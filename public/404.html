@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Not Found | Laura Cordrey</title>
+    <meta name="robots" content="noindex" />
+    <style>
+      :root {
+        --color-text: #1a1a1a;
+        --color-text-secondary: #4a4a4a;
+        --color-accent: #B4F0E6;
+        --color-bg: #FFFDF9;
+        --color-border: #E8E4DE;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--color-bg);
+        color: var(--color-text);
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      }
+
+      .card {
+        max-width: 520px;
+        padding: 40px 48px;
+        border: 1px solid var(--color-border);
+        border-radius: 20px;
+        background: white;
+        text-align: center;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+      }
+
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 12px;
+      }
+
+      p {
+        color: var(--color-text-secondary);
+        margin-bottom: 24px;
+        line-height: 1.6;
+      }
+
+      a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 22px;
+        border-radius: 999px;
+        background: var(--color-accent);
+        color: var(--color-text);
+        text-decoration: none;
+        font-weight: 600;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      a:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <h1>Page not found</h1>
+      <p>The page you’re looking for doesn’t exist or has moved. Let’s get you back on track.</p>
+      <a href="/">Back to homepage</a>
+    </main>
+  </body>
+</html>

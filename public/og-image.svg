@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFFDF9"/>
+      <stop offset="100%" stop-color="#FDF8F3"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#g)"/>
+  <circle cx="980" cy="140" r="180" fill="#B4F0E6" opacity="0.5"/>
+  <circle cx="220" cy="520" r="220" fill="#7DD4C8" opacity="0.25"/>
+  <text x="80" y="240" font-family="Inter, Arial, sans-serif" font-size="64" font-weight="800" fill="#1A1A1A">Laura Cordrey</text>
+  <text x="80" y="320" font-family="Inter, Arial, sans-serif" font-size="40" font-weight="600" fill="#1A1A1A">Fandom as a Growth System</text>
+  <text x="80" y="400" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="500" fill="#4A4A4A">Retention strategy • Community systems • Fan engagement</text>
+</svg>
