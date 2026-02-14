@@ -105,8 +105,8 @@ const ChartIcon = () => (
 // Navigation sections
 const navSections = [
   { id: 'belief', label: 'Belief' },
-  { id: 'system', label: 'System' },
-  { id: 'focus', label: 'Focus' },
+  { id: 'system', label: 'Opportunity' },
+  { id: 'focus', label: 'Fandom Flywheel' },
   { id: 'work', label: 'Work Together' }
 ]
 
@@ -127,7 +127,7 @@ function Navbar({ activeSection, onOpenCalendly }) {
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="navbar-logo">
-        <img src="/logo-website.png" alt="Laura Cordrey" className="navbar-logo-image" />
+        <img src="/logo-website.png" alt="Laura Cordrey" width="38" height="38" className="navbar-logo-image" />
         Laura Cordrey
       </div>
       <div className={`navbar-links ${mobileOpen ? 'open' : ''}`}>
@@ -167,38 +167,42 @@ function Navbar({ activeSection, onOpenCalendly }) {
 }
 
 const trackRecordLogos = [
-  { src: '/ubisoft-Logo.png', alt: 'Ubisoft' },
-  { src: '/amaz-game.png', alt: 'Amazon Games' },
-  { src: '/blablacar-logo.png', alt: 'BlaBlaCar' },
-  { src: '/Azarus.png', alt: 'Azarus' },
-  { src: '/Dazzly.png', alt: 'Dazzly' },
-  { src: '/IKEA-Logo-1967.png', alt: 'IKEA' },
-  { src: '/allsaints.png', alt: 'AllSaints' },
-  { src: '/apprt.png', alt: 'Apprt' },
-  { src: '/basso-brooke-vector-375.png', alt: 'Basso Brooke' },
-  { src: '/fabric-pour-logo.png', alt: 'Fabric' },
-  { src: '/selfridges.png', alt: 'Selfridges' },
-  { src: '/us mobile.png', alt: 'US Mobile' }
+  { src: '/ubisoft-Logo.png', alt: 'Ubisoft', width: 320, height: 181 },
+  { src: '/amaz-game.png', alt: 'Amazon Games', width: 320, height: 141 },
+  { src: '/blablacar-logo.png', alt: 'BlaBlaCar', width: 320, height: 213 },
+  { src: '/Azarus.png', alt: 'Azarus', width: 600, height: 600 },
+  { src: '/Dazzly.png', alt: 'Dazzly', width: 916, height: 384 },
+  { src: '/IKEA-Logo-1967.png', alt: 'IKEA', width: 3840, height: 2160 },
+  { src: '/allsaints.png', alt: 'AllSaints', width: 225, height: 225 },
+  { src: '/apprt.png', alt: 'Apprt', width: 250, height: 52 },
+  { src: '/basso-brooke-vector-375.png', alt: 'Basso Brooke', width: 373, height: 202 },
+  { src: '/fabric-pour-logo.png', alt: 'Fabric', width: 486, height: 291 },
+  { src: '/selfridges.png', alt: 'Selfridges', width: 287, height: 176 },
+  { src: '/us mobile.png', alt: 'US Mobile', width: 1280, height: 800 }
 ]
 
-function Hero() {
+function Hero({ enablePrism }) {
   return (
     <section id="hero" className="hero">
       <div className="hero-background" aria-hidden="true">
         <div className="hero-prism">
-          <Suspense fallback={<div className="hero-prism-placeholder" aria-hidden="true" />}>
-            <Prism
-              animationType="3drotate"
-              timeScale={0.5}
-              height={3.5}
-              baseWidth={5.5}
-              scale={3.6}
-              hueShift={0}
-              colorFrequency={1}
-              noise={0}
-              glow={1}
-            />
-          </Suspense>
+          {!enablePrism ? (
+            <div className="hero-prism-placeholder" aria-hidden="true" />
+          ) : (
+            <Suspense fallback={<div className="hero-prism-placeholder" aria-hidden="true" />}>
+              <Prism
+                animationType="3drotate"
+                timeScale={0.5}
+                height={3.5}
+                baseWidth={5.5}
+                scale={3.6}
+                hueShift={0}
+                colorFrequency={1}
+                noise={0}
+                glow={1}
+              />
+            </Suspense>
+          )}
         </div>
       </div>
       <div className="hero-content">
@@ -206,10 +210,10 @@ function Hero() {
           I design <span className="highlight">fandom</span> as a growth system
         </h1>
         <p className="hero-subtitle">
-          I help brands turn participation into habit, and habit into compounding business value
+            I help brands turn participation into habit, and habit into compounding business value.
         </p>
         <p className="hero-audience">
-          For music labels, gaming studios, entertainment platforms, and culture-led consumer brands
+            For product-led consumer brands, in gaming, beauty, wellness, and entertainment.
         </p>
         <div className="hero-cta-group">
           <a href="#contact" className="hero-cta hero-cta-primary">
@@ -239,48 +243,26 @@ function BeliefSection({ setActiveSection }) {
   return (
     <section id="belief" ref={ref} className="section section-subtle">
       <div className="section-container">
-        <div className="section-header">
-          <span className="section-label">The Belief</span>
-          <h2 className="section-title">Fandom is infrastructure, not a campaign</h2>
-          <p className="section-subtitle">
-            Most brands optimize for reach. But sustainable growth comes from earning repetition, not buying attention.
+        <div className="belief-content belief-content-single">
+          <h2 className="belief-heading">The belief</h2>
+
+          <p>
+            Most brands optimize for reach. They measure success in impressions, followers, and acquisition costs. But sustainable growth doesn't come from buying attention &mdash; it comes from earning repetition.
           </p>
-        </div>
 
-        <div className="belief-grid">
-          <div className="belief-content">
+          <p>
+            Fandom isn't a marketing channel or a campaign you run twice a year. It's infrastructure. It's the system that turns casual users into repeat participants, passive audiences into active communities, and transactions into relationships you own.
+          </p>
+
+          <div className="belief-highlight">
             <p>
-              Fandom isn't a marketing channel or a campaign you run twice a year. It's the system that turns casual users into repeat participants, passive audiences into active communities, and transactions into relationships you own.
-            </p>
-            <p>
-              When people participate repeatedly, they stay longer, spend more, and bring others with them. That's not aspiration. That's mechanics.
-            </p>
-            <div className="belief-highlight">
-              <p>
-                "I've spent 12 years building the pieces — now I'm connecting them into a repeatable system that drives retention, lifetime value, and organic growth."
-              </p>
-            </div>
-            <p>
-              Community programs that generated 60M+ organic views. Monetization tests that turned superfans into $32k revenue in three hours. Creator systems that delivered millions in earned media with zero spend.
+              "I've spent 12 years building the pieces &mdash; now I'm connecting them into a repeatable system that drives retention, lifetime value, and organic growth."
             </p>
           </div>
 
-          <div className="belief-stats">
-            <div className="belief-stat-card">
-              <div className="belief-stat">
-                <div className="belief-stat-number">60M+</div>
-                <div className="belief-stat-label">Organic content views generated</div>
-              </div>
-              <div className="belief-stat">
-                <div className="belief-stat-number">$32k</div>
-                <div className="belief-stat-label">Revenue from superfans in 3 hours</div>
-              </div>
-              <div className="belief-stat">
-                <div className="belief-stat-number">12+</div>
-                <div className="belief-stat-label">Years building fan-powered systems</div>
-              </div>
-            </div>
-          </div>
+          <p>
+            When people participate repeatedly, they stay longer, spend more, and bring others with them. That's not aspiration. That's mechanics.
+          </p>
         </div>
       </div>
     </section>
@@ -289,47 +271,38 @@ function BeliefSection({ setActiveSection }) {
 
 function OpportunitySection() {
   return (
-    <section id="business-case" className="section section-dark">
-      <div className="section-container">
-        <div className="section-header">
-          <span className="section-label">The Opportunity</span>
-          <h2 className="section-title">CAC is breaking. Retention is the answer.</h2>
-          <p className="section-subtitle">
-            Paid acquisition costs have doubled in three years. The brands that win will be the ones who stop buying attention and start earning it.
-          </p>
-        </div>
+    <section id="business-case" className="section section-dark opportunity-section">
+      <div className="section-container opportunity-container">
+        <h2 className="opportunity-heading">The opportunity</h2>
+        <p>
+          CAC has doubled in three years. Paid acquisition is breaking. But most brands still pour millions into buying attention from people who don't care, while ignoring the customers who already love them.
+        </p>
+        <p>
+          The math is clear: a 10-point reduction in churn creates more value than a 10% increase in acquisition. Referred customers stay twice as long and spend more. Retention improvements compound. This isn't theory &mdash; it's measurable, repeatable business impact.
+        </p>
 
-        <div className="opportunity-grid">
-          <div className="opportunity-text">
-            <p>
-              Most brands still pour millions into buying attention from people who don't care, while ignoring the customers who already love them.
-            </p>
-            <p>
-              The math is clear: a 10-point reduction in churn creates more value than a 10% increase in acquisition. Referred customers stay twice as long and spend more. Retention improvements compound.
-            </p>
-            <div className="opportunity-cta">
-              <p>Everyone talks about community and fans. Almost no one knows how to build the system that actually moves these numbers. That's what I do.</p>
-            </div>
+        <div className="opportunity-stats">
+          <div className="opportunity-stat-item">
+            <div className="opportunity-stat-number">$10M&ndash;$30M</div>
+            <div className="opportunity-stat-label">Potential value created over 2-3 years for a mid-sized brand</div>
           </div>
 
-          <div className="opportunity-cards">
-            <div className="opp-stat-card">
-              <div className="opp-stat-number">$10M–$30M</div>
-              <div className="opp-stat-label">Potential value created over 2-3 years for a mid-sized brand</div>
-            </div>
-            <div className="opp-stat-card">
-              <div className="opp-stat-number">100–300x</div>
-              <div className="opp-stat-label">ROI when retention systems replace acquisition spend</div>
-            </div>
-          </div>
-
-          <div className="opportunity-example">
-            <div className="opportunity-example-label">Example Scenario</div>
-            <div className="opportunity-example-content">
-              A brand with 1M active users and $50M ARR reduces churn by 10 percentage points. Year 1 impact: $5M in retained revenue + $3M in saved acquisition costs. Over 3 years with compounding: $25M+ in value created. Your investment to build that system: $75k–$120k.
-            </div>
+          <div className="opportunity-stat-item">
+            <div className="opportunity-stat-number">100&ndash;300x</div>
+            <div className="opportunity-stat-label">ROI when retention systems replace acquisition spend</div>
           </div>
         </div>
+
+        <div className="opportunity-example">
+          <div className="opportunity-example-label">Example Scenario</div>
+          <div className="opportunity-example-content">
+            A brand with 1M active users and $50M ARR reduces churn by 10 percentage points. Year 1 impact: $5M in retained revenue + $3M in saved acquisition costs. Over 3 years with compounding: $25M+ in value created. Your investment to build that system: $75k&ndash;$120k.
+          </div>
+        </div>
+
+        <p className="opportunity-closing">
+          Everyone talks about community and fans. Almost no one knows how to build the system that actually moves these numbers. That's what I do.
+        </p>
       </div>
     </section>
   )
@@ -353,7 +326,7 @@ function FlywheelSection({ setActiveSection }) {
             Three systems working together in a continuous loop, creating compounding growth that reduces reliance on paid acquisition.
           </p>
           <p>
-            Brand creates stories worth participating in. Product designs loops that drive repeat behavior. Community amplifies through word-of-mouth. Each part feeds the others.
+            Brand creates stories, identity, and moments worth participating in. Product designs loops, rewards, and experiences that drive repeat behavior. Community amplifies through UGC, word-of-mouth, and owned relationships. Each part feeds the others.
           </p>
         </div>
 
@@ -436,9 +409,9 @@ function FocusSection({ setActiveSection }) {
 
 function PrinciplesSection() {
   const principles = [
-    "Early participation predicts long-term retention",
+    "Early participation predicts long-term retention. Users who engage in the first 7 days are 3-5x more likely to still be active after 6 months.",
     "Referred customers retain at higher rates than paid acquisition",
-    "Reducing friction in core actions improves both conversion and lifetime engagement",
+    "Every friction point costs 10-20% conversion",
     "Retention gains deliver greater business impact than equivalent acquisition increases"
   ]
 
@@ -485,6 +458,23 @@ function TrackRecordSection() {
             <p>
               I don't lead with case studies. I lead with pattern recognition, systems thinking, and execution across product, community, and fan engagement.
             </p>
+          </div>
+
+          <div className="track-record-stats">
+            <div className="track-record-stat-card">
+              <div className="track-record-stat">
+                <div className="track-record-stat-number">100M+</div>
+                <div className="track-record-stat-label">Influencer campaign reach</div>
+              </div>
+              <div className="track-record-stat">
+                <div className="track-record-stat-number">70M+</div>
+                <div className="track-record-stat-label">Community footprint managed</div>
+              </div>
+              <div className="track-record-stat">
+                <div className="track-record-stat-number">60M+</div>
+                <div className="track-record-stat-label">UGC views generated</div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -830,23 +820,19 @@ function Footer() {
 function App() {
   const [activeSection, setActiveSection] = useState('')
   const [calendlyOpen, setCalendlyOpen] = useState(false)
+  const [shouldRenderPrism, setShouldRenderPrism] = useState(false)
   const calendlyContainerRef = useRef(null)
 
   useEffect(() => {
     if (typeof window === 'undefined') return
-
-    const preloadChunks = () => {
-      import('./components/Prism')
-      import('./components/FlywheelDiagram')
-      import('./components/LogoLoop')
-    }
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
     if ('requestIdleCallback' in window) {
-      const idleId = window.requestIdleCallback(preloadChunks, { timeout: 1500 })
+      const idleId = window.requestIdleCallback(() => setShouldRenderPrism(true), { timeout: 2500 })
       return () => window.cancelIdleCallback(idleId)
     }
 
-    const timeoutId = window.setTimeout(preloadChunks, 1200)
+    const timeoutId = window.setTimeout(() => setShouldRenderPrism(true), 1800)
     return () => window.clearTimeout(timeoutId)
   }, [])
 
@@ -861,6 +847,16 @@ function App() {
   useEffect(() => {
     if (!calendlyOpen) return
     if (typeof window === 'undefined') return
+
+    const calendlyCssHref = 'https://assets.calendly.com/assets/external/widget.css'
+    const existingStyle = document.querySelector(`link[href="${calendlyCssHref}"]`)
+    if (!existingStyle) {
+      const styleLink = document.createElement('link')
+      styleLink.rel = 'stylesheet'
+      styleLink.href = calendlyCssHref
+      styleLink.setAttribute('data-calendly-style', 'true')
+      document.head.appendChild(styleLink)
+    }
 
     const container = calendlyContainerRef.current
     if (!container) return
@@ -904,7 +900,7 @@ function App() {
   return (
     <>
       <Navbar activeSection={activeSection} onOpenCalendly={openCalendly} />
-      <Hero />
+      <Hero enablePrism={shouldRenderPrism} />
       <BeliefSection setActiveSection={setActiveSection} />
       <OpportunitySection />
       <FlywheelSection setActiveSection={setActiveSection} />

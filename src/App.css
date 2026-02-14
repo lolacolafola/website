@@ -388,11 +388,31 @@
   align-items: start;
 }
 
+.belief-content-single {
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.belief-heading {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 28px;
+  line-height: 1.1;
+  color: var(--color-text);
+}
+
 .belief-content p {
   font-size: 1.15rem;
   line-height: 1.85;
   color: var(--color-text-secondary);
   margin-bottom: 28px;
+}
+
+.belief-content.belief-content-single p:first-of-type {
+  font-size: 1.15rem;
+  color: var(--color-text-secondary);
+  font-weight: 400;
 }
 
 .belief-content p:first-of-type {
@@ -460,93 +480,85 @@
 /* ============================================
    OPPORTUNITY SECTION
    ============================================ */
-.opportunity-grid {
+.opportunity-section {
+  background: var(--color-bg-alt);
+  padding: 60px 24px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica', Arial, sans-serif;
+}
+
+.opportunity-container {
+  max-width: 1200px;
+}
+
+.opportunity-heading {
+  font-size: 1.75rem;
+  line-height: 1.3;
+  font-weight: 600;
+  color: white;
+  margin-top: 0;
+  margin-bottom: 24px;
+}
+
+.opportunity-container > p {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 20px;
+}
+
+.opportunity-stats {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: start;
+  gap: 40px;
+  margin: 48px 0 40px 0;
 }
 
-.opportunity-text p {
-  font-size: 1.15rem;
-  line-height: 1.85;
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 28px;
+.opportunity-stat-item {
+  border-left: 3px solid rgba(255, 255, 255, 0.3);
+  padding-left: 20px;
 }
 
-.opportunity-text p:first-of-type {
-  font-size: 1.3rem;
-  color: white;
-}
-
-.opportunity-cards {
-  display: grid;
-  gap: 24px;
-}
-
-.opp-stat-card {
-  background: rgba(180, 240, 230, 0.08);
-  border: 1px solid rgba(180, 240, 230, 0.2);
-  border-radius: 20px;
-  padding: 36px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.opp-stat-card:hover {
-  background: rgba(180, 240, 230, 0.15);
-  transform: translateY(-4px);
-  border-color: var(--color-accent);
-}
-
-.opp-stat-number {
+.opportunity-stat-number {
   font-size: 3rem;
-  font-weight: 800;
-  color: var(--color-accent);
+  line-height: 1.1;
+  font-weight: 700;
+  color: white;
   margin-bottom: 8px;
-  line-height: 1;
 }
 
-.opp-stat-label {
+.opportunity-stat-label {
   font-size: 1rem;
+  line-height: 1.4;
   color: rgba(255, 255, 255, 0.7);
-  line-height: 1.5;
 }
 
 .opportunity-example {
-  grid-column: 1 / -1;
-  background: rgba(180, 240, 230, 0.05);
-  border: 1px solid rgba(180, 240, 230, 0.15);
-  border-radius: 20px;
-  padding: 36px;
-  margin-top: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  border-left: 3px solid white;
+  border-radius: 0;
+  padding: 24px;
+  margin-top: 32px;
 }
 
 .opportunity-example-label {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 2.5px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: var(--color-accent);
-  margin-bottom: 16px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 12px;
 }
 
 .opportunity-example-content {
-  font-size: 1.05rem;
-  line-height: 1.8;
-  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.95);
 }
 
-.opportunity-cta {
-  margin-top: 40px;
-  padding-top: 40px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.opportunity-cta p {
-  font-size: 1.2rem;
-  color: white;
-  font-weight: 500;
-  margin: 0;
+.opportunity-closing {
+  margin-top: 32px;
+  margin-bottom: 0;
+  color: rgba(255, 255, 255, 0.95);
 }
 
 /* ============================================
@@ -938,8 +950,8 @@
    ============================================ */
 .track-record-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 40px;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 64px;
   align-items: start;
 }
 
@@ -953,6 +965,47 @@
 .track-record-text p:first-of-type {
   font-size: 1.3rem;
   color: var(--color-text);
+}
+
+.track-record-stats {
+  position: sticky;
+  top: 120px;
+}
+
+.track-record-stat-card {
+  background: white;
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.06);
+  border: 2px solid var(--color-accent);
+}
+
+.track-record-stat {
+  padding: 28px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.track-record-stat:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.track-record-stat:first-child {
+  padding-top: 0;
+}
+
+.track-record-stat-number {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--color-accent-darker);
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+.track-record-stat-label {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
 }
 
 .track-record-logos {
@@ -1445,7 +1498,6 @@
    ============================================ */
 @media (max-width: 1024px) {
   .belief-grid,
-  .opportunity-grid,
   .flywheel-wrapper,
   .track-record-grid {
     grid-template-columns: 1fr;
@@ -1471,7 +1523,8 @@
     grid-template-columns: 1fr;
   }
 
-  .belief-stats {
+  .belief-stats,
+  .track-record-stats {
     position: static;
   }
 }
@@ -1550,6 +1603,27 @@
 
   .section-title {
     font-size: 2.2rem;
+  }
+
+  .belief-heading {
+    font-size: 2.2rem;
+  }
+
+  .opportunity-section {
+    padding: 48px 20px;
+  }
+
+  .opportunity-heading {
+    font-size: 1.5rem;
+  }
+
+  .opportunity-stats {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .opportunity-stat-number {
+    font-size: 2.5rem;
   }
 
   .focus-grid {
