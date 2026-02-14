@@ -101,7 +101,7 @@ function FlywheelCenter() {
         r="45"
       />
       <text className="flywheel-center-label" x="200" y="217">
-        SYSTEM
+        FANDOM
       </text>
       <text className="flywheel-center-title" x="200" y="237">
         Flywheel

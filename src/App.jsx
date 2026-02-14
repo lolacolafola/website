@@ -105,8 +105,8 @@ const ChartIcon = () => (
 // Navigation sections
 const navSections = [
   { id: 'belief', label: 'Belief' },
-  { id: 'system', label: 'Opportunity' },
-  { id: 'focus', label: 'Fandom Flywheel' },
+  { id: 'business-case', label: 'Opportunity' },
+  { id: 'system', label: 'Fandom Flywheel' },
   { id: 'work', label: 'Work Together' }
 ]
 
@@ -269,9 +269,16 @@ function BeliefSection({ setActiveSection }) {
   )
 }
 
-function OpportunitySection() {
+function OpportunitySection({ setActiveSection }) {
+  const { ref } = useInView({
+    threshold: 0.3,
+    onChange: (inView) => {
+      if (inView) setActiveSection('business-case')
+    }
+  })
+
   return (
-    <section id="business-case" className="section section-dark opportunity-section">
+    <section id="business-case" ref={ref} className="section section-dark opportunity-section">
       <div className="section-container opportunity-container">
         <h2 className="opportunity-heading">The opportunity</h2>
         <p>
@@ -902,7 +909,7 @@ function App() {
       <Navbar activeSection={activeSection} onOpenCalendly={openCalendly} />
       <Hero enablePrism={shouldRenderPrism} />
       <BeliefSection setActiveSection={setActiveSection} />
-      <OpportunitySection />
+      <OpportunitySection setActiveSection={setActiveSection} />
       <FlywheelSection setActiveSection={setActiveSection} />
       <FocusSection setActiveSection={setActiveSection} />
       <PrinciplesSection />
