@@ -282,7 +282,10 @@ function OpportunitySection({ setActiveSection }) {
       <div className="section-container opportunity-container">
         <h2 className="opportunity-heading">The opportunity</h2>
         <p>
-          CAC has doubled in three years. Paid acquisition is breaking. But most brands still pour millions into buying attention from people who don't care, while ignoring the customers who already love them.
+          Influencer campaigns spike your MAU, then it crashes back to baseline. CAC has doubled in three years, but retention hasn't improved. You're pouring millions into acquisition while your product bleeds users.
+        </p>
+        <p>
+          The pattern repeats: spike, drop, repeat. Because acquisition without retention is a leaky bucket. Every dollar you spend on ads or influencers pours straight through unless you have systems that make users stay, participate, and bring others.
         </p>
         <p>
           The math is clear: a 10-point reduction in churn creates more value than a 10% increase in acquisition. Referred customers stay twice as long and spend more. Retention improvements compound. This isn't theory &mdash; it's measurable, repeatable business impact.
