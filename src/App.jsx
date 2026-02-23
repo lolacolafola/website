@@ -210,10 +210,7 @@ function Hero({ enablePrism }) {
           I design <span className="highlight">fandom</span> as a growth system
         </h1>
         <p className="hero-subtitle">
-            I help brands turn participation into habit, and habit into compounding business value.
-        </p>
-        <p className="hero-audience">
-            For product-led consumer brands, in gaming, beauty, wellness, and entertainment.
+            Turn customers into <span className="highlight">fans</span>. Turn <span className="highlight">fans</span> into repeat revenue.
         </p>
         <div className="hero-cta-group">
           <a href="#contact" className="hero-cta hero-cta-primary">
@@ -241,27 +238,56 @@ function BeliefSection({ setActiveSection }) {
   })
 
   return (
-    <section id="belief" ref={ref} className="section section-subtle">
+    <section id="belief" ref={ref} className="section two-paths-section">
       <div className="section-container">
         <div className="belief-content belief-content-single">
-          <h2 className="belief-heading">The belief</h2>
+          <h2 className="belief-heading challenge-title">The Challenge</h2>
 
-          <p>
-            Most brands optimize for reach. They measure success in impressions, followers, and acquisition costs. But sustainable growth doesn't come from buying attention &mdash; it comes from earning repetition.
+          <p className="paths-intro">
+            Most brands come to me for one of two reasons: to reduce churn or scale advocacy.
           </p>
 
-          <p>
-            Fandom isn't a marketing channel or a campaign you run twice a year. It's infrastructure. It's the system that turns casual users into repeat participants, passive audiences into active communities, and transactions into relationships you own.
-          </p>
+          <div className="two-paths-grid">
+            <div className="path-card churn-path">
+              <h3 className="path-title">Reduce Churn</h3>
 
-          <div className="belief-highlight">
-            <p>
-              "I've spent 12 years building the pieces &mdash; now I'm connecting them into a repeatable system that drives retention, lifetime value, and organic growth."
-            </p>
+              <p className="path-hook">Your acquisition works. Your retention doesn&apos;t.</p>
+
+              <p className="path-description">
+                Marketing brings users &mdash; influencer campaigns spike MAU, paid ads drive
+                installs, customers make first purchases. But they don&apos;t come back. CAC
+                keeps rising while retention stays flat.
+              </p>
+
+              <p className="path-solution">
+                <strong>If this is you:</strong> I build retention systems that turn
+                one-time buyers into repeat customers who stay longer and create more
+                value. Your acquisition spend starts compounding instead of evaporating.
+              </p>
+            </div>
+
+            <div className="path-card advocacy-path">
+              <h3 className="path-title">Scale Advocacy</h3>
+
+              <p className="path-hook">Your customers already advocate. You just can&apos;t scale it.</p>
+
+              <p className="path-description">
+                They share it, post about it, recommend it to friends. But it happens
+                organically, in isolation, unpredictably. There&apos;s untapped value in
+                turning those individual moments into a systematic growth engine.
+              </p>
+
+              <p className="path-solution">
+                <strong>If this is you:</strong> I build programs that activate your
+                superfans at scale &mdash; creating content, recruiting customers, amplifying
+                your brand. Turn sporadic advocacy into predictable growth.
+              </p>
+            </div>
           </div>
 
-          <p>
-            When people participate repeatedly, they stay longer, spend more, and bring others with them. That's not aspiration. That's mechanics.
+          <p className="paths-converge">
+            Different challenges, same solution: retention systems customized to your
+            specific needs.
           </p>
         </div>
       </div>
