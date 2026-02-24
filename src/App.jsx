@@ -243,51 +243,51 @@ function BeliefSection({ setActiveSection }) {
         <div className="belief-content belief-content-single">
           <h2 className="belief-heading challenge-title">The Challenge</h2>
 
+          <p className="paths-intro-big">Make them stay or make them share.</p>
+
           <p className="paths-intro">
-            Most brands come to me for one of two reasons: to reduce churn or scale advocacy.
+            Your customers either don&apos;t return, or they love you but don&apos;t tell others.
+            I build the mechanics that make them come back and spread the word.
           </p>
 
           <div className="two-paths-grid">
-            <div className="path-card churn-path">
-              <h3 className="path-title">Reduce Churn</h3>
+            <div className="path-card stay-path">
+              <h3 className="path-title">Make them stay</h3>
 
               <p className="path-hook">Your acquisition works. Your retention doesn&apos;t.</p>
 
               <p className="path-description">
-                Marketing brings users &mdash; influencer campaigns spike MAU, paid ads drive
-                installs, customers make first purchases. But they don&apos;t come back. CAC
-                keeps rising while retention stays flat.
+                Marketing brings customers in: influencer campaigns spike MAU, paid ads drive
+                installs, first purchases happen. But they don&apos;t come back.
               </p>
 
               <p className="path-solution">
-                <strong>If this is you:</strong> I build retention systems that turn
-                one-time buyers into repeat customers who stay longer and create more
-                value. Your acquisition spend starts compounding instead of evaporating.
+                <strong>If this is you:</strong> I build retention mechanics that make
+                customers return repeatedly and become fans. Every
+                customer acquired becomes more valuable.
               </p>
             </div>
 
-            <div className="path-card advocacy-path">
-              <h3 className="path-title">Scale Advocacy</h3>
+            <div className="path-card share-path">
+              <h3 className="path-title">Make them share</h3>
 
-              <p className="path-hook">Your customers already advocate. You just can&apos;t scale it.</p>
+              <p className="path-hook">You have customers who love you. Let&apos;s multiply it.</p>
 
               <p className="path-description">
-                They share it, post about it, recommend it to friends. But it happens
-                organically, in isolation, unpredictably. There&apos;s untapped value in
-                turning those individual moments into a systematic growth engine.
+                They post about you, recommend you to friends, create content around you.
+                But it happens in isolation with no repeatable pattern.
               </p>
 
               <p className="path-solution">
-                <strong>If this is you:</strong> I build programs that activate your
-                superfans at scale &mdash; creating content, recruiting customers, amplifying
-                your brand. Turn sporadic advocacy into predictable growth.
+                <strong>If this is you:</strong> I build advocacy mechanics that turn
+                customers into content creators and recruiters. Sporadic love becomes
+                systematic word-of-mouth at scale.
               </p>
             </div>
           </div>
 
           <p className="paths-converge">
-            Different challenges, same solution: retention systems customized to your
-            specific needs.
+            Different challenges, same solution: fandom mechanics customized to your needs.
           </p>
         </div>
       </div>
