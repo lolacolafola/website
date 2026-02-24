@@ -241,13 +241,12 @@ function BeliefSection({ setActiveSection }) {
     <section id="belief" ref={ref} className="section two-paths-section">
       <div className="section-container">
         <div className="belief-content belief-content-single">
-          <h2 className="belief-heading challenge-title">The Challenge</h2>
+          <p className="paths-badge">STARTING POINT</p>
 
-          <p className="paths-intro-big">Make them stay or make them share.</p>
+          <p className="paths-intro-big">Make them stay or make them share</p>
 
           <p className="paths-intro">
-            Your customers either don&apos;t return, or they love you but don&apos;t tell others.
-            I build the mechanics that make them come back and spread the word.
+            When I design your fandom system, we start with one of two paths.
           </p>
 
           <div className="two-paths-grid">
@@ -287,7 +286,7 @@ function BeliefSection({ setActiveSection }) {
           </div>
 
           <p className="paths-converge">
-            Different challenges, same solution: fandom mechanics customized to your needs.
+            Both paths lead to the same place: The Fandom Flywheel.
           </p>
         </div>
       </div>
