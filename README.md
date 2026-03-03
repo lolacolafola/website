@@ -1,16 +1,78 @@
-# React + Vite
+# Laura Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Marketing site for **The Fandom Flywheel** built with React + Vite.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React 19
+- Vite 7
+- CSS (no UI framework)
+- OGL (for the hero prism background)
 
-## React Compiler
+## Local Development
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Install dependencies:
 
-## Expanding the ESLint configuration
+```bash
+npm install
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Start dev server:
+
+```bash
+npm run dev
+```
+
+Build production assets:
+
+```bash
+npm run build
+```
+
+Preview production build:
+
+```bash
+npm run preview
+```
+
+Lint:
+
+```bash
+npm run lint
+```
+
+## Project Structure
+
+- `src/App.jsx`: Main page layout/content sections
+- `src/App.css`: Page section styling
+- `src/index.css`: Global reset + design tokens
+- `src/components/Prism.jsx`: Animated hero background effect
+- `src/components/FlywheelDiagram.jsx`: Fandom Flywheel diagram component
+
+## Current Page Sections
+
+1. Hero
+2. Starting Point
+3. The Value
+4. The Solution (Fandom Flywheel)
+5. Why It Works
+6. About / Track Record
+7. Services
+8. Final CTA
+
+## Design Notes
+
+- Core palette currently uses neutral text (`#1A1A1A`, `#333`) with mint accents (`#8CE5D0`, `#4BBFB0`) and light section backgrounds (`#FAFAFA`, `#F0F9FF`).
+- Global color tokens are defined in `src/index.css`; section-level overrides are in `src/App.css`.
+- Hero prism background is lazy-loaded in `App.jsx` for performance.
+- Flywheel visuals are controlled by `FlywheelDiagram.jsx` + related `.flywheel-*` classes in `App.css`.
+
+## Content + Layout Workflow
+
+- Most edits happen in `src/App.jsx` (copy/section order).
+- Most visual updates happen in `src/App.css` (spacing, backgrounds, cards, hover states).
+- Keep `FlywheelDiagram.jsx` unchanged unless intentionally redesigning the diagram logic itself.
+
+## Deployment
+
+`npm run build` outputs static files to `dist/` for deployment on any static host.
