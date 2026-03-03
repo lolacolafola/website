@@ -151,7 +151,8 @@
 }
 
 .path-title {
-  font-size: 32px;
+  font-size: 30px;
+  line-height: 1.25;
   font-weight: 700;
   margin-bottom: 16px;
   color: #1a1a1a;
@@ -189,16 +190,18 @@
 
 .convergence {
   text-align: center;
-  padding: 48px;
-  background: #f0f9ff;
-  border-radius: 12px;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
 }
 
 .convergence-text {
-  font-size: 22px;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin-bottom: 8px;
+  font-size: 20px;
+  line-height: 1.6;
+  font-weight: 400;
+  color: #333;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .convergence-subtext {

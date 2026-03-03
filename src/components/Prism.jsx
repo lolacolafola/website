@@ -163,7 +163,8 @@ export default function Prism({
   inertia = 0.05,
   bloom = 1,
   suspendWhenOffscreen = false,
-  timeScale = 0.5
+  timeScale = 0.5,
+  maxFps = 30
 }) {
   const containerRef = useRef(null)
 
@@ -185,7 +186,7 @@ export default function Prism({
     const timeScaleValue = Math.max(0, timeScale || 1)
     const hoverStrengthValue = Math.max(0, hoverStrength || 1)
     const inertiaValue = clamp(inertia ?? 0.12, 0, 1)
-    const dpr = Math.min(2, window.devicePixelRatio || 1)
+    const dpr = Math.min(1.5, window.devicePixelRatio || 1)
 
     const renderer = new Renderer({ dpr, alpha: transparent, antialias: false })
     const gl = renderer.gl
@@ -293,6 +294,8 @@ export default function Prism({
 
     const shouldStopWhenStill = noiseValue < 1e-6
     const startTime = performance.now()
+    const frameInterval = maxFps > 0 ? 1000 / maxFps : 0
+    let lastFrameAt = 0
     let rafId = 0
 
     const start = () => {
@@ -307,6 +310,12 @@ export default function Prism({
     }
 
     const tick = (now) => {
+      if (frameInterval > 0 && now - lastFrameAt < frameInterval) {
+        rafId = requestAnimationFrame(tick)
+        return
+      }
+      lastFrameAt = now
+
       const t = (now - startTime) * 0.001
       program.uniforms.iTime.value = t
 
@@ -403,7 +412,8 @@ export default function Prism({
     inertia,
     bloom,
     suspendWhenOffscreen,
-    timeScale
+    timeScale,
+    maxFps
   ])
 
   return <div className="prism-container" ref={containerRef} />

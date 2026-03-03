@@ -40,6 +40,8 @@ function App() {
                   colorFrequency={1}
                   noise={0}
                   glow={1}
+                  suspendWhenOffscreen
+                  maxFps={30}
                 />
               </Suspense>
             )}
@@ -58,103 +60,43 @@ function App() {
 
       <section className="starting-point">
         <div className="container">
-          <div className="section-badge">WHERE YOU ARE</div>
-          <h2 className="section-title">Two retention challenges</h2>
+          <div className="section-badge">STARTING POINT</div>
+          <h2 className="section-title">Which is your growth challenge?</h2>
           <p className="section-intro">
-            Most brands face one of two retention problems. The first is obvious. The second is
-            invisible but just as costly.
+            Most brands face one of two growth challenges when it comes to their users:
+            retention or advocacy.
           </p>
 
           <div className="paths-grid">
             <div className="path-card">
               <span className="path-badge">CHALLENGE ONE</span>
-              <h3 className="path-title">They don&apos;t stay</h3>
+              <h3 className="path-title">Retention</h3>
               <p className="path-description">
-                Users try once or twice, then disappear. Influencer campaigns drive spikes, ads
-                bring traffic, but within days it all dies back to baseline.
+                They don&apos;t stay. Campaigns bring waves of new users but your product isn&apos;t sticky:
               </p>
               <ul className="symptoms-list">
-                <li>High churn—users try once or twice, then leave</li>
-                <li>Every new customer gained replaces one lost</li>
-                <li>Community feels hollow (lurkers, not participants)</li>
-                <li>Constantly chasing new users to replace churned ones</li>
+                <li>Newcomers aren&apos;t finishing onboarding</li>
+                <li>You&apos;re unable to secure purchases</li>
+                <li>You&apos;re experiencing high churn</li>
+                <li>You&apos;re paying to replace lost customers</li>
               </ul>
             </div>
 
             <div className="path-card">
               <span className="path-badge">CHALLENGE TWO</span>
-              <h3 className="path-title">They stay silently</h3>
+              <h3 className="path-title">Advocacy</h3>
               <p className="path-description">
-                Customers stick around but don&apos;t engage deeply. They buy occasionally but never
-                become real fans. Your best customers blend in with everyone else.
+                They don&apos;t advocate. Your product is sticky but no one is talking about you online:
               </p>
               <ul className="symptoms-list">
                 <li>Low lifetime value despite decent retention</li>
                 <li>Minimal user-generated content or social proof</li>
                 <li>Low referral rates—customers don&apos;t recruit others</li>
-                <li>You can&apos;t tell your champions from casual users</li>
+                <li>You know you have superfans but you can&apos;t find them</li>
               </ul>
             </div>
           </div>
 
-          <div className="convergence">
-            <p className="convergence-text">
-              Both are retention problems. Both need the same solution: fandom mechanics that make
-              customers feel valued, connected, and part of something bigger.
-            </p>
-            <p className="convergence-subtext">Here&apos;s why this matters financially.</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="the-value">
-        <div className="container">
-          <div className="section-badge">WHY THIS MATTERS</div>
-          <h2 className="section-title">The retention math that justifies everything</h2>
-
-          <div className="value-content">
-            <div className="stat-highlight">
-              <p>A 5% increase in customer retention generates <strong>25-95% profit increase</strong></p>
-              <p>Customer acquisition costs are <strong>4-6x higher</strong> than retention costs</p>
-            </div>
-
-            <h3 className="value-subtitle">What this means in real numbers:</h3>
-            <p className="value-context">Starting point: $500k/year on acquisition, 40% retention</p>
-
-            <div className="improvement-grid">
-              <div className="improvement-card">
-                <div className="card-header">IMPROVE 10 POINTS</div>
-                <div className="card-body">
-                  <p className="retention-change">40% → 50%</p>
-                  <p className="value-amount">= $250k</p>
-                  <p className="value-label">equivalent value</p>
-                </div>
-              </div>
-
-              <div className="improvement-card highlighted">
-                <div className="card-header">IMPROVE 20 POINTS</div>
-                <div className="card-body">
-                  <p className="retention-change">40% → 60%</p>
-                  <p className="value-amount">= $500k</p>
-                  <p className="value-label">equivalent value</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="why-matters-box">
-              <p className="box-intro">That&apos;s why the top 15-20% of your customers (fans) matter so much</p>
-              <ul className="fan-benefits">
-                <li>Spend 66-80% more</li>
-                <li>Stay 2-3x longer</li>
-                <li>Recruit others</li>
-              </ul>
-              <p className="box-conclusion">Activating them is the highest-leverage growth strategy available.</p>
-            </div>
-
-            <p className="value-conclusion">
-              The Fandom Flywheel designs the system that makes this happen.
-            </p>
-          </div>
         </div>
       </section>
 
@@ -163,10 +105,9 @@ function App() {
           <div className="section-badge">THE SOLUTION</div>
           <h2 className="section-title">The Fandom Flywheel</h2>
           <p className="system-intro">
-            The Fandom Flywheel is a retention system that turns customers into fans. It connects
-            three mechanics—Brand, Product, and Community—so they reinforce each other instead of
-            working in silos. When designed together, customers don&apos;t just return—they bring others
-            with them.
+            The Fandom Flywheel is the system I&apos;ve built to solve retention and advocacy together.
+            Instead of siloed tactics, it designs Brand, Product, and Community to work as one, creating
+            experiences that make customers stay and recruit others.
           </p>
 
           <div className="flywheel-diagram" aria-label="Fandom Flywheel Diagram">
@@ -180,10 +121,10 @@ function App() {
               <span className="component-number">01</span>
               <h3 className="component-title">Brand</h3>
               <p className="component-description">
-                Creates participation moments that make customers feel part of something
+                Creates participation moments that foster belonging
               </p>
               <div className="component-deliverables">
-                <p className="deliverables-label">You get:</p>
+                <p className="deliverables-label">Tactics:</p>
                 <ul>
                   <li>Storytelling and brand narrative (emotional connection)</li>
                   <li>Events and challenges (active participation)</li>
@@ -199,7 +140,7 @@ function App() {
                 Builds retention loops that reward repeat behavior
               </p>
               <div className="component-deliverables">
-                <p className="deliverables-label">You get:</p>
+                <p className="deliverables-label">Tactics:</p>
                 <ul>
                   <li>Gamification and progression systems</li>
                   <li>Loyalty programs (points, tiers, rewards)</li>
@@ -215,7 +156,7 @@ function App() {
                 Activates advocates who create content and recruit others
               </p>
               <div className="component-deliverables">
-                <p className="deliverables-label">You get:</p>
+                <p className="deliverables-label">Tactics:</p>
                 <ul>
                   <li>UGC and creator programs</li>
                   <li>Referral programs (structured word-of-mouth)</li>
@@ -225,9 +166,6 @@ function App() {
             </div>
           </div>
 
-          <p className="system-bridge">
-            Each component is backed by behavioral research showing why these mechanics work.
-          </p>
         </div>
       </section>
 
@@ -306,6 +244,57 @@ function App() {
             <p>
               *Research compiled from Stanford University, Harvard Business Review, Goldman Sachs,
               Nielsen, Luminate, Bazaarvoice, and peer-reviewed business studies (2023-2025).
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="the-value">
+        <div className="container">
+          <div className="section-badge">WHY THIS MATTERS</div>
+          <h2 className="section-title">The retention math that justifies everything</h2>
+
+          <div className="value-content">
+            <div className="stat-highlight">
+              <p>A 5% increase in customer retention generates <strong>25-95% profit increase</strong></p>
+              <p>Customer acquisition costs are <strong>4-6x higher</strong> than retention costs</p>
+            </div>
+
+            <h3 className="value-subtitle">What this means in real numbers:</h3>
+            <p className="value-context">Starting point: $500k/year on acquisition, 40% retention</p>
+
+            <div className="improvement-grid">
+              <div className="improvement-card">
+                <div className="card-header">IMPROVE 10 POINTS</div>
+                <div className="card-body">
+                  <p className="retention-change">40% → 50%</p>
+                  <p className="value-amount">= $250k</p>
+                  <p className="value-label">equivalent value</p>
+                </div>
+              </div>
+
+              <div className="improvement-card highlighted">
+                <div className="card-header">IMPROVE 20 POINTS</div>
+                <div className="card-body">
+                  <p className="retention-change">40% → 60%</p>
+                  <p className="value-amount">= $500k</p>
+                  <p className="value-label">equivalent value</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="why-matters-box">
+              <p className="box-intro">That&apos;s why the top 15-20% of your customers (fans) matter so much</p>
+              <ul className="fan-benefits">
+                <li>Spend 66-80% more</li>
+                <li>Stay 2-3x longer</li>
+                <li>Recruit others</li>
+              </ul>
+              <p className="box-conclusion">Activating them is the highest-leverage growth strategy available.</p>
+            </div>
+
+            <p className="value-conclusion">
+              The Fandom Flywheel designs the system that makes this happen.
             </p>
           </div>
         </div>
