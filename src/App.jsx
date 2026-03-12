@@ -49,9 +49,11 @@ function App() {
         </div>
         <div className="container">
           <div className="hero-content">
-            <h1>I design fandom as a growth system</h1>
+            <h1>
+              I design <span className="highlight">fandom</span> as a growth system
+            </h1>
             <p className="hero-subtitle">
-              Turn customers into fans who come back repeatedly and bring others with them.
+              Turn customers into <span className="highlight">fans</span> who come back repeatedly and bring others with them.
             </p>
             <a href="#services" className="hero-cta">See How It Works</a>
           </div>
@@ -60,7 +62,7 @@ function App() {
 
       <section className="starting-point">
         <div className="container">
-          <div className="section-badge">STARTING POINT</div>
+          <div className="section-badge">The Challenge</div>
           <h2 className="section-title">Which is your growth challenge?</h2>
           <p className="section-intro">
             Most brands face one of two growth challenges when it comes to their users:
@@ -69,10 +71,10 @@ function App() {
 
           <div className="paths-grid">
             <div className="path-card">
-              <span className="path-badge">CHALLENGE ONE</span>
-              <h3 className="path-title">Retention</h3>
+              <span className="path-badge">Retention</span>
+              <h3 className="path-title">They don&apos;t stay</h3>
               <p className="path-description">
-                They don&apos;t stay. Campaigns bring waves of new users but your product isn&apos;t sticky:
+                Campaigns bring waves of new users but your product isn&apos;t sticky:
               </p>
               <ul className="symptoms-list">
                 <li>Newcomers aren&apos;t finishing onboarding</li>
@@ -83,10 +85,10 @@ function App() {
             </div>
 
             <div className="path-card">
-              <span className="path-badge">CHALLENGE TWO</span>
-              <h3 className="path-title">Advocacy</h3>
+              <span className="path-badge">Advocacy</span>
+              <h3 className="path-title">They don&apos;t share</h3>
               <p className="path-description">
-                They don&apos;t advocate. Your product is sticky but no one is talking about you online:
+                Your product is sticky but no one is talking about you online:
               </p>
               <ul className="symptoms-list">
                 <li>Low lifetime value despite decent retention</li>
@@ -177,66 +179,35 @@ function App() {
             Here&apos;s the research that proves these mechanics drive measurable results:
           </p>
 
-          <div className="mechanics-category">
-            <h3 className="category-title">Brand Mechanics</h3>
-
-            <div className="mechanics-grid">
-              <div className="mechanic-card">
-                <p className="mechanic-name">Storytelling creates emotional connection</p>
-                <p className="mechanic-data">Stories are 22x more memorable than facts alone</p>
-              </div>
-
-              <div className="mechanic-card">
-                <p className="mechanic-name">Events and challenges drive participation</p>
-                <p className="mechanic-data">Active participation increases retention by 30%</p>
-              </div>
-
-              <div className="mechanic-card">
-                <p className="mechanic-name">Shared identity builds belonging</p>
-                <p className="mechanic-data">Customers who feel connected have 3x higher lifetime value</p>
-              </div>
+          <div className="mechanics-simple-grid">
+            <div className="mechanic-card">
+              <p className="mechanic-name">Storytelling creates connection</p>
+              <p className="mechanic-data">Emotional hooks in your brand marketing are 22x more memorable than facts alone</p>
             </div>
-          </div>
 
-          <div className="mechanics-category">
-            <h3 className="category-title">Product Mechanics</h3>
-
-            <div className="mechanics-grid">
-              <div className="mechanic-card">
-                <p className="mechanic-name">Gamification builds habits</p>
-                <p className="mechanic-data">48% higher engagement, 22% better retention</p>
-              </div>
-
-              <div className="mechanic-card">
-                <p className="mechanic-name">Progression shows mastery</p>
-                <p className="mechanic-data">Users who engage in first 7 days are 3-5x more likely to stay 6 months</p>
-              </div>
-
-              <div className="mechanic-card">
-                <p className="mechanic-name">Rewards trigger sustained action</p>
-                <p className="mechanic-data">Variable reward systems create repeated behavior patterns</p>
-              </div>
+            <div className="mechanic-card">
+              <p className="mechanic-name">Gamification drives engagement</p>
+              <p className="mechanic-data">Habit loops and rewards drive 48% higher engagement and 22% better retention</p>
             </div>
-          </div>
 
-          <div className="mechanics-category">
-            <h3 className="category-title">Community Mechanics</h3>
+            <div className="mechanic-card">
+              <p className="mechanic-name">Loyalty programs drive retention</p>
+              <p className="mechanic-data">Members generate 12-18% more revenue growth per year than non-members</p>
+            </div>
 
-            <div className="mechanics-grid">
-              <div className="mechanic-card">
-                <p className="mechanic-name">UGC programs activate creators</p>
-                <p className="mechanic-data">User-generated content increases conversions by 161%</p>
-              </div>
+            <div className="mechanic-card">
+              <p className="mechanic-name">UGC drives conversions</p>
+              <p className="mechanic-data">UGC increases conversions 161% more than brand-owned media</p>
+            </div>
 
-              <div className="mechanic-card">
-                <p className="mechanic-name">Social proof drives trust</p>
-                <p className="mechanic-data">Customers trust peer recommendations 92% more than brand messages</p>
-              </div>
+            <div className="mechanic-card">
+              <p className="mechanic-name">Referral programs create viral growth</p>
+              <p className="mechanic-data">Referred customers have 37% higher retention and are 4X more likely to refer others</p>
+            </div>
 
-              <div className="mechanic-card">
-                <p className="mechanic-name">Fan tiers unlock advocates</p>
-                <p className="mechanic-data">Top 15-20% of engaged customers spend 66-80% more and recruit at higher rates</p>
-              </div>
+            <div className="mechanic-card">
+              <p className="mechanic-name">Superfans are top spenders</p>
+              <p className="mechanic-data">Top 15-20% spend 66-80% more and recruit friends at higher rates</p>
             </div>
           </div>
 

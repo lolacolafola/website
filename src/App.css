@@ -95,6 +95,24 @@
   color: #1a1a1a;
 }
 
+.hero h1 .highlight {
+  position: relative;
+  display: inline-block;
+  z-index: 0;
+}
+
+.hero h1 .highlight::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  right: 0;
+  height: 14px;
+  background: rgba(140, 229, 208, 0.78);
+  border-radius: 4px;
+  z-index: -1;
+}
+
 .hero-subtitle {
   font-size: 24px;
   line-height: 1.5;
@@ -103,6 +121,24 @@
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.hero-subtitle .highlight {
+  position: relative;
+  display: inline-block;
+  z-index: 0;
+}
+
+.hero-subtitle .highlight::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  right: 0;
+  height: 9px;
+  background: rgba(140, 229, 208, 0.65);
+  border-radius: 4px;
+  z-index: -1;
 }
 
 .hero-cta {
@@ -142,16 +178,16 @@
 
 .path-badge {
   display: inline-block;
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 700;
-  letter-spacing: 1.2px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   color: #666;
   margin-bottom: 16px;
 }
 
 .path-title {
-  font-size: 30px;
+  font-size: 32px;
   line-height: 1.25;
   font-weight: 700;
   margin-bottom: 16px;
@@ -604,6 +640,13 @@
   margin-bottom: 48px;
 }
 
+.mechanics-simple-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+
 .mechanic-card {
   padding: 32px;
   background: #ffffff;
@@ -950,6 +993,7 @@
   .paths-grid,
   .improvement-grid,
   .components-grid,
+  .mechanics-simple-grid,
   .mechanics-grid,
   .services-grid,
   .about-content {
@@ -964,6 +1008,16 @@
 @media (max-width: 768px) {
   .hero h1 {
     font-size: 40px;
+  }
+
+  .hero h1 .highlight::after {
+    height: 10px;
+    bottom: 4px;
+  }
+
+  .hero-subtitle .highlight::after {
+    height: 7px;
+    bottom: 1px;
   }
 
   .section-title {
