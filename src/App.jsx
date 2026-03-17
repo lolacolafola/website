@@ -1,12 +1,15 @@
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import './App.css'
 
 const Prism = lazy(() => import('./components/Prism'))
 const FlywheelDiagram = lazy(() => import('./components/FlywheelDiagram'))
 const CALENDLY_URL = 'https://calendly.com/laura-lcordrey/30min'
+const RETENTION_CALCULATOR_URL = '/retention-calculator.html'
 
 function App() {
   const [shouldRenderPrism, setShouldRenderPrism] = useState(false)
+  const [retentionCalculatorHeight, setRetentionCalculatorHeight] = useState(1320)
+  const retentionCalculatorRef = useRef(null)
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -20,6 +23,66 @@ function App() {
     const timeoutId = window.setTimeout(() => setShouldRenderPrism(true), 1600)
     return () => window.clearTimeout(timeoutId)
   }, [])
+
+  const syncRetentionCalculatorHeight = useCallback(() => {
+    const frame = retentionCalculatorRef.current
+    if (!frame) return
+
+    try {
+      const frameDocument = frame.contentDocument || frame.contentWindow?.document
+      if (!frameDocument) return
+
+      const bodyHeight = frameDocument.body
+        ? Math.max(frameDocument.body.scrollHeight, frameDocument.body.offsetHeight)
+        : 0
+      const htmlHeight = frameDocument.documentElement
+        ? Math.max(
+            frameDocument.documentElement.scrollHeight,
+            frameDocument.documentElement.offsetHeight,
+            frameDocument.documentElement.clientHeight
+          )
+        : 0
+      const nextHeight = Math.ceil(Math.max(bodyHeight, htmlHeight))
+
+      if (nextHeight > 0) {
+        setRetentionCalculatorHeight((previousHeight) =>
+          Math.abs(previousHeight - nextHeight) > 1 ? nextHeight : previousHeight
+        )
+      }
+    } catch {
+      // Keep fallback height when iframe content cannot be read.
+    }
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const handleMessage = (event) => {
+      if (event.origin !== window.location.origin) return
+      if (!event.data || event.data.type !== 'retention-calculator-height') return
+
+      const nextHeight = Number(event.data.height)
+      if (Number.isFinite(nextHeight) && nextHeight > 0) {
+        setRetentionCalculatorHeight(Math.ceil(nextHeight))
+      }
+    }
+
+    const handleResize = () => {
+      window.requestAnimationFrame(syncRetentionCalculatorHeight)
+    }
+
+    window.addEventListener('message', handleMessage)
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('message', handleMessage)
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [syncRetentionCalculatorHeight])
+
+  const handleRetentionCalculatorLoad = useCallback(() => {
+    syncRetentionCalculatorHeight()
+  }, [syncRetentionCalculatorHeight])
 
   return (
     <main>
@@ -267,6 +330,22 @@ function App() {
             <p className="value-conclusion">
               The Fandom Flywheel designs the system that makes this happen.
             </p>
+            <div className="retention-calculator-block">
+              <h3 className="retention-calculator-title">Try the Retention Calculator</h3>
+              <p className="retention-calculator-intro">
+                Use your own numbers to estimate how better retention can grow revenue.
+              </p>
+              <iframe
+                ref={retentionCalculatorRef}
+                src={RETENTION_CALCULATOR_URL}
+                title="Retention Calculator"
+                className="retention-calculator-frame"
+                loading="lazy"
+                onLoad={handleRetentionCalculatorLoad}
+                scrolling="no"
+                style={{ height: `${retentionCalculatorHeight}px` }}
+              />
+            </div>
           </div>
         </div>
       </section>

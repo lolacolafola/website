@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retention Value Calculator — Fandom Flywheel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0e0e0e; --surface: #161616; --surface2: #1f1f1f;
+      --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.14);
+      --accent: #e8c97e; --accent2: #d4a853;
+      --text: #f0ede8; --muted: #666; --muted2: #999;
+      --green: #5ec98b; --blue: #6ec3f4;
+      --thumb-size: 22px;
+    }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; padding: 40px 20px; overflow-x: hidden; }
+    .card { width: 100%; max-width: 700px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; box-shadow: 0 40px 80px rgba(0,0,0,0.6); min-width: 0; overflow: hidden; }
+    .header { padding: clamp(20px, 5%, 40px) clamp(20px, 6%, 44px) 16px; border-bottom: 1px solid var(--border); background: linear-gradient(135deg, #1a1710 0%, #161616 60%); position: relative; overflow: hidden; border-radius: 20px 20px 0 0; }
+    .header::before { content: ''; position: absolute; top: -60px; right: -60px; width: 220px; height: 220px; background: radial-gradient(circle, rgba(232,201,126,0.1) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+    .eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+    h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 900; line-height: 1.15; color: var(--text); margin-bottom: 10px; }
+    h1 em { font-style: italic; color: var(--accent); }
+    .subtitle { font-size: 13.5px; color: var(--muted2); line-height: 1.6; }
+    .mode-btn { background: none; border: none; color: var(--muted2); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 8px 20px; border-radius: 7px; cursor: pointer; transition: all 0.2s; }
+    .mode-btn.active { background: var(--accent); color: #0a0a0a; }
+    .body { padding: 20px clamp(16px, 6%, 44px); display: flex; flex-direction: column; gap: 20px; }
+    .section-label { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+    .input-group { display: flex; flex-direction: column; gap: 4px; }
+    .input-group label { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; color: var(--muted2); margin-bottom: 2px; }
+    .input-group label strong { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--text); }
+    .num-wrap { position: relative; display: flex; align-items: stretch; background: var(--surface2); border: 1px solid var(--border2); border-radius: 10px; overflow: hidden; transition: border-color 0.2s; min-width: 0; width: 100%; }
+    .num-wrap:focus-within { border-color: var(--accent); }
+    .num-wrap input[type=text] { flex: 1; background: none; border: none; padding: 11px 12px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; outline: none; min-width: 0; text-align: center; letter-spacing: 0.03em; }
+    .num-btn { background: none; border: none; border-right: 1px solid var(--border); color: var(--muted); font-size: 18px; width: 28px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.15s, color 0.15s; flex-shrink: 0; padding: 0; line-height: 1; align-self: stretch; }
+    .num-btn:last-child { border-right: none; border-left: 1px solid var(--border); }
+    .num-btn:hover { background: var(--surface); color: var(--text); }
+    .dual-slider { position: relative; height: 80px; padding: 0 11px; padding-top: 30px; margin: 28px 0 4px; touch-action: none; user-select: none; }
+    .ds-track { position: absolute; left: 11px; right: 11px; top: 50%; transform: translateY(-50%); height: 4px; background: var(--surface2); border-radius: 2px; }
+    .ds-fill { position: absolute; top: 50%; transform: translateY(-50%); height: 4px; background: linear-gradient(90deg, var(--muted), var(--accent)); border-radius: 2px; pointer-events: none; }
+    .ds-badge { display: none; }
+    .ds-thumb { position: absolute; width: 22px; height: 22px; border-radius: 50%; top: 50%; transform: translateY(-50%); cursor: ew-resize; z-index: 3; touch-action: none; transition: box-shadow 0.15s; }
+    .ds-thumb:active { transform: translateY(-50%) scale(1.15); }
+    .ds-thumb-curr { background: var(--surface); border: 2.5px solid var(--muted); box-shadow: 0 0 0 3px rgba(102,102,102,0.2); }
+    .ds-thumb-curr:hover { box-shadow: 0 0 0 6px rgba(102,102,102,0.2); }
+    .ds-thumb-targ { background: var(--accent); border: 2.5px solid #161616; box-shadow: 0 0 0 3px rgba(232,201,126,0.2); }
+    .ds-thumb-targ:hover { box-shadow: 0 0 0 6px rgba(232,201,126,0.2); }
+    .dual-labels { display: flex; justify-content: space-between; }
+    .dl-side { display: flex; flex-direction: column; gap: 6px; }
+    .dl-side-right { align-items: flex-end; }
+    .dl-tag { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .dl-val { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; line-height: 1.1; }
+    .dl-val-curr { color: var(--muted2); }
+    .dl-val-targ { color: var(--accent); }
+    .zone-banner { position: absolute; top: -6px; transform: translateX(-50%); padding: 5px 14px; border-radius: 20px; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; line-height: 1; white-space: nowrap; pointer-events: none; z-index: 5; display: none; }
+    .zone-banner.zone-grow { display: block; background: rgba(102,102,102,0.1); border: 1px solid rgba(102,102,102,0.25); color: var(--muted2); }
+    .zone-banner.zone-momentum { display: block; background: rgba(180,150,80,0.1); border: 1px solid rgba(180,150,80,0.3); color: #b4966a; }
+    .zone-banner.zone-flywheel { display: block; background: rgba(212,168,83,0.1); border: 1px solid rgba(212,168,83,0.35); color: var(--accent2); }
+    .zone-banner.zone-joke { display: block; background: rgba(232,201,126,0.12); border: 1px solid rgba(232,201,126,0.4); color: var(--accent); }
+    .ds-zone-track { position: absolute; left: 11px; right: 11px; top: 50%; transform: translateY(-50%); height: 4px; border-radius: 2px; overflow: hidden; pointer-events: none; }
+    .ds-zone-seg { position: absolute; top: 0; height: 100%; }
+    .slider-wrap { padding: 10px 10px 4px; margin: 0 -10px; }
+    input[type=range].plain { -webkit-appearance: none; width: 100%; height: 4px; border-radius: 2px; outline: none; cursor: pointer; display: block; }
+    input[type=range].plain::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--accent); border: 2px solid #161616; box-shadow: 0 0 0 1px var(--accent2); cursor: pointer; }
+    input[type=range].plain::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--accent); border: 2px solid #161616; cursor: pointer; }
+    .year-btn { flex: 1; background: none; border: none; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 6px 14px; border-radius: 7px; cursor: pointer; color: var(--muted2); transition: all 0.2s; text-align: center; }
+    .year-btn.active { background: var(--surface); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.5); }
+    .year-btn .yr-num { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; display: block; line-height: 1.1; }
+    .year-btn.active .yr-num { color: var(--accent); }
+    .year-btn .yr-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; display: block; }
+    .divider { height: 1px; background: var(--border); margin: 0; }
+    .result-hero { background: linear-gradient(135deg, #1e1c13 0%, #1a1a1a 100%); border: 1px solid rgba(232,201,126,0.3); border-radius: 14px; padding: 28px 30px; position: relative; overflow: hidden; box-shadow: 0 0 40px rgba(232,201,126,0.08), inset 0 0 60px rgba(232,201,126,0.03); }
+    .result-hero::before { content: ''; position: absolute; top: -40px; right: -40px; width: 180px; height: 180px; background: radial-gradient(circle, rgba(232,201,126,0.12) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+    .result-hero .rlabel { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 16px; }
+    .result-hero .rvalue { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 8vw, 4.2rem); font-weight: 900; color: var(--accent); line-height: 1; }
+    .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .result-tile { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+    .result-tile .rlabel { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin-bottom: 7px; }
+    .result-tile .rvalue { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; }
+    .green { color: var(--green); } .blue { color: var(--blue); } .gold { color: var(--accent); }
+    .advanced-panel { background: var(--surface2); border: 1px solid var(--border); border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+    .adv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 480px) { .input-grid { grid-template-columns: 1fr; } }
+    .cta-wrap { padding: 0 clamp(16px, 6%, 44px) 36px; }
+    .cta { display: block; background: var(--accent); color: #0e0e0e; border: none; border-radius: 10px; padding: 15px 24px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; text-align: center; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+    .cta:hover { background: #f0d898; transform: translateY(-1px); }
+    .hidden { display: none !important; }
+    @media (max-width: 540px) { .header, .body { padding-left: 16px; padding-right: 16px; } .cta-wrap { padding-left: 16px; padding-right: 16px; } .result-grid, .adv-grid, .input-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="header">
+    <div class="eyebrow">The Fandom Flywheel Calculator</div>
+    <h1>Your next million is<br><em>already in the room.</em></h1>
+    <p class="subtitle">When customers love your brand, they stay longer, spend more, and bring others with them. See what that's worth.</p>
+  </div>
+  <div class="body">
+    <div style="display:flex;justify-content:flex-end;align-items:center;margin-bottom:-8px;">
+      <div style="display:flex;background:var(--surface2);border-radius:8px;padding:3px;border:1px solid var(--border);">
+        <button class="mode-btn active" id="btnSimple" onclick="setMode('simple')" style="font-size:11px;padding:5px 14px;">Retention</button>
+        <button class="mode-btn" id="btnAdvanced" onclick="setMode('advanced')" style="font-size:11px;padding:5px 14px;">Full Flywheel</button>
+      </div>
+    </div>
+
+    <!-- SIMPLE -->
+    <div id="simpleMode">
+      <div class="advanced-panel">
+        <div>
+          <div class="section-label" style="margin-bottom:6px;">Your starting point</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.5;">Let's see what we're working with.</div>
+          <div class="input-grid">
+            <div class="input-group">
+              <label>Your customers</label>
+              <div class="num-wrap"><button class="num-btn" onclick="nudge('custS',-1)">&#8722;</button><input type="text" id="custS" value="50,000" data-raw="50000" data-min="1" data-step="1000"><button class="num-btn" onclick="nudge('custS',1)">+</button></div>
+            </div>
+            <div class="input-group">
+              <label>Revenue per customer per year</label>
+              <div class="num-wrap"><button class="num-btn" onclick="nudge('arpaS',-1)">&#8722;</button><input type="text" id="arpaS" value="$200.00" data-raw="200" data-min="1" data-step="10" data-decimal="true"><button class="num-btn" onclick="nudge('arpaS',1)">+</button></div>
+            </div>
+          </div>
+          <div style="margin-top:12px;font-size:12px;color:var(--muted);line-height:1.5;">Total addressable customer revenue: <span style="color:var(--muted2);font-weight:600;" id="baseRevSummary">&#8212;</span></div>
+        </div>
+        <div class="divider"></div>
+        <div>
+          <div class="section-label" style="margin-bottom:6px;">Where you could go</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.5;">Set your current retention on the left, then explore your potential on the right.</div>
+          <div class="dual-slider" id="dsS">
+            <div class="ds-track"></div>
+            <div class="ds-zone-track" id="dsZoneS"></div>
+            <div class="ds-fill" id="dsFillS"></div>
+            <div class="ds-badge" id="dsBadgeS"></div>
+            <div class="zone-banner" id="zoneBannerS"></div>
+            <div class="ds-thumb ds-thumb-curr" id="dsCS" data-slider="S" data-which="curr"></div>
+            <div class="ds-thumb ds-thumb-targ" id="dsTS" data-slider="S" data-which="targ"></div>
+          </div>
+          <div class="dual-labels">
+            <div class="dl-side">
+              <span class="dl-tag">Current retention</span>
+              <span class="dl-val dl-val-curr" id="currValS">&#8212;</span>
+            </div>
+            <div class="dl-side dl-side-right">
+              <span class="dl-tag">Potential retention</span>
+              <span class="dl-val dl-val-targ" id="targValS">&#8212;</span>
+              <span id="ptsDeltaS" style="font-size:11px;font-weight:600;color:var(--green);">&#8212; pts increase</span>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:8px;">
+            <span style="font-size:11px;color:var(--muted);">Revenue: <span style="color:var(--muted2);font-weight:600;" id="currRevDisp">&#8212;</span></span>
+            <span style="font-size:11px;color:var(--muted);">Revenue: <span style="color:var(--muted2);font-weight:600;" id="targRevDisp">&#8212;</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADVANCED -->
+    <div id="advancedMode" class="hidden">
+      <div class="advanced-panel">
+        <div>
+          <div class="section-label" style="margin-bottom:6px;">Your starting point</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.5;">Let's see what we're working with.</div>
+          <div class="input-grid">
+            <div class="input-group">
+              <label>Your customers</label>
+              <div class="num-wrap"><button class="num-btn" onclick="nudge('customers',-1)">&#8722;</button><input type="text" id="customers" value="50,000" data-raw="50000" data-min="0" data-step="1000"><button class="num-btn" onclick="nudge('customers',1)">+</button></div>
+            </div>
+            <div class="input-group">
+              <label>Revenue per customer per year</label>
+              <div class="num-wrap"><button class="num-btn" onclick="nudge('arpa',-1)">&#8722;</button><input type="text" id="arpa" value="$200.00" data-raw="200" data-min="0" data-step="10" data-decimal="true"><button class="num-btn" onclick="nudge('arpa',1)">+</button></div>
+            </div>
+          </div>
+          <div style="margin-top:12px;font-size:12px;color:var(--muted);line-height:1.5;">Total addressable customer revenue: <span style="color:var(--muted2);font-weight:600;" id="baseRevSummaryA">&#8212;</span></div>
+        </div>
+        <div class="divider"></div>
+        <div>
+          <div class="section-label" style="margin-bottom:6px;">Where you could go</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.5;">Set your current retention on the left, then explore your potential on the right.</div>
+          <div class="dual-slider" id="dsA">
+            <div class="ds-track"></div>
+            <div class="ds-zone-track" id="dsZoneA"></div>
+            <div class="ds-fill" id="dsFillA"></div>
+            <div class="ds-badge" id="dsBadgeA"></div>
+            <div class="zone-banner" id="zoneBannerA"></div>
+            <div class="ds-thumb ds-thumb-curr" id="dsCA" data-slider="A" data-which="curr"></div>
+            <div class="ds-thumb ds-thumb-targ" id="dsTA" data-slider="A" data-which="targ"></div>
+          </div>
+          <div class="dual-labels">
+            <div class="dl-side">
+              <span class="dl-tag">Current retention</span>
+              <span class="dl-val dl-val-curr" id="currValA">40%</span>
+            </div>
+            <div class="dl-side dl-side-right">
+              <span class="dl-tag">Potential retention</span>
+              <span class="dl-val dl-val-targ" id="targValA">60%</span>
+              <span id="ptsDeltaA" style="font-size:11px;font-weight:600;color:var(--green);">&#8212; pts increase</span>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:8px;">
+            <span style="font-size:11px;color:var(--muted);">Revenue: <span style="color:var(--muted2);font-weight:600;" id="currRevDispA">&#8212;</span></span>
+            <span style="font-size:11px;color:var(--muted);">Revenue: <span style="color:var(--muted2);font-weight:600;" id="targRevDispA">&#8212;</span></span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end advancedMode -->
+
+      <!-- CUSTOMER REFERRALS + RESULTS — outside mode wrappers -->
+      <div id="referralSection" class="hidden" style="display:flex;flex-direction:column;gap:12px;margin-top:-10px;">
+        <div class="advanced-panel" style="margin-top:20px;">
+        <div>
+          <div class="section-label" style="margin-bottom:6px;">Customer referrals</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.5;">Set your own numbers or play with the sliders to see the impact of fostering advocacy within your customer base.</div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px 14px;margin-bottom:14px;">
+            <div style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">Referral funnel <span style="font-size:10px;font-weight:400;letter-spacing:0;text-transform:none;color:var(--muted);opacity:0.7;">&#8212; these three combine to estimate new customers from word-of-mouth</span></div>
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <div class="input-group">
+                <label>% of customers who actively recommend you <strong id="refRateDisp">15%</strong></label>
+                <div class="slider-wrap"><input type="range" class="plain" id="refRate" value="15" min="0" max="100" step="1"></div>
+              </div>
+
+              <div class="input-group">
+                <label>How many people they refer you to <strong id="refsPerDisp">3</strong></label>
+                <div class="slider-wrap"><input type="range" class="plain" id="refsPerRef" value="3" min="0" max="100" step="1"></div>
+              </div>
+
+              <div class="input-group">
+                <label>How many of those convert to a customer <strong id="refConvDisp">10%</strong></label>
+                <div class="slider-wrap"><input type="range" class="plain" id="refConv" value="10" min="0" max="100" step="1"></div>
+              </div>
+            </div>
+            <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);display:flex;flex-direction:row;justify-content:flex-end;gap:24px;">
+              <div style="display:flex;flex-direction:column;gap:2px;text-align:right;">
+                <span style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--green);" id="womPreview">&#8212;</span>
+                <span style="font-size:11px;color:var(--muted);">New customers from referrals</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:2px;text-align:right;">
+                <span style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--green);" id="refValuePreview">&#8212;</span>
+                <span style="font-size:11px;color:var(--muted);">Their value</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- RESULTS -->
+    <div>
+      <div class="section-label" style="margin-bottom:14px;" id="resultsLabel">Your Opportunity</div>
+
+      <!-- SIMPLE MODE HERO -->
+      <div id="simpleHero">
+        <div class="result-hero" style="position:relative;">
+          <div style="position:absolute;top:16px;right:16px;">
+            <div style="display:flex;background:rgba(0,0,0,0.2);border:1px solid rgba(232,201,126,0.15);border-radius:8px;padding:3px;gap:1px;">
+              <button class="year-btn active" id="yr1" onclick="setYears(1)" style="padding:4px 10px;"><span class="yr-num" style="font-size:0.85rem;">1</span><span class="yr-label">yr</span></button>
+              <button class="year-btn" id="yr2" onclick="setYears(2)" style="padding:4px 10px;"><span class="yr-num" style="font-size:0.85rem;">2</span><span class="yr-label">yrs</span></button>
+              <button class="year-btn" id="yr3" onclick="setYears(3)" style="padding:4px 10px;"><span class="yr-num" style="font-size:0.85rem;">3</span><span class="yr-label">yrs</span></button>
+            </div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;">
+            <span class="rvalue gold" id="heroValue" style="line-height:1;">&#8212;</span>
+            <span style="font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4.5vw,2.4rem);font-weight:900;color:var(--accent);line-height:1;">extra</span>
+          </div>
+          <div class="rlabel" id="heroLabel" style="margin-top:24px;">Ready for us to unlock</div>
+          <div style="font-size:13px;color:var(--muted2);margin-top:10px;line-height:1.6;" id="heroExplainer">This is the revenue your existing customers could generate just by staying longer. No new customers required.</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.5;" id="heroSub">Adjust the inputs above to see your number</div>
+        </div>
+        <div class="result-grid hidden" id="simpleTiles"></div>
+      </div>
+
+      <!-- FULL FLYWHEEL HERO -->
+      <div id="advancedHero" class="hidden">
+        <div class="result-hero" style="position:relative;">
+          <!-- Year toggle + breakdown side by side, no overlap -->
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid rgba(232,201,126,0.15);">
+            <div style="display:flex;flex-direction:row;gap:32px;">
+              <div style="display:flex;flex-direction:column;gap:2px;">
+                <span style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--muted2);" id="breakdownRetention">&#8212;</span>
+                <span style="font-size:11px;color:var(--muted);">Retention value</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:2px;">
+                <span style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--muted2);" id="breakdownReferral">&#8212;</span>
+                <span style="font-size:11px;color:var(--muted);">Referral value</span>
+              </div>
+            </div>
+            <div style="display:flex;background:rgba(0,0,0,0.2);border:1px solid rgba(232,201,126,0.15);border-radius:8px;padding:3px;gap:1px;flex-shrink:0;">
+              <button class="year-btn" id="ayr1" onclick="setYears(1)" style="padding:4px 10px;"><span class="yr-num" style="font-size:0.85rem;">1</span><span class="yr-label">yr</span></button>
+              <button class="year-btn" id="ayr2" onclick="setYears(2)" style="padding:4px 10px;"><span class="yr-num" style="font-size:0.85rem;">2</span><span class="yr-label">yrs</span></button>
+              <button class="year-btn" id="ayr3" onclick="setYears(3)" style="padding:4px 10px;"><span class="yr-num" style="font-size:0.85rem;">3</span><span class="yr-label">yrs</span></button>
+            </div>
+          </div>
+          <!-- Big number -->
+          <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;">
+            <span class="rvalue" style="color:var(--accent);line-height:1;" id="totalFlywheelPreview">&#8212;</span>
+            <span style="font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4.5vw,2.4rem);font-weight:900;color:var(--accent);line-height:1;">total</span>
+          </div>
+          <div class="rlabel" style="margin-top:24px;">Ready to unlock</div>
+          <div style="font-size:13px;color:var(--muted2);margin-top:10px;line-height:1.6;">This is what happens when your customers stay longer and bring others with them — the Fandom Flywheel at full spin.</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.5;">Estimated <span style="color:var(--muted2);font-weight:400;" id="totalGPDisp">&#8212;</span> gross profit after costs, assuming <span style="display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:1px 6px;vertical-align:middle;"><button onclick="nudgeGM(-5)" style="background:none;border:none;color:var(--muted);font-size:11px;cursor:pointer;padding:0 2px;line-height:1;">&#8722;</button><span style="color:var(--muted2);font-size:11px;" id="gmStepDisp">65%</span><button onclick="nudgeGM(5)" style="background:none;border:none;color:var(--muted);font-size:11px;cursor:pointer;padding:0 2px;line-height:1;">+</button></span> margin</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- HOW WE CALCULATE -->
+    <div>
+      <div class="section-label" style="margin-bottom:6px;">How we calculate</div>
+      <div id="simpleProof" style="display:flex;flex-direction:column;gap:0;">
+        <div style="padding:0 0 12px;border-bottom:1px solid var(--border);">
+          <div style="font-size:11px;color:var(--muted);line-height:1.7;">We model what happens to your revenue at your current vs potential retention rate over your chosen time horizon. Each percentage point of improvement means more customers completing year 2 and year 3 &#8212; and the gap between current and potential <strong>widens the longer the time horizon</strong>, because you're retaining a larger base each year.</div>
+        </div>
+        <div style="padding:12px 0 0;font-size:11px;color:#4a4a4a;line-height:1.6;">These figures are estimates based on your inputs. Actual results will vary.</div>
+      </div>
+      <div id="advancedProof" class="hidden" style="display:flex;flex-direction:column;gap:0;">
+        <div style="padding:0 0 12px;border-bottom:1px solid var(--border);">
+          <div style="font-size:11px;color:var(--muted);line-height:1.7;">We model what happens to your revenue at your current vs potential retention rate over your chosen time horizon. Each percentage point of improvement means more customers completing year 2 and year 3 &#8212; and the gap between current and potential <strong>widens the longer the time horizon</strong>, because you're retaining a larger base each year. Referral value applies a 16% lifetime value uplift to each referred customer, compounded across the same horizon.</div>
+        </div>
+        <div style="padding:12px 0 0;font-size:11px;color:#4a4a4a;line-height:1.6;">Results are estimates based on your inputs using a finite-horizon customer lifetime value model. Referral value applies a 16% uplift per Schmitt et al. (2011). Actual outcomes will vary.</div>
+    </div>
+  </div>
+
+  <div class="cta-wrap">
+    <a href="#" class="cta">Let's design your Fandom Flywheel &#8594;</a>
+  </div>
+</div>
+
+<script>
+var appMode = 'simple', years = 1;
+var gmAdv = 65; // gross margin % for advanced mode
+
+var DS = {
+  S: { curr: 40, targ: 60, min: 1, max: 99 },
+  A: { curr: 40, targ: 60, min: 1, max: 99 }
+};
+
+function setMode(m) {
+  document.getElementById('simpleHero').classList.toggle('hidden', m !== 'simple');
+  document.getElementById('advancedHero').classList.toggle('hidden', m !== 'advanced');
+  var refSection = document.getElementById('referralSection');
+  if (refSection) refSection.classList.toggle('hidden', m !== 'advanced');
+  if (m === 'advanced') {
+    document.getElementById('customers').value = document.getElementById('custS').value;
+    document.getElementById('customers').dataset.raw = document.getElementById('custS').dataset.raw;
+    document.getElementById('arpa').value = document.getElementById('arpaS').value;
+    document.getElementById('arpa').dataset.raw = document.getElementById('arpaS').dataset.raw;
+    DS.A.curr = DS.S.curr; DS.A.targ = DS.S.targ;
+  }
+  if (m === 'simple') { DS.S.curr = DS.A.curr; DS.S.targ = DS.A.targ; }
+  appMode = m;
+  document.getElementById('simpleMode').classList.toggle('hidden', m !== 'simple');
+  document.getElementById('advancedMode').classList.toggle('hidden', m !== 'advanced');
+  document.getElementById('btnSimple').classList.toggle('active', m === 'simple');
+  document.getElementById('btnAdvanced').classList.toggle('active', m === 'advanced');
+  document.getElementById('simpleTiles').classList.add('hidden');
+  document.getElementById('simpleProof').classList.toggle('hidden', m !== 'simple');
+  document.getElementById('advancedProof').classList.toggle('hidden', m !== 'advanced');
+  update();
+}
+
+function setYears(y) {
+  years = y;
+  [1,2,3].forEach(function(n) {
+    document.getElementById('yr'+n).classList.toggle('active', n===y);
+    var aEl = document.getElementById('ayr'+n);
+    if (aEl) aEl.classList.toggle('active', n===y);
+
+  });
+  update();
+}
+
+// Advanced year buttons call same setYears
+function setYearsA(y) { setYears(y); }
+
+function nudgeGM(delta) {
+  gmAdv = Math.max(10, Math.min(100, gmAdv + delta));
+  document.getElementById('gmStepDisp').textContent = gmAdv + '%';
+  update();
+}
+
+var THUMB_R = 11;
+var ZONES = [
+  { min:1,  max:44, cls:'zone-grow',     color:'rgba(102,102,102,0.3)',  label:'Growing' },
+  { min:45, max:64, cls:'zone-momentum', color:'rgba(180,150,80,0.35)',  label:'Momentum' },
+  { min:65, max:79, cls:'zone-flywheel', color:'rgba(212,168,83,0.5)',   label:'Fandom Flywheel' },
+  { min:80, max:99, cls:'zone-joke',     color:'rgba(232,201,126,0.7)',  label:'\uD83D\uDE80\uD83D\uDE80\uD83D\uDE80' }
+];
+
+function getZone(v) {
+  for (var i=0;i<ZONES.length;i++) if (v>=ZONES[i].min && v<=ZONES[i].max) return ZONES[i];
+  return ZONES[0];
+}
+function pctOf(s,v) { return (v-s.min)/(s.max-s.min); }
+
+function renderZones(key) {
+  var s=DS[key], zTrack=document.getElementById('dsZone'+key), banner=document.getElementById('zoneBanner'+key);
+  var range=s.max-s.min;
+  zTrack.innerHTML='';
+  ZONES.forEach(function(z) {
+    var seg=document.createElement('div'); seg.className='ds-zone-seg';
+    seg.style.left=Math.max(0,(z.min-s.min)/range*100).toFixed(2)+'%';
+    seg.style.right=Math.max(0,(s.max-Math.min(z.max,s.max))/range*100).toFixed(2)+'%';
+    seg.style.background=z.color; zTrack.appendChild(seg);
+  });
+  var tz=getZone(s.targ), pt=pctOf(s,s.targ);
+  banner.className='zone-banner '+tz.cls;
+  banner.textContent=tz.label;
+  banner.style.left='calc('+THUMB_R+'px + '+(pt*100).toFixed(3)+'% - '+(pt*22).toFixed(3)+'px)';
+  banner.style.transform='translateX(-50%)';
+}
+
+function renderDS(key) {
+  var s=DS[key];
+  var fill=document.getElementById('dsFill'+key);
+  var tC=document.getElementById('dsC'+key), tT=document.getElementById('dsT'+key);
+  var pC=pctOf(s,s.curr), pT=pctOf(s,s.targ);
+  tC.style.left='calc('+THUMB_R+'px + '+(pC*100).toFixed(3)+'% - '+(pC*22).toFixed(3)+'px)';
+  tT.style.left='calc('+THUMB_R+'px + '+(pT*100).toFixed(3)+'% - '+(pT*22).toFixed(3)+'px)';
+  fill.style.left='calc('+THUMB_R+'px + '+(pC*100).toFixed(3)+'% - '+(pC*22).toFixed(3)+'px)';
+  fill.style.width='calc('+((pT-pC)*100).toFixed(3)+'% - '+((pT-pC)*22).toFixed(3)+'px)';
+}
+
+function posToVal(container, clientX, state) {
+  var rect=container.getBoundingClientRect();
+  var tw=rect.width-THUMB_R*2; if (tw<=0) return state.curr;
+  var pct=Math.max(0,Math.min(1,(clientX-rect.left-THUMB_R)/tw));
+  return Math.round(state.min+pct*(state.max-state.min));
+}
+
+var drag={active:false,key:null,which:null};
+function onPointerMove(e) {
+  if (!drag.active) return; e.preventDefault();
+  var cx=e.touches?e.touches[0].clientX:e.clientX;
+  var val=posToVal(document.getElementById('ds'+drag.key),cx,DS[drag.key]);
+  var s=DS[drag.key];
+  if (drag.which==='curr') s.curr=Math.max(s.min,Math.min(val,s.targ-1));
+  else s.targ=Math.min(s.max,Math.max(val,s.curr+1));
+  update();
+}
+function onPointerUp() { drag.active=false; }
+document.addEventListener('mousemove',onPointerMove);
+document.addEventListener('touchmove',onPointerMove,{passive:false});
+document.addEventListener('mouseup',onPointerUp);
+document.addEventListener('touchend',onPointerUp);
+
+function attachDualSlider(key) {
+  var container=document.getElementById('ds'+key);
+  var tC=document.getElementById('dsC'+key), tT=document.getElementById('dsT'+key);
+  function startDrag(w,e) { drag.active=true; drag.key=key; drag.which=w; e.preventDefault&&e.preventDefault(); }
+  tC.addEventListener('mousedown',function(e){startDrag('curr',e);});
+  tT.addEventListener('mousedown',function(e){startDrag('targ',e);});
+  tC.addEventListener('touchstart',function(e){startDrag('curr',e);},{passive:false});
+  tT.addEventListener('touchstart',function(e){startDrag('targ',e);},{passive:false});
+  container.addEventListener('mousedown',function(e) {
+    if (e.target===tC||e.target===tT) return;
+    var val=posToVal(container,e.clientX,DS[key]), s=DS[key];
+    if (Math.abs(val-s.curr)<=Math.abs(val-s.targ)) { drag.which='curr'; s.curr=Math.max(s.min,Math.min(val,s.targ-1)); }
+    else { drag.which='targ'; s.targ=Math.min(s.max,Math.max(val,s.curr+1)); }
+    drag.active=true; drag.key=key; update();
+  });
+}
+
+function fmtMoney(v) {
+  if (Math.abs(v)>=1e6) return '$'+(v/1e6).toFixed(1)+'M';
+  if (Math.abs(v)>=1000) return '$'+Math.round(v/1000)+'K';
+  return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(v);
+}
+function fmtNum(v) { return new Intl.NumberFormat('en-US',{maximumFractionDigits:0}).format(v); }
+function fmtInput(v,decimal) {
+  if (decimal) return '$'+new Intl.NumberFormat('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}).format(v);
+  return new Intl.NumberFormat('en-US',{maximumFractionDigits:0}).format(v);
+}
+function getRaw(id) { return parseFloat(document.getElementById(id).dataset.raw)||0; }
+function setRaw(id,val) {
+  var el=document.getElementById(id), min=parseFloat(el.dataset.min)||0;
+  el.dataset.raw=Math.max(min,val);
+  el.value=fmtInput(Math.max(min,val),el.dataset.decimal==='true');
+  el.dispatchEvent(new Event('input'));
+}
+function nudge(id,dir) { setRaw(id,getRaw(id)+dir*(parseFloat(document.getElementById(id).dataset.step)||1)); }
+
+function clvH(val,r,H) {
+  if (H<=0||val<=0||r<=0) return 0;
+  if (Math.abs(r-1)<1e-10) return val*H;
+  return val*r*(1-Math.pow(r,H))/(1-r);
+}
+function fillPlain(el,color) {
+  var pct=((el.value-el.min)/(el.max-el.min))*100;
+  el.style.background='linear-gradient(to right,'+color+' '+pct+'%,#1f1f1f '+pct+'%)';
+}
+
+function update() {
+  renderDS('S'); renderDS('A'); renderZones('S'); renderZones('A');
+  var H=years;
+
+  if (appMode==='simple') {
+    var N0=getRaw('custS'), arpaS=getRaw('arpaS'), gm=0.65;
+    var rC=DS.S.curr/100, rT=DS.S.targ/100, pts=DS.S.targ-DS.S.curr;
+    var currRev=N0*clvH(arpaS,rC,H);
+    var incRev=N0*(clvH(arpaS,rT,H)-clvH(arpaS,rC,H));
+    var incGP=N0*(clvH(arpaS*gm,rT,H)-clvH(arpaS*gm,rC,H));
+    document.getElementById('currValS').textContent=DS.S.curr+'%';
+    document.getElementById('targValS').textContent=DS.S.targ+'%';
+    document.getElementById('ptsDeltaS').textContent='+'+pts+' pts';
+    document.getElementById('heroValue').textContent=fmtMoney(Math.max(incRev,0));
+    document.getElementById('heroLabel').textContent='Ready to unlock';
+    document.getElementById('heroExplainer').textContent='This is the revenue your existing customers could generate just by staying longer. No new customers required.';
+    document.getElementById('heroSub').innerHTML='Estimated <span style="color:var(--muted2);font-weight:400;">'+fmtMoney(Math.max(incGP,0))+'</span> gross profit after costs, assuming a 65% margin \u2014 switch to Full Flywheel to use your own inputs.';
+    document.getElementById('baseRevSummary').textContent=fmtMoney(N0*arpaS);
+    document.getElementById('currRevDisp').textContent=fmtMoney(Math.max(currRev,0));
+    document.getElementById('targRevDisp').textContent=fmtMoney(Math.max(currRev+incRev,0));
+
+  } else {
+    var N0=getRaw('customers'), arpa=getRaw('arpa');
+    var gm=gmAdv/100;
+    var rC=DS.A.curr/100, rT=DS.A.targ/100, pts=DS.A.targ-DS.A.curr;
+    var refRate=parseInt(document.getElementById('refRate').value)/100;
+    var refsPerR=parseInt(document.getElementById('refsPerRef').value);
+    var refConv=parseInt(document.getElementById('refConv').value)/100;
+    var refUplift=0.16;
+
+    document.getElementById('refRateDisp').textContent=Math.round(refRate*100)+'%';
+    document.getElementById('refsPerDisp').textContent=refsPerR;
+    document.getElementById('refConvDisp').textContent=Math.round(refConv*100)+'%';
+    document.getElementById('currValA').textContent=DS.A.curr+'%';
+    document.getElementById('targValA').textContent=DS.A.targ+'%';
+    document.getElementById('ptsDeltaA').textContent='+'+pts+' pts';
+
+    fillPlain(document.getElementById('refRate'),'#e8c97e');
+    fillPlain(document.getElementById('refsPerRef'),'#e8c97e');
+    fillPlain(document.getElementById('refConv'),'#e8c97e');
+
+    var currRev=N0*clvH(arpa,rC,H);
+    var incRev=N0*(clvH(arpa,rT,H)-clvH(arpa,rC,H));
+    var incGP=N0*(clvH(arpa*gm,rT,H)-clvH(arpa*gm,rC,H));
+    document.getElementById('baseRevSummaryA').textContent=fmtMoney(N0*arpa);
+    document.getElementById('currRevDispA').textContent=fmtMoney(Math.max(currRev,0));
+    document.getElementById('targRevDispA').textContent=fmtMoney(Math.max(currRev+incRev,0));
+
+    var womPerYr=Math.round(N0*refRate*refsPerR*refConv);
+    document.getElementById('womPreview').textContent='~'+fmtNum(womPerYr)+' per year';
+
+    var totalNewCust=0, totalRefRev=0, totalRefGP=0;
+    for (var t=0;t<H;t++) {
+      var newRef=N0*Math.pow(rT,t)*refRate*refsPerR*refConv;
+      totalNewCust+=newRef;
+      totalRefRev+=newRef*clvH(arpa*(1+refUplift),rT,H-t);
+      totalRefGP+=newRef*clvH(arpa*(1+refUplift)*gm,rT,H-t);
+    }
+    var totalRevenue=incRev+totalRefRev;
+    var totalGP=incGP+totalRefGP;
+    document.getElementById('refValuePreview').textContent=fmtMoney(Math.max(totalRefRev,0));
+    document.getElementById('totalFlywheelPreview').textContent=fmtMoney(Math.max(totalRevenue,0));
+    document.getElementById('breakdownRetention').textContent=fmtMoney(Math.max(incRev,0));
+    document.getElementById('breakdownReferral').textContent=fmtMoney(Math.max(totalRefRev,0));
+    document.getElementById('totalGPDisp').textContent=fmtMoney(Math.max(totalGP,0));
+
+    document.getElementById('gmStepDisp').textContent=gmAdv+'%';
+    // advHeroSub is now static HTML with inline stepper
+    // gross profit shown inline in hero sub via advGPDisp
+  }
+
+  scheduleHeightPost();
+}
+
+attachDualSlider('S');
+attachDualSlider('A');
+
+['custS','arpaS','customers','arpa'].forEach(function(id) {
+  var el=document.getElementById(id);
+  el.addEventListener('input',function() {
+    var typed=parseFloat(el.value.replace(/[$,]/g,''))||0;
+    if (typed!==getRaw(id)) el.dataset.raw=typed;
+    update();
+  });
+  el.addEventListener('blur',function() { setRaw(id,getRaw(id)); });
+});
+['refRate','refsPerRef','refConv'].forEach(function(id) {
+  document.getElementById(id).addEventListener('input',update);
+});
+
+var heightPostScheduled = false;
+
+function postHeightToParent() {
+  if (!window.parent || window.parent === window) return;
+
+  var body = document.body;
+  var html = document.documentElement;
+  var nextHeight = Math.max(
+    body ? body.scrollHeight : 0,
+    body ? body.offsetHeight : 0,
+    html ? html.scrollHeight : 0,
+    html ? html.offsetHeight : 0,
+    html ? html.clientHeight : 0
+  );
+
+  if (nextHeight > 0) {
+    window.parent.postMessage({ type: 'retention-calculator-height', height: Math.ceil(nextHeight) }, window.location.origin);
+  }
+}
+
+function scheduleHeightPost() {
+  if (heightPostScheduled) return;
+  heightPostScheduled = true;
+
+  var run = function() {
+    heightPostScheduled = false;
+    postHeightToParent();
+  };
+
+  if (window.requestAnimationFrame) {
+    window.requestAnimationFrame(function() {
+      window.requestAnimationFrame(run);
+    });
+  } else {
+    setTimeout(run, 0);
+  }
+}
+
+window.addEventListener('load', scheduleHeightPost);
+window.addEventListener('resize', scheduleHeightPost);
+
+if (typeof ResizeObserver !== 'undefined' && document.body) {
+  var retentionHeightObserver = new ResizeObserver(scheduleHeightPost);
+  retentionHeightObserver.observe(document.body);
+}
+
+setMode('simple');
+</script>
+</body>
+</html>
