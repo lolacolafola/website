@@ -46,7 +46,7 @@ function App() {
               <span className="dot">·</span>
               BlaBlaCar
               <span className="dot">·</span>
-              13 years
+              Since 2013
             </div>
             <h1>
               Tune your fans into<br />your next <span className="highlight">growth engine.</span>
@@ -66,18 +66,18 @@ function App() {
       <section className="opportunity-section">
         <div className="container">
           <div className="section-badge">The Opportunity</div>
-          <h2 className="section-title">The most valuable growth asset<br />you have isn&apos;t in your acquisition budget.</h2>
+          <h2 className="section-title">Your most powerful growth engine<br />is already inside your product.</h2>
 
           <div className="opportunity-body">
-            <p>It&apos;s already in your user base. Right now, there&apos;s a cohort of people who don&apos;t just use your product — they love it. They come back unprompted. They tell friends. Almost no brand has a system to find them and build from them deliberately.</p>
+            <p>Right now, some of your users don&apos;t just use your product. They love it. They come back unprompted. They tell people. That energy is already there.</p>
 
-            <p>That&apos;s not a retention problem or a community problem. <strong>It&apos;s a design problem.</strong> Nobody connected the product experience to the fan experience. Nobody built the layer that turns satisfaction into identity, and identity into advocacy.</p>
+            <p><strong>That gap is the opportunity.</strong> Most brands haven&apos;t built the layer that turns satisfaction into identity, and identity into advocacy. Yet.</p>
 
-            <p>I spent 13 years inside the industry that figured this out first — building the systems that move people from first login to lifelong fan. I&apos;ve built these systems, measured them, and presented them on world stages including E3. Now I bring that thinking to consumer brands who are ready to capture what&apos;s already there.</p>
+            <p>What that costs: higher CAC, faster churn, flat LTV — and none of the word-of-mouth or UGC that fans naturally generate when you build for them.</p>
 
-            <div className="opportunity-stat">
-              <p>Research shows only <strong>40% of consumers</strong> feel their favourite brands genuinely connect them with others — even ones they actively love. That gap is where growth gets left on the table.</p>
-            </div>
+            <p><strong>That&apos;s why I&apos;m here.</strong></p>
+
+            <p>Gaming to consumer tech. Conglomerates to startups. North American-led, with global reach. I&apos;ve spent 13 years building fan-driven systems across all of it — and distilled everything that works into one offer.</p>
           </div>
         </div>
       </section>
