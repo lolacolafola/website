@@ -1,91 +1,28 @@
-import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import './App.css'
 
 const Prism = lazy(() => import('./components/Prism'))
 const FlywheelDiagram = lazy(() => import('./components/FlywheelDiagram'))
 const CALENDLY_URL = 'https://calendly.com/laura-lcordrey/30min'
-const RETENTION_CALCULATOR_URL = '/retention-calculator.html'
 
 function App() {
   const [shouldRenderPrism, setShouldRenderPrism] = useState(false)
-  const [retentionCalculatorHeight, setRetentionCalculatorHeight] = useState(1320)
-  const retentionCalculatorRef = useRef(null)
 
   useEffect(() => {
     if (typeof window === 'undefined') return
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
     if ('requestIdleCallback' in window) {
-      const idleId = window.requestIdleCallback(() => setShouldRenderPrism(true), { timeout: 2500 })
-      return () => window.cancelIdleCallback(idleId)
+      const id = window.requestIdleCallback(() => setShouldRenderPrism(true), { timeout: 2500 })
+      return () => window.cancelIdleCallback(id)
     }
-
-    const timeoutId = window.setTimeout(() => setShouldRenderPrism(true), 1600)
-    return () => window.clearTimeout(timeoutId)
+    const id = window.setTimeout(() => setShouldRenderPrism(true), 1600)
+    return () => window.clearTimeout(id)
   }, [])
-
-  const syncRetentionCalculatorHeight = useCallback(() => {
-    const frame = retentionCalculatorRef.current
-    if (!frame) return
-
-    try {
-      const frameDocument = frame.contentDocument || frame.contentWindow?.document
-      if (!frameDocument) return
-
-      const bodyHeight = frameDocument.body
-        ? Math.max(frameDocument.body.scrollHeight, frameDocument.body.offsetHeight)
-        : 0
-      const htmlHeight = frameDocument.documentElement
-        ? Math.max(
-            frameDocument.documentElement.scrollHeight,
-            frameDocument.documentElement.offsetHeight,
-            frameDocument.documentElement.clientHeight
-          )
-        : 0
-      const nextHeight = Math.ceil(Math.max(bodyHeight, htmlHeight))
-
-      if (nextHeight > 0) {
-        setRetentionCalculatorHeight((previousHeight) =>
-          Math.abs(previousHeight - nextHeight) > 1 ? nextHeight : previousHeight
-        )
-      }
-    } catch {
-      // Keep fallback height when iframe content cannot be read.
-    }
-  }, [])
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-
-    const handleMessage = (event) => {
-      if (event.origin !== window.location.origin) return
-      if (!event.data || event.data.type !== 'retention-calculator-height') return
-
-      const nextHeight = Number(event.data.height)
-      if (Number.isFinite(nextHeight) && nextHeight > 0) {
-        setRetentionCalculatorHeight(Math.ceil(nextHeight))
-      }
-    }
-
-    const handleResize = () => {
-      window.requestAnimationFrame(syncRetentionCalculatorHeight)
-    }
-
-    window.addEventListener('message', handleMessage)
-    window.addEventListener('resize', handleResize)
-
-    return () => {
-      window.removeEventListener('message', handleMessage)
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [syncRetentionCalculatorHeight])
-
-  const handleRetentionCalculatorLoad = useCallback(() => {
-    syncRetentionCalculatorHeight()
-  }, [syncRetentionCalculatorHeight])
 
   return (
     <main>
+
+      {/* ── HERO ───────────────────────────────── */}
       <section className="hero">
         <div className="hero-background" aria-hidden="true">
           <div className="hero-prism">
@@ -93,349 +30,224 @@ function App() {
               <div className="hero-prism-placeholder" aria-hidden="true" />
             ) : (
               <Suspense fallback={<div className="hero-prism-placeholder" aria-hidden="true" />}>
-                <Prism
-                  animationType="3drotate"
-                  timeScale={0.5}
-                  height={3.5}
-                  baseWidth={5.5}
-                  scale={3.6}
-                  hueShift={0}
-                  colorFrequency={1}
-                  noise={0}
-                  glow={1}
-                  suspendWhenOffscreen
-                  maxFps={30}
-                />
+                <Prism animationType="3drotate" timeScale={0.4} height={3.5} baseWidth={5.5} scale={3.6} hueShift={0.3} colorFrequency={1} noise={0} glow={0.8} suspendWhenOffscreen maxFps={30} />
               </Suspense>
             )}
           </div>
         </div>
         <div className="container">
           <div className="hero-content">
+            <div className="hero-credentials">
+              <span>E3 Speaker</span>
+              <span className="dot">·</span>
+              Ubisoft
+              <span className="dot">·</span>
+              Amazon Games
+              <span className="dot">·</span>
+              BlaBlaCar
+              <span className="dot">·</span>
+              13 years
+            </div>
             <h1>
-              I design <span className="highlight">fandom</span> as a growth system
+              Tune your fans into<br />your next <span className="highlight">growth engine.</span>
             </h1>
             <p className="hero-subtitle">
-              Turn customers into <span className="highlight">fans</span> who come back repeatedly and bring others with them.
+              Most consumer brands are sitting on their most powerful growth asset and don&apos;t know it. I design the system that captures it.
             </p>
-            <a href="#services" className="hero-cta">See How It Works</a>
+            <div className="hero-actions">
+              <a href="#services" className="hero-cta">See How It Works</a>
+              <a href={CALENDLY_URL} className="hero-cta-secondary" target="_blank" rel="noopener noreferrer">Book a Call</a>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="starting-point">
+      {/* ── OPPORTUNITY ────────────────────────── */}
+      <section className="opportunity-section">
         <div className="container">
-          <div className="section-badge">The Challenge</div>
-          <h2 className="section-title">Which is your growth challenge?</h2>
-          <p className="section-intro">
-            Most brands face one of two growth challenges when it comes to their users:
-            retention or advocacy.
-          </p>
+          <div className="section-badge">The Opportunity</div>
+          <h2 className="section-title">The most valuable growth asset<br />you have isn&apos;t in your acquisition budget.</h2>
 
-          <div className="paths-grid">
-            <div className="path-card">
-              <span className="path-badge">Retention</span>
-              <h3 className="path-title">They don&apos;t stay</h3>
-              <p className="path-description">
-                Campaigns bring waves of new users but your product isn&apos;t sticky:
-              </p>
-              <ul className="symptoms-list">
-                <li>Newcomers aren&apos;t finishing onboarding</li>
-                <li>You&apos;re unable to secure purchases</li>
-                <li>You&apos;re experiencing high churn</li>
-                <li>You&apos;re paying to replace lost customers</li>
-              </ul>
-            </div>
+          <div className="opportunity-body">
+            <p>It&apos;s already in your user base. Right now, there&apos;s a cohort of people who don&apos;t just use your product — they love it. They come back unprompted. They tell friends. Almost no brand has a system to find them and build from them deliberately.</p>
 
-            <div className="path-card">
-              <span className="path-badge">Advocacy</span>
-              <h3 className="path-title">They don&apos;t share</h3>
-              <p className="path-description">
-                Your product is sticky but no one is talking about you online:
-              </p>
-              <ul className="symptoms-list">
-                <li>Low lifetime value despite decent retention</li>
-                <li>Minimal user-generated content or social proof</li>
-                <li>Low referral rates—customers don&apos;t recruit others</li>
-                <li>You know you have superfans but you can&apos;t find them</li>
-              </ul>
+            <p>That&apos;s not a retention problem or a community problem. <strong>It&apos;s a design problem.</strong> Nobody connected the product experience to the fan experience. Nobody built the layer that turns satisfaction into identity, and identity into advocacy.</p>
+
+            <p>I spent 13 years inside the industry that figured this out first — building the systems that move people from first login to lifelong fan. I&apos;ve built these systems, measured them, and presented them on world stages including E3. Now I bring that thinking to consumer brands who are ready to capture what&apos;s already there.</p>
+
+            <div className="opportunity-stat">
+              <p>Research shows only <strong>40% of consumers</strong> feel their favourite brands genuinely connect them with others — even ones they actively love. That gap is where growth gets left on the table.</p>
             </div>
           </div>
-
         </div>
       </section>
 
+      {/* ── FLYWHEEL ───────────────────────────── */}
       <section className="the-system">
         <div className="container">
-          <div className="section-badge">THE SOLUTION</div>
-          <h2 className="section-title">The Fandom Flywheel</h2>
+          <div className="section-badge">The Methodology</div>
+          <h2 className="section-title">The Fandom Flywheel™</h2>
           <p className="system-intro">
-            The Fandom Flywheel is the system I&apos;ve built to solve retention and advocacy together.
-            Instead of siloed tactics, it designs Brand, Product, and Community to work as one, creating
-            experiences that make customers stay and recruit others.
+            A five-stage system designed to move users from first login to lifelong fan — and from fan to active advocate. Built on 13 years across gaming and consumer tech.
           </p>
 
           <div className="flywheel-diagram" aria-label="Fandom Flywheel Diagram">
-            <Suspense fallback={<p className="diagram-placeholder">Loading flywheel diagram...</p>}>
+            <Suspense fallback={<p className="diagram-placeholder">Loading flywheel...</p>}>
               <FlywheelDiagram />
             </Suspense>
           </div>
 
-          <div className="components-grid">
-            <div className="component-card">
-              <span className="component-number">01</span>
-              <h3 className="component-title">Brand</h3>
-              <p className="component-description">
-                Creates participation moments that foster belonging
-              </p>
-              <div className="component-deliverables">
-                <p className="deliverables-label">Tactics:</p>
-                <ul>
-                  <li>Storytelling and brand narrative (emotional connection)</li>
-                  <li>Events and challenges (active participation)</li>
-                  <li>Shared identity and community rituals</li>
-                </ul>
-              </div>
+          <div className="stages-grid">
+            <div className="stage-card">
+              <span className="stage-number">01</span>
+              <h3 className="stage-title">Activation</h3>
+              <p className="stage-description">The hook that sticks</p>
+              <ul className="stage-tactics">
+                <li>Onboarding that creates habit</li>
+                <li>First value moments</li>
+                <li>Early engagement loops</li>
+              </ul>
             </div>
-
-            <div className="component-card">
-              <span className="component-number">02</span>
-              <h3 className="component-title">Product</h3>
-              <p className="component-description">
-                Builds retention loops that reward repeat behavior
-              </p>
-              <div className="component-deliverables">
-                <p className="deliverables-label">Tactics:</p>
-                <ul>
-                  <li>Gamification and progression systems</li>
-                  <li>Loyalty programs (points, tiers, rewards)</li>
-                  <li>Personalization and habit formation</li>
-                </ul>
-              </div>
+            <div className="stage-card">
+              <span className="stage-number">02</span>
+              <h3 className="stage-title">Habit</h3>
+              <p className="stage-description">Loops that compound</p>
+              <ul className="stage-tactics">
+                <li>Gamification mechanics</li>
+                <li>Loyalty tiers and rewards</li>
+                <li>Behavioural triggers</li>
+              </ul>
             </div>
-
-            <div className="component-card">
-              <span className="component-number">03</span>
-              <h3 className="component-title">Community</h3>
-              <p className="component-description">
-                Activates advocates who create content and recruit others
-              </p>
-              <div className="component-deliverables">
-                <p className="deliverables-label">Tactics:</p>
-                <ul>
-                  <li>UGC and creator programs</li>
-                  <li>Referral programs (structured word-of-mouth)</li>
-                  <li>Fan recognition and activation</li>
-                </ul>
-              </div>
+            <div className="stage-card">
+              <span className="stage-number">03</span>
+              <h3 className="stage-title">Belonging</h3>
+              <p className="stage-description">Moments that bond</p>
+              <ul className="stage-tactics">
+                <li>Drops, events, challenges</li>
+                <li>Brand narrative that invites in</li>
+                <li>Shared fan milestones</li>
+              </ul>
+            </div>
+            <div className="stage-card">
+              <span className="stage-number">04</span>
+              <h3 className="stage-title">Identity</h3>
+              <p className="stage-description">Where UGC is born</p>
+              <ul className="stage-tactics">
+                <li>Fan recognition systems</li>
+                <li>UGC infrastructure</li>
+                <li>Community intelligence into product</li>
+              </ul>
+            </div>
+            <div className="stage-card">
+              <span className="stage-number">05</span>
+              <h3 className="stage-title">Advocacy</h3>
+              <p className="stage-description">Fans become growth</p>
+              <ul className="stage-tactics">
+                <li>Creator programs built to last</li>
+                <li>Referral mechanics</li>
+                <li>Brand-aligned ambassadors</li>
+              </ul>
             </div>
           </div>
 
+          <div className="creator-callout">
+            <h3>Creators aren&apos;t a campaign. They&apos;re a community layer.</h3>
+            <p>US creator economy ad spend is projected to reach <strong>$37 billion in 2025</strong>, up 26% year on year. Most brands treat creators as a one-post transaction. I build the programs that turn them into long-term brand partners — with shared values, generating content that compounds. I&apos;ve closed six-figure creator partnerships. That&apos;s a different capability to placing media.</p>
+          </div>
         </div>
       </section>
 
+      {/* ── WHY IT WORKS ───────────────────────── */}
       <section className="how-it-works">
         <div className="container">
-          <div className="section-badge">WHY IT WORKS</div>
-          <h2 className="section-title">The science behind fandom mechanics</h2>
+          <div className="section-badge">Why It Works</div>
+          <h2 className="section-title">The mechanics are proven.<br />Most brands just haven&apos;t applied them.</h2>
           <p className="section-intro">
-            Here&apos;s the research that proves these mechanics drive measurable results:
+            I spent 13 years inside the industry that built these systems first. Here&apos;s the research confirming they work across every consumer category.
           </p>
 
           <div className="mechanics-simple-grid">
             <div className="mechanic-card">
               <p className="mechanic-name">Storytelling creates connection</p>
-              <p className="mechanic-data">Emotional hooks in your brand marketing are 22x more memorable than facts alone</p>
+              <p className="mechanic-data">Brand storytelling is 22x more memorable and drives 30% higher customer retention</p>
             </div>
-
             <div className="mechanic-card">
               <p className="mechanic-name">Gamification drives engagement</p>
-              <p className="mechanic-data">Habit loops and rewards drive 48% higher engagement and 22% better retention</p>
+              <p className="mechanic-data">Progression mechanics drive 48% higher engagement and 22% better retention</p>
             </div>
-
             <div className="mechanic-card">
-              <p className="mechanic-name">Loyalty programs drive retention</p>
-              <p className="mechanic-data">Members generate 12-18% more revenue growth per year than non-members</p>
+              <p className="mechanic-name">Loyalty programs drive revenue</p>
+              <p className="mechanic-data">Loyalty members generate 12-18% more revenue per year than non-members</p>
             </div>
-
             <div className="mechanic-card">
-              <p className="mechanic-name">UGC drives conversions</p>
-              <p className="mechanic-data">UGC increases conversions 161% more than brand-owned media</p>
+              <p className="mechanic-name">UGC converts better than ads</p>
+              <p className="mechanic-data">UGC increases product page conversions by 161% and revenue per visitor by 154%</p>
             </div>
-
             <div className="mechanic-card">
-              <p className="mechanic-name">Referral programs create viral growth</p>
-              <p className="mechanic-data">Referred customers have 37% higher retention and are 4X more likely to refer others</p>
+              <p className="mechanic-name">Referred customers compound</p>
+              <p className="mechanic-data">Word-of-mouth users stay 2x longer and refer others at 4x the rate</p>
             </div>
-
             <div className="mechanic-card">
-              <p className="mechanic-name">Superfans are top spenders</p>
-              <p className="mechanic-data">Top 15-20% spend 66-80% more and recruit friends at higher rates</p>
+              <p className="mechanic-name">Superfans are your top line</p>
+              <p className="mechanic-data">Top 15-20% spend 66-80% more and drive the majority of organic growth</p>
             </div>
           </div>
 
           <div className="sources-note">
-            <p>
-              *Research compiled from Stanford University, Harvard Business Review, Goldman Sachs,
-              Nielsen, Luminate, Bazaarvoice, and peer-reviewed business studies (2023-2025).
-            </p>
+            <p>Stanford, Harvard Business Review, Goldman Sachs, Nielsen, Luminate, Bazaarvoice (2023-2025)</p>
           </div>
         </div>
       </section>
 
-      <section className="the-value">
+      {/* ── PROOF — teal section ────────────────── */}
+      <section className="proof-section">
         <div className="container">
-          <div className="section-badge">WHY THIS MATTERS</div>
-          <h2 className="section-title">The retention math that justifies everything</h2>
+          <div className="section-badge badge-teal">Proof</div>
+          <h2 className="section-title">What this looks like in practice</h2>
+          <p className="section-intro">Real work. Named companies. Numbers that are clean and attributable.</p>
 
-          <div className="value-content">
-            <div className="stat-highlight">
-              <p>A 5% increase in customer retention generates <strong>25-95% profit increase</strong></p>
-              <p>Customer acquisition costs are <strong>4-6x higher</strong> than retention costs</p>
-            </div>
-
-            <h3 className="value-subtitle">What this means in real numbers:</h3>
-            <p className="value-context">Starting point: $500k/year on acquisition, 40% retention</p>
-
-            <div className="improvement-grid">
-              <div className="improvement-card">
-                <div className="card-header">IMPROVE 10 POINTS</div>
-                <div className="card-body">
-                  <p className="retention-change">40% → 50%</p>
-                  <p className="value-amount">= $250k</p>
-                  <p className="value-label">equivalent value</p>
-                </div>
-              </div>
-
-              <div className="improvement-card highlighted">
-                <div className="card-header">IMPROVE 20 POINTS</div>
-                <div className="card-body">
-                  <p className="retention-change">40% → 60%</p>
-                  <p className="value-amount">= $500k</p>
-                  <p className="value-label">equivalent value</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="why-matters-box">
-              <p className="box-intro">That&apos;s why the top 15-20% of your customers (fans) matter so much</p>
-              <ul className="fan-benefits">
-                <li>Spend 66-80% more</li>
-                <li>Stay 2-3x longer</li>
-                <li>Recruit others</li>
-              </ul>
-              <p className="box-conclusion">Activating them is the highest-leverage growth strategy available.</p>
-            </div>
-
-            <p className="value-conclusion">
-              The Fandom Flywheel designs the system that makes this happen.
-            </p>
-            <div className="retention-calculator-block">
-              <h3 className="retention-calculator-title">Try the Retention Calculator</h3>
-              <p className="retention-calculator-intro">
-                Use your own numbers to estimate how better retention can grow revenue.
+          <div className="proof-grid">
+            <div className="proof-card">
+              <div className="proof-metric">6M</div>
+              <div className="proof-unit">views · $0 spend</div>
+              <p className="proof-description">
+                At Ubisoft, I built the <strong>Siege Champions Program</strong> for Rainbow Six Siege — 200 members, 18 markets, 60%+ creators. First season: 6M views, 2.4M watch-hours, 393K interactions. Zero paid media.
               </p>
-              <iframe
-                ref={retentionCalculatorRef}
-                src={RETENTION_CALCULATOR_URL}
-                title="Retention Calculator"
-                className="retention-calculator-frame"
-                loading="lazy"
-                onLoad={handleRetentionCalculatorLoad}
-                scrolling="no"
-                style={{ height: `${retentionCalculatorHeight}px` }}
-              />
+              <div className="proof-tag">Ubisoft · Rainbow Six Siege</div>
+            </div>
+            <div className="proof-card">
+              <div className="proof-metric">$32K</div>
+              <div className="proof-unit">revenue in 3 hours</div>
+              <p className="proof-description">
+                At <strong>US Mobile</strong>, I designed a limited-edition superfan product from scratch. 250 units at $129. Sold out in 3 hours. No advertising. Fan identity did the work.
+              </p>
+              <div className="proof-tag">US Mobile · Superfan Product</div>
+            </div>
+            <div className="proof-card">
+              <div className="proof-metric">-50%</div>
+              <div className="proof-unit">CAC on community ads</div>
+              <p className="proof-description">
+                At <strong>BlaBlaCar</strong>, community-first brand narrative — real riders, real stories — cut cost of acquisition by 50% versus the control. People respond to feeling seen, not sold to.
+              </p>
+              <div className="proof-tag">BlaBlaCar · Brand Storytelling</div>
+            </div>
+            <div className="proof-card">
+              <div className="proof-metric">60M+</div>
+              <div className="proof-unit">organic UGC views</div>
+              <p className="proof-description">
+                Across three <strong>Ubisoft</strong> programs — 500+ members, 18 markets, 90% engagement. Community intelligence from hundreds of thousands of players fed directly into Ghost Recon product decisions. Announced at E3.
+              </p>
+              <div className="proof-tag">Ubisoft · Delta Company · E3</div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="about-section">
-        <div className="container">
-          <div className="section-badge">TRACK RECORD</div>
-          <h2 className="section-title">Who I am</h2>
-
-          <div className="about-content">
-            <div className="about-narrative">
-              <p className="about-intro">
-                I&apos;ve spent 12+ years building fan engagement at scale—from Ubisoft&apos;s influencer
-                programs generating 60M+ reach, to Amazon Games&apos; community platforms, to BlaBlaCar&apos;s
-                growth mechanics.
-              </p>
-
-              <p className="about-paragraph">
-                But here&apos;s what I learned: <strong>these companies built the pieces separately</strong>.
-                Brand storytelling lived in marketing. Gamification lived in product. Community lived
-                in a different silo. Each worked, but they weren&apos;t designed to reinforce each other.
-              </p>
-
-              <p className="about-paragraph">
-                <strong>I saw what happens when you connect them.</strong> That&apos;s The Fandom Flywheel—the
-                system I&apos;m building now, based on everything I learned about what works when Brand,
-                Product, and Community are designed as one integrated system.
-              </p>
-
-              <p className="about-paragraph">
-                I&apos;m not just a strategist—I&apos;m a <strong>builder</strong>. I&apos;m co-founding a fan app
-                right now. I&apos;ve worked at giants (Ubisoft, Amazon Games) and startups that became
-                unicorns (BlaBlaCar). I bring unique experience across North American AND European
-                markets—rare in Europe, where most consultants only know one or the other.
-              </p>
-
-              <p className="about-paragraph">
-                Now I design The Fandom Flywheel for product-led brands in gaming, beauty, wellness,
-                and entertainment who want to turn customers into fans.
-              </p>
-            </div>
-
-            <div className="about-highlights">
-              <div className="highlight-box">
-                <h4>Experience</h4>
-                <ul>
-                  <li>12+ years across tech and video games</li>
-                  <li>60M+ reach through influencer partnerships</li>
-                  <li>70M+ community footprint managed</li>
-                  <li>60M+ organic UGC views generated</li>
-                </ul>
-              </div>
-
-              <div className="highlight-box">
-                <h4>What I Build</h4>
-                <ul>
-                  <li>Gamified retention loops</li>
-                  <li>Love-brand building programs</li>
-                  <li>UGC and creator activation systems</li>
-                  <li>Influencer partnerships (six-figure deals)</li>
-                </ul>
-              </div>
-
-              <div className="highlight-box">
-                <h4>Background</h4>
-                <ul>
-                  <li>Co-founder of fan app (launching)</li>
-                  <li>Based in Paris, work globally</li>
-                  <li>US + European market expertise</li>
-                  <li>English/French bilingual</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div className="companies-worked">
-            <p className="companies-label">Companies I&apos;ve worked with:</p>
-            <div className="company-logos">
-              <div className="company-logo">Ubisoft</div>
-              <div className="company-logo">Amazon Games</div>
-              <div className="company-logo">BlaBlaCar</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      {/* ── SERVICES ───────────────────────────── */}
       <section className="services-section" id="services">
         <div className="container">
-          <div className="section-badge">HOW WE WORK TOGETHER</div>
-          <h2 className="section-title">Three ways to work with me</h2>
+          <div className="section-badge">How We Work Together</div>
+          <h2 className="section-title">Two ways in</h2>
 
           <div className="services-grid">
             <div className="service-card">
@@ -444,26 +256,24 @@ function App() {
                 <h3 className="service-title">Diagnostic</h3>
                 <p className="service-price">$15,000</p>
               </div>
-
+              <div className="service-outcome">
+                <p className="outcome-label">You will get</p>
+                <p className="outcome-text">Clarity on where your fan value is leaking and a prioritised roadmap to capture it — with the business case to act.</p>
+              </div>
               <p className="service-description">
-                A 2-week deep dive into your retention systems. I audit your current
-                mechanics across Brand, Product, and Community to identify what&apos;s working,
-                what&apos;s missing, and where you&apos;re leaving value on the table.
+                A 2-week structured audit across Brand, Product, and Community. I find exactly where the gaps are, what they&apos;re costing, and what to fix first.
               </p>
-
               <div className="service-deliverables">
-                <p className="deliverable-label">You get:</p>
+                <p className="deliverable-label">Deliverables</p>
                 <ul>
-                  <li>Retention maturity assessment across all three systems</li>
-                  <li>Gap analysis: where you&apos;re strong, where you&apos;re weak</li>
-                  <li>Priority roadmap: highest-impact improvements ranked by ROI</li>
-                  <li>90-minute presentation to leadership</li>
+                  <li>Fandom Flywheel audit across all five stages</li>
+                  <li>Gap analysis with commercial impact sizing</li>
+                  <li>Priority roadmap ranked by ROI</li>
+                  <li>90-min leadership presentation</li>
                 </ul>
               </div>
-
               <p className="service-ideal-for">
-                <strong>Best for:</strong> Brands who need clarity on where to invest
-                next or validation before building a comprehensive system.
+                Best for brands who need clarity before committing to a larger engagement.
               </p>
             </div>
 
@@ -471,89 +281,129 @@ function App() {
               <div className="service-header">
                 <span className="service-number">02</span>
                 <h3 className="service-title">Blueprint</h3>
-                <p className="service-price">$45,000-$65,000</p>
+                <p className="service-price">$45,000 – $65,000</p>
               </div>
-
+              <div className="service-outcome">
+                <p className="outcome-label">You will get</p>
+                <p className="outcome-text">A complete fan system designed and ready to execute — every mechanic, every metric, every workflow. Built to run without ongoing dependency on me.</p>
+              </div>
               <p className="service-description">
-                A 6-8 week engagement to design your complete Fandom Flywheel. I map out
-                the full system—every mechanic, every touchpoint, every metric—plus AI
-                automation workflows, ready for your team to execute.
+                A 6-8 week engagement to design your complete Fandom Flywheel from Activation through to Advocacy.
               </p>
-
               <div className="service-deliverables">
-                <p className="deliverable-label">You get:</p>
+                <p className="deliverable-label">Deliverables</p>
                 <ul>
-                  <li>Complete Fandom Flywheel design: Brand, Product, Community mechanics</li>
-                  <li>Detailed implementation roadmap with phases and timelines</li>
-                  <li>AI automation suite (prompts, workflows, custom GPT)</li>
-                  <li>Technical requirements and platform recommendations</li>
-                  <li>Success metrics framework with targets and tracking</li>
-                  <li>Workshop sessions with cross-functional teams</li>
+                  <li>Complete five-stage Fandom Flywheel design</li>
+                  <li>Creator and community program frameworks</li>
+                  <li>Implementation roadmap with phases and owners</li>
+                  <li>AI-enabled content and automation workflows</li>
+                  <li>Success metrics and measurement framework</li>
+                  <li>Cross-functional workshop sessions</li>
                 </ul>
               </div>
-
               <p className="service-ideal-for">
-                <strong>Best for:</strong> Brands with internal execution capacity who
-                need expert strategy, system design, and AI enablement.
-              </p>
-            </div>
-
-            <div className="service-card build">
-              <div className="service-header">
-                <span className="service-number">03</span>
-                <h3 className="service-title">Build</h3>
-                <p className="service-price">$75,000-$120,000</p>
-              </div>
-
-              <p className="service-description">
-                A 3-6 month engagement where I design AND execute your Fandom Flywheel.
-                From strategy through launch, I work alongside your teams to build, test,
-                and optimize the complete system with AI-powered automation.
-              </p>
-
-              <div className="service-deliverables">
-                <p className="deliverable-label">You get:</p>
-                <ul>
-                  <li>Everything in Blueprint, plus hands-on execution</li>
-                  <li>Program launches: gamification, UGC campaigns, creator programs</li>
-                  <li>AI workflow implementation and team training</li>
-                  <li>Content creation: storylines, challenges, community events</li>
-                  <li>Platform setup and integration with existing tools</li>
-                  <li>Ongoing optimization and support</li>
-                </ul>
-              </div>
-
-              <p className="service-ideal-for">
-                <strong>Best for:</strong> Brands who want a complete solution—strategy,
-                execution, AI automation, and ongoing support—without adding headcount.
+                Best for brands with internal execution capacity who need expert system design.
               </p>
             </div>
           </div>
 
           <div className="services-cta">
-            <p className="cta-text">
-              Not sure which is right for you? Let&apos;s talk through your situation and find
-              the best fit.
-            </p>
-            <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">
-              Schedule a Call
-            </a>
+            <p className="cta-text">Not sure where to start? Tell me what&apos;s breaking and we&apos;ll find the right fit.</p>
+            <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">Book a Free 30-Min Call</a>
+          </div>
+          <div className="larger-engagements">
+            <p>For larger engagements including full implementation, <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">let&apos;s talk.</a></p>
           </div>
         </div>
       </section>
 
+      {/* ── ABOUT ──────────────────────────────── */}
+      <section className="about-section">
+        <div className="container">
+          <div className="section-badge">Track Record</div>
+          <h2 className="section-title">13 years. Two industries.<br />One rare combination.</h2>
+
+          <div className="about-content">
+            <div className="about-narrative">
+              <p className="about-intro">
+                I&apos;ve spent my career at the intersection of gaming and consumer tech — two industries that think about fan engagement in completely different ways. That gap is where the Fandom Flywheel came from.
+              </p>
+              <p className="about-paragraph">
+                Gaming builds fan systems deliberately: progression mechanics, belonging moments, superfan activation, creator ecosystems, community intelligence feeding product decisions. I learned that at Ubisoft and Amazon Games — building programs across 18+ markets and presenting them on world stages.
+              </p>
+              <p className="about-paragraph">
+                Consumer tech has the product sophistication. I brought the gaming lens to BlaBlaCar and a series of consumer startups, where the challenge was turning large user bases into advocates at scale.
+              </p>
+              <p className="about-paragraph">
+                <strong>Most people live in one world. I&apos;ve built in both.</strong> I walk into a product team and speak their language, then turn to the marketing team and speak theirs — and show them how to connect the two into something that compounds.
+              </p>
+            </div>
+
+            <div className="about-highlights">
+              <div className="highlight-box">
+                <h4>Where I&apos;ve Built</h4>
+                <ul>
+                  <li>Ubisoft — community, creators, product</li>
+                  <li>Amazon Games — fan engagement</li>
+                  <li>BlaBlaCar — growth and brand</li>
+                  <li>Magic — fan app (founding team)</li>
+                </ul>
+              </div>
+              <div className="highlight-box">
+                <h4>Numbers</h4>
+                <ul>
+                  <li>100M+ reach generated</li>
+                  <li>70M+ community footprint managed</li>
+                  <li>60M+ organic UGC views</li>
+                  <li>Six-figure creator partnerships</li>
+                </ul>
+              </div>
+              <div className="highlight-box">
+                <h4>Specialisms</h4>
+                <ul>
+                  <li>Gamified retention</li>
+                  <li>Love-brand building</li>
+                  <li>Long-term creator programs</li>
+                  <li>Community intelligence into product</li>
+                </ul>
+              </div>
+              <div className="highlight-box">
+                <h4>How I Work</h4>
+                <ul>
+                  <li>Remote-first, US timezone friendly</li>
+                  <li>Strategy through to execution</li>
+                  <li>English / French bilingual</li>
+                  <li>Based in Paris, clients globally</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="companies-worked">
+            <p className="companies-label">Companies I&apos;ve worked with</p>
+            <div className="company-logos">
+              <div className="company-logo">Ubisoft</div>
+              <div className="company-logo">Amazon Games</div>
+              <div className="company-logo">BlaBlaCar</div>
+              <div className="company-logo">US Mobile</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FINAL CTA ──────────────────────────── */}
       <section className="final-cta">
         <div className="container">
-          <h2>Ready to design your retention system?</h2>
+          <h2>Ready to tune your fans into<br />your next growth engine?</h2>
           <p>
-            Let&apos;s talk about your retention challenge and build a Fandom Flywheel that turns your
-            customers into fans.
+            Let&apos;s talk about where your fan energy is going uncaptured and what it would look like to build the system that captures it.
           </p>
           <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">
-            Schedule a Call
+            Book a Free 30-Min Call
           </a>
         </div>
       </section>
+
     </main>
   )
 }
