@@ -1,93 +1,127 @@
+import { useEffect, useRef } from 'react'
+
 const stages = [
   { id: 'activation', number: '01', title: 'Activation', description: 'The hook that sticks', angle: -90 },
-  { id: 'habit', number: '02', title: 'Habit', description: 'Loops that compound', angle: -18 },
-  { id: 'belonging', number: '03', title: 'Belonging', description: 'Moments that bond', angle: 54 },
-  { id: 'identity', number: '04', title: 'Identity', description: 'Where UGC is born', angle: 126 },
-  { id: 'advocacy', number: '05', title: 'Advocacy', description: 'Fans become growth', angle: 198 },
+  { id: 'habit',      number: '02', title: 'Habit',      description: 'Loops that compound', angle: -18 },
+  { id: 'belonging',  number: '03', title: 'Belonging',  description: 'Moments that bond',   angle: 54  },
+  { id: 'identity',   number: '04', title: 'Identity',   description: 'Where UGC is born',   angle: 126 },
+  { id: 'advocacy',   number: '05', title: 'Advocacy',   description: 'Fans become growth',  angle: 198 },
 ]
 
 const CX = 220
 const CY = 220
 const ORBIT = 145
-const NODE_W = 100
-const NODE_H = 72
+const NODE_W = 88
+const NODE_H = 60
+const DURATION = 8000 // ms per revolution
 
-function toRad(deg) {
-  return (deg * Math.PI) / 180
-}
+// Each node's position on the SVG circle path (0–100, clockwise from 3 o'clock)
+// position = angle / 360 * 100, where angle is measured clockwise from rightmost
+// Our angles use standard math convention, so we convert: pathPos = (angle % 360 + 360) % 360 / 360 * 100
+const stagesWithPos = stages.map(s => ({
+  ...s,
+  pathPos: ((s.angle % 360) + 360) % 360 / 360 * 100,
+}))
+
+function toRad(deg) { return (deg * Math.PI) / 180 }
 
 function nodePos(angleDeg) {
   const r = toRad(angleDeg)
-  return {
-    x: CX + ORBIT * Math.cos(r),
-    y: CY + ORBIT * Math.sin(r),
-  }
+  return { x: CX + ORBIT * Math.cos(r), y: CY + ORBIT * Math.sin(r) }
 }
 
-const arcs = stages.map((s, i) => {
-  const next = stages[(i + 1) % stages.length]
-  const a1 = toRad(s.angle + 28)
-  const a2 = toRad(next.angle - 28)
-  const x1 = CX + ORBIT * Math.cos(a1)
-  const y1 = CY + ORBIT * Math.sin(a1)
-  const x2 = CX + ORBIT * Math.cos(a2)
-  const y2 = CY + ORBIT * Math.sin(a2)
-  const large = Math.abs(next.angle - s.angle) > 180 ? 1 : 0
-  return { id: `arc-${i}`, d: `M ${x1} ${y1} A ${ORBIT} ${ORBIT} 0 ${large} 1 ${x2} ${y2}`, duration: 2.4 + i * 0.2, delay: i * 0.8 }
-})
-
-function StageNode({ stage }) {
+function StageNode({ stage, nodeRef }) {
   const pos = nodePos(stage.angle)
   const x = pos.x - NODE_W / 2
   const y = pos.y - NODE_H / 2
-
   return (
-    <g className="flywheel-node-group" transform={`translate(${x}, ${y})`}>
+    <g ref={nodeRef} className={`flywheel-node-group`} transform={`translate(${x}, ${y})`}>
       <g className="flywheel-node">
         <rect className="flywheel-node-card" width={NODE_W} height={NODE_H} rx="10" />
-        <text className="flywheel-node-number" x={NODE_W / 2} y="18" textAnchor="middle">{stage.number}</text>
-        <text className="flywheel-node-title" x={NODE_W / 2} y="38" textAnchor="middle">{stage.title}</text>
-        <text className="flywheel-node-desc" x={NODE_W / 2} y="56" textAnchor="middle">{stage.description}</text>
+        <text className="flywheel-node-number" x={NODE_W / 2} y="20" textAnchor="middle">{stage.number}</text>
+        <text className="flywheel-node-title" x={NODE_W / 2} y="40" textAnchor="middle">{stage.title}</text>
       </g>
     </g>
   )
 }
 
 export default function FlywheelDiagram() {
+  const glowRef = useRef(null)
+  const nodeRefs = useRef(stagesWithPos.map(() => ({ current: null })))
+
+  useEffect(() => {
+    const glowEl = glowRef.current
+    if (!glowEl) return
+    let startTime = null
+    let raf
+
+    function animate(ts) {
+      if (!startTime) startTime = ts
+      const elapsed = ts - startTime
+      const progress = (elapsed % DURATION) / DURATION
+
+      // Comet: dashoffset 100→0 moves dash forward (clockwise) on SVG circle
+      const offset = 100 - progress * 100
+      glowEl.setAttribute('stroke-dashoffset', offset)
+
+      // Comet's centre position on path (0–100, clockwise from 3 o'clock)
+      // position = pathLength - offset (since positive dashoffset shifts pattern backward)
+      const cometPos = (100 - offset + 8) % 100
+
+      // Glow each node based on how close the comet is to it
+      stagesWithPos.forEach((stage, i) => {
+        const el = nodeRefs.current[i]?.current
+        if (!el) return
+        // Angular distance on the circle (handles wrap-around)
+        let dist = Math.abs(cometPos - stage.pathPos)
+        if (dist > 50) dist = 100 - dist
+        // Glow window: full glow within 8 units, fades to nothing at 18 units
+        const intensity = Math.max(0, 1 - Math.max(0, dist - 8) / 10)
+        if (intensity > 0) {
+          const a1 = intensity.toFixed(2)
+          const a2 = (intensity * 0.5).toFixed(2)
+          el.style.filter = `drop-shadow(0 0 ${12 * intensity}px rgba(232,160,32,${a1})) drop-shadow(0 0 ${24 * intensity}px rgba(232,160,32,${a2}))`
+        } else {
+          el.style.filter = 'none'
+        }
+      })
+
+      raf = requestAnimationFrame(animate)
+    }
+
+    raf = requestAnimationFrame(animate)
+    return () => cancelAnimationFrame(raf)
+  }, [])
+
   return (
     <div className="flywheel-diagram-container">
       <svg viewBox="0 0 440 440" className="flywheel-svg-clean">
         <defs>
-          <marker id="arrowhead-flywheel" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto" markerUnits="userSpaceOnUse">
-            <path d="M 0 0 L 8 4 L 0 8 Z" className="flywheel-arrow-head" />
-          </marker>
-          {arcs.map(a => <path key={`${a.id}-def`} id={a.id} d={a.d} />)}
+          <radialGradient id="orbit-fill" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stopColor="#E8A020" stopOpacity="0.14" />
+            <stop offset="60%"  stopColor="#E8A020" stopOpacity="0.07" />
+            <stop offset="100%" stopColor="#E8A020" stopOpacity="0" />
+          </radialGradient>
+          <radialGradient id="center-fill" cx="50%" cy="50%" r="65%">
+            <stop offset="0%"   stopColor="#000000" />
+            <stop offset="65%"  stopColor="#1a0d00" />
+            <stop offset="100%" stopColor="#C07818" />
+          </radialGradient>
         </defs>
 
-        <g className="flywheel-arrows">
-          {arcs.map((arc, i) => (
-            <g key={arc.id}>
-              <path d={arc.d} pathLength="100" className={`flywheel-arrow-path flywheel-arrow-${i + 1}`}>
-                <animate attributeName="stroke-dashoffset" values="100;0" dur={`${arc.duration}s`} begin={`${arc.delay}s`} repeatCount="indefinite" />
-                <animate attributeName="opacity" values="0;0.4;0.4;0" keyTimes="0;0.15;0.85;1" dur={`${arc.duration}s`} begin={`${arc.delay}s`} repeatCount="indefinite" />
-              </path>
-              <g className={`flywheel-arrowhead flywheel-arrowhead-${i + 1}`}>
-                <path d="M 0 -3 L 8 0 L 0 3 Z" />
-                <animateMotion dur={`${arc.duration}s`} begin={`${arc.delay}s`} repeatCount="indefinite" rotate="auto">
-                  <mpath href={`#${arc.id}`} xlinkHref={`#${arc.id}`} />
-                </animateMotion>
-              </g>
-            </g>
-          ))}
-        </g>
+        <circle cx={CX} cy={CY} r={ORBIT} fill="url(#orbit-fill)" stroke="none" />
+        <circle cx={CX} cy={CY} r={ORBIT} className="flywheel-orbit-base" />
+        <circle ref={glowRef} cx={CX} cy={CY} r={ORBIT} pathLength="100" className="flywheel-orbit-glow" strokeDashoffset="100" />
 
         <g className="flywheel-center">
-          <circle className="flywheel-center-circle" cx={CX} cy={CY} r="48" />
-          <text className="flywheel-center-label" x={CX} y={CY - 6}>FANDOM</text>
-          <text className="flywheel-center-title" x={CX} y={CY + 14}>Flywheel</text>
+          <circle className="flywheel-center-circle" cx={CX} cy={CY} r="70" style={{ fill: 'url(#center-fill)' }} />
+          <text className="flywheel-center-label" x={CX} y={CY - 8}>FANDOM</text>
+          <text className="flywheel-center-title" x={CX} y={CY + 16}>Flywheel</text>
         </g>
 
-        {stages.map(s => <StageNode key={s.id} stage={s} />)}
+        {stagesWithPos.map((s, i) => (
+          <StageNode key={s.id} stage={s} nodeRef={nodeRefs.current[i]} />
+        ))}
       </svg>
     </div>
   )
