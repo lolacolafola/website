@@ -30,8 +30,8 @@ export default function ServicesPage() {
               <span className="cs-agg-label">CAC</span>
             </div>
             <div className="cs-agg-item">
-              <span className="cs-agg-value">$0</span>
-              <span className="cs-agg-label">Ad Spend</span>
+              <span className="cs-agg-value">$32K</span>
+              <span className="cs-agg-label">in 3 Hrs</span>
             </div>
             <div className="cs-agg-item">
               <span className="cs-agg-value">22</span>

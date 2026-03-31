@@ -1,10 +1,46 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const FlywheelDiagram = lazy(() => import('../components/FlywheelDiagram'))
 const SoftAurora = lazy(() => import('../components/SoftAurora'))
 const CALENDLY_URL = 'https://calendly.com/laura-lcordrey/30min'
 
+const stages = [
+  {
+    name: "Activation",
+    summary: "Get passive audiences to act.",
+    example: "Delta Company launched on the E3 stage to 10M viewers. 10,000 applied from the US for 5 spots. The activation wasn\u2019t an ad \u2014 it was an invitation to belong.",
+    source: "Ubisoft"
+  },
+  {
+    name: "Habit",
+    summary: "Turn first actions into repeat behaviour.",
+    example: "Overlay quizzes gave viewers a reason to come back every stream. 90% engagement rate \u2014 because the mechanic made participation the default.",
+    source: "Azarus"
+  },
+  {
+    name: "Belonging",
+    summary: "Make fans feel part of something bigger.",
+    example: "Delta Company had 5 community clusters: artists, cosplayers, explorers, feedback specialists, tournament players. Members had roles, not just access.",
+    source: "Ubisoft"
+  },
+  {
+    name: "Identity",
+    summary: "Fans define themselves through the brand.",
+    example: "The $129 VIP bundle sold out in 3 hours. Not because of the SIM kit \u2014 because being a VIP member meant something.",
+    source: "US Mobile"
+  },
+  {
+    name: "Advocacy",
+    summary: "Fans become the marketing channel.",
+    example: "60M+ UGC views. $0 media spend. The community produced content, recruited members, and defended the brand in public.",
+    source: "Ubisoft"
+  }
+]
+
 export default function FlywheelPage() {
+  const [openStage, setOpenStage] = useState(null)
+
   return (
     <main>
 
@@ -23,52 +59,29 @@ export default function FlywheelPage() {
             </Suspense>
           </div>
 
-          <div className="stages-list">
-            <div className="stage-row">
-              <span className="stage-num">01</span>
-              <span className="stage-name">Activation</span>
-              <div className="stage-detail">
-                <span className="stage-line">The first moment of real value. The product earns their attention.</span>
-                <span className="stage-tactics">onboarding flows &middot; aha moment design &middot; first-session mechanics</span>
-                <div className="flywheel-example">At Ubisoft, we announced Delta Company on the E3 stage to 10M viewers. 10,000 people applied from the US alone for 5&ndash;10 spots. The activation wasn&apos;t an ad &mdash; it was an invitation to belong.</div>
+          <div className="flywheel-stages-accordion">
+            {stages.map((stage, i) => (
+              <div
+                key={i}
+                className={`flywheel-stage-card ${openStage === i ? 'expanded' : ''}`}
+                onClick={() => setOpenStage(openStage === i ? null : i)}
+              >
+                <div className="flywheel-stage-header">
+                  <span className="flywheel-stage-number">{i + 1}</span>
+                  <div>
+                    <h3 className="flywheel-stage-name">{stage.name}</h3>
+                    <p className="flywheel-stage-summary">{stage.summary}</p>
+                  </div>
+                  <span className="flywheel-toggle">{openStage === i ? '\u2212' : '+'}</span>
+                </div>
+                {openStage === i && (
+                  <div className="flywheel-stage-example">
+                    <p>{stage.example}</p>
+                    <cite>&mdash; {stage.source}</cite>
+                  </div>
+                )}
               </div>
-            </div>
-            <div className="stage-row">
-              <span className="stage-num">02</span>
-              <span className="stage-name">Habit</span>
-              <div className="stage-detail">
-                <span className="stage-line">They build the product into their routine. Usage becomes consistent and measurable.</span>
-                <span className="stage-tactics">streaks &middot; progression mechanics &middot; loyalty programs</span>
-                <div className="flywheel-example">At Azarus, we designed overlay quizzes that gave viewers a reason to come back every stream. 90% engagement rate on Game Ads &mdash; because the mechanic made participation the default.</div>
-              </div>
-            </div>
-            <div className="stage-row">
-              <span className="stage-num">03</span>
-              <span className="stage-name">Belonging</span>
-              <div className="stage-detail">
-                <span className="stage-line">They feel seen. The brand creates a space they want to be part of.</span>
-                <span className="stage-tactics">community spaces &middot; events &middot; brand storytelling</span>
-                <div className="flywheel-example">Delta Company had 5 community clusters &mdash; artists, cosplayers, explorers, feedback specialists, tournament players. Members weren&apos;t just fans; they had roles.</div>
-              </div>
-            </div>
-            <div className="stage-row">
-              <span className="stage-num">04</span>
-              <span className="stage-name">Identity</span>
-              <div className="stage-detail">
-                <span className="stage-line">The brand fits into who they are. It becomes part of how they show up in the world.</span>
-                <span className="stage-tactics">co-creation &middot; status tiers &middot; personalisation</span>
-                <div className="flywheel-example">Delta Company members introduced themselves as &lsquo;Delta&rsquo; before they said &lsquo;Ghost Recon player.&rsquo; At US Mobile, the $129 VIP bundle sold out in hours &mdash; not because of the SIM kit, but because being a VIP member meant something.</div>
-              </div>
-            </div>
-            <div className="stage-row">
-              <span className="stage-num">05</span>
-              <span className="stage-name">Advocacy</span>
-              <div className="stage-detail">
-                <span className="stage-line">They recruit, refer and create content. Passionate, authentic, and entirely self-driven.</span>
-                <span className="stage-tactics">referral programs &middot; creator programs &middot; ambassador programs</span>
-                <div className="flywheel-example">50M+ UGC views across Ubisoft&apos;s advocacy programmes. Zero media spend. At BlaBlaCar, first-person brand storytelling (300+ assets) achieved &euro;5 CAC across 22 markets &mdash; because real member stories outperformed any ad creative.</div>
-              </div>
-            </div>
+            ))}
           </div>
 
           <div className="creator-callout">
@@ -145,76 +158,29 @@ export default function FlywheelPage() {
         </div>
       </section>
 
-      {/* ── PACKAGES ── */}
-      <section className="services-section" id="packages">
+      {/* ── PRICING ── */}
+      <section className="flywheel-pricing">
         <div className="container">
-          <div className="section-badge">Flywheel Packages</div>
-          <h2 className="section-title">Two ways in</h2>
-
-          <div className="services-grid">
-            <div className="service-card">
-              <div className="service-header">
-                <span className="service-number">01</span>
-                <h3 className="service-title">Diagnostic</h3>
-                <p className="service-price">$15,000</p>
-              </div>
-              <div className="service-outcome">
-                <p className="outcome-label">You will get</p>
-                <p className="outcome-text">Clarity on where your fan value is leaking and a prioritised roadmap to capture it — with the business case to act.</p>
-              </div>
-              <p className="service-description">
-                A 2-week structured audit across Brand, Product, and Community. I find exactly where the gaps are, what they&apos;re costing, and what to fix first.
-              </p>
-              <div className="service-deliverables">
-                <p className="deliverable-label">Deliverables</p>
-                <ul>
-                  <li>Fandom Flywheel audit across all five stages</li>
-                  <li>Gap analysis with commercial impact sizing</li>
-                  <li>Priority roadmap ranked by ROI</li>
-                  <li>90-min leadership presentation</li>
-                </ul>
-              </div>
-              <p className="service-ideal-for">
-                Best for brands who need clarity before committing to a larger engagement.
-              </p>
+          <h2 className="section-title">Ready to build yours?</h2>
+          <div className="flywheel-pricing-grid">
+            <div className="flywheel-pricing-card">
+              <h3>Fandom Flywheel Diagnostic</h3>
+              <span className="flywheel-pricing-price">$15K</span>
+              <p>Score your current fan ecosystem across all 5 stages. Get a prioritised action plan.</p>
             </div>
-
-            <div className="service-card blueprint">
-              <div className="service-header">
-                <span className="service-number">02</span>
-                <h3 className="service-title">Blueprint</h3>
-                <p className="service-price">$45,000 – $65,000</p>
-              </div>
-              <div className="service-outcome">
-                <p className="outcome-label">You will get</p>
-                <p className="outcome-text">A complete fan system designed and ready to execute — every mechanic, every metric, every workflow. Built to run without ongoing dependency on me.</p>
-              </div>
-              <p className="service-description">
-                A 6-8 week engagement to design your complete Fandom Flywheel from Activation through to Advocacy.
-              </p>
-              <div className="service-deliverables">
-                <p className="deliverable-label">Deliverables</p>
-                <ul>
-                  <li>Complete five-stage Fandom Flywheel design</li>
-                  <li>Creator and community program frameworks</li>
-                  <li>Implementation roadmap with phases and owners</li>
-                  <li>AI-enabled content and automation workflows</li>
-                  <li>Success metrics and measurement framework</li>
-                  <li>Cross-functional workshop sessions</li>
-                </ul>
-              </div>
-              <p className="service-ideal-for">
-                Best for brands with internal execution capacity who need expert system design.
-              </p>
+            <div className="flywheel-pricing-card">
+              <h3>Fandom Flywheel Blueprint</h3>
+              <span className="flywheel-pricing-price">from $45K</span>
+              <p>Full system design: strategy, mechanics, content frameworks, and a 90-day launch roadmap.</p>
             </div>
           </div>
-
-          <div className="services-cta">
-            <p className="cta-text">Not sure where to start? Tell me what&apos;s breaking and we&apos;ll find the right fit.</p>
-            <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">Book a Free 30-Min Call</a>
+          <div className="flywheel-pricing-cta">
+            <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">
+              Book a Discovery Call &rarr;
+            </a>
           </div>
           <div className="larger-engagements">
-            <p>For larger engagements including full implementation, <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">let&apos;s talk.</a></p>
+            <p>Want to see all services? <Link to="/services">View full services &rarr;</Link></p>
           </div>
         </div>
       </section>

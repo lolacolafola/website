@@ -286,59 +286,83 @@
 .flywheel-center-title { font-size: 12px; font-weight: 800; fill: #ffffff; text-anchor: middle; }
 .diagram-placeholder { font-size: 15px; color: #444; font-style: italic; }
 
-.stages-list {
-  max-width: 580px;
+/* ─── Flywheel Accordion Cards ───────────────── */
+.flywheel-stages-accordion {
+  max-width: 680px;
   margin: 0 auto 48px;
-  position: relative;
-  padding-left: 32px;
 }
-.stages-list::before {
-  content: '';
-  position: absolute;
-  left: 7px;
-  top: 8px;
-  bottom: 8px;
-  width: 1px;
-  background: linear-gradient(to bottom, rgba(232,160,32,0.4) 0%, rgba(232,160,32,0.4) 90%, transparent);
-}
-.stage-row {
-  display: flex;
-  align-items: baseline;
-  gap: 16px;
-  padding: 0 0 28px 0;
-  position: relative;
-  border-bottom: 1px solid #1A1A1A;
-  margin-bottom: 28px;
-}
-.stage-row::before {
-  content: '';
-  position: absolute;
-  left: -25px;
-  top: 7px;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #E8A020;
-  box-shadow: 0 0 8px rgba(232,160,32,0.5);
-  transform: translateX(-50%);
-}
-.stage-num { font-size: 11px; font-weight: 700; color: #E8A020; letter-spacing: 1px; flex-shrink: 0; width: 24px; }
-.stage-name { font-size: 15px; font-weight: 800; color: #F5F5F0; flex-shrink: 0; width: 110px; }
-.stage-detail { flex: 1; display: flex; flex-direction: column; gap: 8px; }
-.stage-line { font-size: 14px; color: #AAAAAA; line-height: 1.5; }
-.stage-tactics { display: block; margin-top: 6px; font-size: 12px; color: #A07040; letter-spacing: 0.03em; line-height: 1.5; }
-.tactic-dot { color: #E8A020; font-size: 14px; font-weight: 700; vertical-align: middle; }
 
-.flywheel-example {
-  margin-top: 16px;
+.flywheel-stage-card {
+  background: #141414;
+  border: 1px solid #1E1E1E;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.flywheel-stage-card:hover,
+.flywheel-stage-card.expanded {
+  border-color: #4BBFB0;
+}
+
+.flywheel-stage-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.flywheel-stage-number {
+  font-size: 28px;
+  font-weight: 700;
+  color: #4BBFB0;
+  min-width: 36px;
+}
+
+.flywheel-stage-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #F5F5F0;
+  margin: 0;
+}
+
+.flywheel-stage-summary {
+  font-size: 14px;
+  color: #999;
+  margin: 4px 0 0;
+}
+
+.flywheel-toggle {
+  margin-left: auto;
+  font-size: 24px;
+  color: #4BBFB0;
+  font-weight: 300;
+}
+
+.flywheel-stage-example {
+  margin-top: 20px;
   padding: 16px 20px;
   background: rgba(75, 191, 176, 0.06);
   border-left: 3px solid #4BBFB0;
   border-radius: 0 8px 8px 0;
+}
+
+.flywheel-stage-example p {
   font-size: 14px;
   color: #CCC;
   line-height: 1.6;
   font-style: italic;
+  margin: 0;
+}
+
+.flywheel-stage-example cite {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+  color: #E8A020;
+  font-style: normal;
+  font-weight: 600;
 }
 
 .stage-card {
@@ -615,6 +639,60 @@
 .larger-engagements { text-align: center; }
 .larger-engagements p { font-size: 13px; color: #333; }
 .larger-engagements a { color: #4BBFB0; text-decoration: underline; text-underline-offset: 3px; }
+
+/* ─── Flywheel Pricing ──────────────────────── */
+.flywheel-pricing {
+  padding: 80px 0 60px;
+}
+
+.flywheel-pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  max-width: 700px;
+  margin: 40px auto 32px;
+}
+
+.flywheel-pricing-card {
+  background: #141414;
+  border: 1px solid #1E1E1E;
+  border-radius: 12px;
+  padding: 28px;
+  text-align: center;
+}
+
+.flywheel-pricing-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #F5F5F0;
+  margin: 0 0 12px;
+}
+
+.flywheel-pricing-price {
+  display: block;
+  font-size: 28px;
+  font-weight: 800;
+  color: #E8A020;
+  margin-bottom: 12px;
+}
+
+.flywheel-pricing-card p {
+  font-size: 14px;
+  color: #999;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.flywheel-pricing-cta {
+  text-align: center;
+  margin: 32px 0 16px;
+}
+
+@media (max-width: 600px) {
+  .flywheel-pricing-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* ─── ABOUT — prism teal ─────────────────────── */
 .about-section {
