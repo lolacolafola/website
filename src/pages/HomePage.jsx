@@ -156,6 +156,13 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── PORTFOLIO TEASE ── */}
+      <section className="portfolio-tease">
+        <div className="container" style={{ textAlign: 'center', padding: '40px 0' }}>
+          <Link to="/portfolio" className="cta-link">See what I&apos;ve built &rarr;</Link>
+        </div>
+      </section>
+
       {/* ── TWO PATHS TEASE ── */}
       <section className="paths-tease">
         <div className="container">

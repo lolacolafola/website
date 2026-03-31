@@ -24,11 +24,51 @@ export default function FlywheelPage() {
           </div>
 
           <div className="stages-list">
-            <div className="stage-row"><span className="stage-num">01</span><span className="stage-name">Activation</span><div className="stage-detail"><span className="stage-line">The first moment of real value. The product earns their attention.</span><span className="stage-tactics">onboarding flows &middot; aha moment design &middot; first-session mechanics</span></div></div>
-            <div className="stage-row"><span className="stage-num">02</span><span className="stage-name">Habit</span><div className="stage-detail"><span className="stage-line">They build the product into their routine. Usage becomes consistent and measurable.</span><span className="stage-tactics">streaks &middot; progression mechanics &middot; loyalty programs</span></div></div>
-            <div className="stage-row"><span className="stage-num">03</span><span className="stage-name">Belonging</span><div className="stage-detail"><span className="stage-line">They feel seen. The brand creates a space they want to be part of.</span><span className="stage-tactics">community spaces &middot; events &middot; brand storytelling</span></div></div>
-            <div className="stage-row"><span className="stage-num">04</span><span className="stage-name">Identity</span><div className="stage-detail"><span className="stage-line">The brand fits into who they are. It becomes part of how they show up in the world.</span><span className="stage-tactics">co-creation &middot; status tiers &middot; personalisation</span></div></div>
-            <div className="stage-row"><span className="stage-num">05</span><span className="stage-name">Advocacy</span><div className="stage-detail"><span className="stage-line">They recruit, refer and create content. Passionate, authentic, and entirely self-driven.</span><span className="stage-tactics">referral programs &middot; creator programs &middot; ambassador programs</span></div></div>
+            <div className="stage-row">
+              <span className="stage-num">01</span>
+              <span className="stage-name">Activation</span>
+              <div className="stage-detail">
+                <span className="stage-line">The first moment of real value. The product earns their attention.</span>
+                <span className="stage-tactics">onboarding flows &middot; aha moment design &middot; first-session mechanics</span>
+                <div className="flywheel-example">At Ubisoft, we announced Delta Company on the E3 stage to 10M viewers. 10,000 people applied from the US alone for 5&ndash;10 spots. The activation wasn&apos;t an ad &mdash; it was an invitation to belong.</div>
+              </div>
+            </div>
+            <div className="stage-row">
+              <span className="stage-num">02</span>
+              <span className="stage-name">Habit</span>
+              <div className="stage-detail">
+                <span className="stage-line">They build the product into their routine. Usage becomes consistent and measurable.</span>
+                <span className="stage-tactics">streaks &middot; progression mechanics &middot; loyalty programs</span>
+                <div className="flywheel-example">At Azarus, we designed overlay quizzes that gave viewers a reason to come back every stream. 90% engagement rate on Game Ads &mdash; because the mechanic made participation the default.</div>
+              </div>
+            </div>
+            <div className="stage-row">
+              <span className="stage-num">03</span>
+              <span className="stage-name">Belonging</span>
+              <div className="stage-detail">
+                <span className="stage-line">They feel seen. The brand creates a space they want to be part of.</span>
+                <span className="stage-tactics">community spaces &middot; events &middot; brand storytelling</span>
+                <div className="flywheel-example">Delta Company had 5 community clusters &mdash; artists, cosplayers, explorers, feedback specialists, tournament players. Members weren&apos;t just fans; they had roles.</div>
+              </div>
+            </div>
+            <div className="stage-row">
+              <span className="stage-num">04</span>
+              <span className="stage-name">Identity</span>
+              <div className="stage-detail">
+                <span className="stage-line">The brand fits into who they are. It becomes part of how they show up in the world.</span>
+                <span className="stage-tactics">co-creation &middot; status tiers &middot; personalisation</span>
+                <div className="flywheel-example">Delta Company members introduced themselves as &lsquo;Delta&rsquo; before they said &lsquo;Ghost Recon player.&rsquo; At US Mobile, the $129 VIP bundle sold out in hours &mdash; not because of the SIM kit, but because being a VIP member meant something.</div>
+              </div>
+            </div>
+            <div className="stage-row">
+              <span className="stage-num">05</span>
+              <span className="stage-name">Advocacy</span>
+              <div className="stage-detail">
+                <span className="stage-line">They recruit, refer and create content. Passionate, authentic, and entirely self-driven.</span>
+                <span className="stage-tactics">referral programs &middot; creator programs &middot; ambassador programs</span>
+                <div className="flywheel-example">50M+ UGC views across Ubisoft&apos;s advocacy programmes. Zero media spend. At BlaBlaCar, first-person brand storytelling (300+ assets) achieved &euro;5 CAC across 22 markets &mdash; because real member stories outperformed any ad creative.</div>
+              </div>
+            </div>
           </div>
 
           <div className="creator-callout">

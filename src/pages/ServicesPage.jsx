@@ -17,71 +17,62 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* ── STRATEGY ── */}
-      <section className="consulting-track">
+      {/* ── SERVICES STATS ── */}
+      <section className="services-stats">
         <div className="container">
-          <div className="track-header">
-            <span className="track-number">01</span>
-            <h2 className="track-title">Strategy &amp; Advisory</h2>
-            <p className="track-description">
-              Clarify your fan growth direction, align your team across brand, product, and community, and build the roadmap. I bridge the silos that most companies struggle with.
-            </p>
-          </div>
-          <div className="offerings-grid">
-            <div className="offering-card">
-              <h3>Fan Growth Strategy</h3>
-              <p>Audit your current fan ecosystem — brand, product, CRM, and community. Define where value is leaking and build a phased plan to capture it.</p>
-              <span className="offering-proof">Built at: Ubisoft (Delta Company &rarr; 500+ creators, 50M+ views, $0 ad spend)</span>
+          <div className="cs-aggregate">
+            <div className="cs-agg-item">
+              <span className="cs-agg-value">50M+</span>
+              <span className="cs-agg-label">Organic Views</span>
             </div>
-            <div className="offering-card">
-              <h3>Fan Engagement Workshops</h3>
-              <p>Half-day or full-day sessions with your team to identify fan opportunities, map your retention gaps, and prioritise high-impact initiatives.</p>
-              <span className="offering-proof">Ran at: Ubisoft EMEA (18 subsidiaries onboarded, 100+ hrs/month ops work eliminated)</span>
+            <div className="cs-agg-item">
+              <span className="cs-agg-value">&euro;5</span>
+              <span className="cs-agg-label">CAC</span>
             </div>
-            <div className="offering-card">
-              <h3>Fractional Leadership</h3>
-              <p>Embedded strategic support as a fractional Head of Fan Growth — bridging brand, product, and community without the full-time overhead.</p>
-              <span className="offering-proof">Currently: Magic (founding team, fan growth &amp; engagement for entertainment). Previously: US Mobile (interim, reporting to CEO)</span>
+            <div className="cs-agg-item">
+              <span className="cs-agg-value">$0</span>
+              <span className="cs-agg-label">Ad Spend</span>
             </div>
-            <div className="offering-card">
-              <h3>Brand &amp; Retention Audits</h3>
-              <p>Deep-dive into your brand positioning, lifecycle engagement, and growth loops. You get a clear picture of what&apos;s driving repeat behaviour — and what isn&apos;t.</p>
-              <span className="offering-proof">Built at: BlaBlaCar (SWOT review &rarr; &minus;90% ad-hoc requests, freeing design team for strategic work)</span>
+            <div className="cs-agg-item">
+              <span className="cs-agg-value">22</span>
+              <span className="cs-agg-label">Markets</span>
+            </div>
+            <div className="cs-agg-item">
+              <span className="cs-agg-value">500+</span>
+              <span className="cs-agg-label">Leaders</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── EXECUTION ── */}
+      {/* ── OFFERINGS ── */}
       <section className="consulting-track">
         <div className="container">
-          <div className="track-header">
-            <span className="track-number">02</span>
-            <h2 className="track-title">Hands-On Execution</h2>
-            <p className="track-description">
-              I don&apos;t just advise — I build. Participation systems, creator ecosystems, and retention mechanics that turn fan energy into measurable business results.
-            </p>
-          </div>
-          <div className="offerings-grid">
-            <div className="offering-card">
-              <h3>Creator-Led Growth</h3>
-              <p>Structure creators not as one-off promo, but as a repeatable media and participation channel. Recruitment, onboarding, content frameworks, and performance tracking.</p>
-              <span className="offering-proof">Built at: Ubisoft (Delta Company — 10K applications for 5 spots, E3 stage launch to 10M viewers)</span>
+          <div className="offerings-grid offerings-grid-2col">
+            <div className="offering-card offering-card-priced">
+              <span className="offering-price">$15K</span>
+              <h3>Fandom Flywheel Diagnostic</h3>
+              <p>A deep-dive audit of your current fan ecosystem: who your fans are, where they drop off, and what&apos;s blocking organic growth. You get a scored assessment across the 5 Flywheel stages plus a prioritised action plan.</p>
+              <span className="offering-proof">Built the audit methodology behind Delta Company (Ubisoft), BlaBlaCar&apos;s brand overhaul, and US Mobile&apos;s community strategy</span>
             </div>
-            <div className="offering-card">
-              <h3>Participation Systems</h3>
-              <p>Build the structures that make people return, contribute, and share. Community spaces, events, and engagement loops that compound over time.</p>
-              <span className="offering-proof">Built at: Azarus (product pivot, 20% of 500K viewers converted to members)</span>
+            <div className="offering-card offering-card-priced offering-card-featured">
+              <span className="offering-price">$45K&ndash;$65K</span>
+              <h3>Fandom Flywheel Blueprint</h3>
+              <p>The full system design. I map your fan journey across all 5 Flywheel stages and deliver the strategy, mechanics, content frameworks, and operational playbooks to build your fan-powered growth engine.</p>
+              <p className="offering-tiers"><strong>Blueprint Core ($45K):</strong> Strategy + system design + 90-day roadmap.<br /><strong>Blueprint + Launch ($60&ndash;65K):</strong> Everything in Core + hands-on support through first activation.</p>
+              <span className="offering-proof">Designed the systems behind Delta Company (50M+ views, $0 spend), BlaBlaCar&apos;s 22-market content engine (&euro;5 CAC), and US Mobile&apos;s community revenue model ($32K in 3 hours)</span>
             </div>
-            <div className="offering-card">
-              <h3>Fan-First Campaigns</h3>
-              <p>Campaign concepts built on fan identity and cultural instinct — not just performance thinking. From superfan product drops to community-generated content.</p>
-              <span className="offering-proof">Built at: US Mobile (Claw Mobile — parody ad campaign, 38% CAC reduction, 88% retention)</span>
+            <div className="offering-card offering-card-priced">
+              <span className="offering-price">$8&ndash;12K/month</span>
+              <h3>Fractional Leadership</h3>
+              <p>I embed in your team as a fractional Head of Fan Growth &amp; Engagement. I run the strategy, manage the team, and ship the work. Best for companies who need senior leadership but aren&apos;t ready for a full-time hire.</p>
+              <span className="offering-proof">Currently: Magic (founding team, fan growth &amp; engagement for entertainment). Previously: US Mobile (6 months in-house, reporting to CEO)</span>
             </div>
-            <div className="offering-card">
-              <h3>Repeat Behaviour Design</h3>
-              <p>Gamified retention systems — streaks, progression, loyalty tiers — designed around fan psychology. Why people stay, participate, and talk.</p>
-              <span className="offering-proof">Built at: US Mobile (gamified landing pages, 50K+ visitors. VIP bundle sold out in 3 hours)</span>
+            <div className="offering-card offering-card-priced">
+              <span className="offering-price">Custom</span>
+              <h3>Campaigns &amp; Activation</h3>
+              <p>Standalone campaign design and execution: creator programs, fan events, gamified experiences, brand content production. For teams that have a strategy but need a senior creative operator to make it happen.</p>
+              <span className="offering-proof">Claw Mobile ad campaign (US Mobile, 38% CAC reduction), BlaBlaCar &times; Live Nation festival partnerships, Azarus &times; 2022 Streamer Awards title sponsorship</span>
             </div>
           </div>
         </div>

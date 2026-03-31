@@ -33,6 +33,14 @@ const portfolioItems = [
     image: null,
     link: null,
   },
+  {
+    title: 'BlaBlaCar \u00d7 Live Nation Festival Partnerships',
+    description:
+      'Official Ridesharing Partner for Latitude, Leeds, Reading. Managed branded festival zones and community activations.',
+    tags: ['Partnerships', 'Brand Activation'],
+    image: null,
+    link: null,
+  },
 ]
 
 export default function PortfolioPage() {

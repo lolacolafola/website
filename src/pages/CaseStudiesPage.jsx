@@ -17,9 +17,9 @@ const caseStudies = [
     challenge:
       'Massive playerbases, no system to activate them as a growth channel.',
     approach:
-      'Designed Delta Company with 5 community clusters (artists, cosplayers, explorers, feedback specialists, tournament players). Launched at E3 2019 to 10M+ viewers. 10K US applications for 5\u201310 spots. Pivoted to feedback engine when Breakpoint launched badly (50% negative \u2192 80% positive sentiment). Scaled to 3 franchises.',
+      'Designed Delta Company with 5 community clusters (artists, cosplayers, explorers, feedback specialists, tournament players). Launched at E3 2019 to 10M+ viewers. 10K US applications for 5\u201310 spots. Pivoted to feedback engine when Breakpoint launched badly (50% negative \u2192 80% positive sentiment). Scaled to 3 franchises. Then proved it was repeatable: built the R6 Siege Community Creator Program (150+ invite-only creators, 6M video views, 2.4M live watch hours, 393K interactions \u2014 Season 1 alone, $0 media spend).',
     takeaway:
-      'Built the system that turned Ubisoft\u2019s players into their most valuable marketing channel.',
+      'Built the system that turned Ubisoft\u2019s players into their most valuable marketing channel. Then proved it was repeatable across multiple franchises.',
   },
   {
     company: 'US Mobile',
@@ -79,6 +79,24 @@ const caseStudies = [
       'Built streamer network. Led product pivot to Chrome extension / Game Ads platform. Delivered 6 game ads in 3 months (Ubisoft, Logitech). Secured title sponsorship of 2022 Streamer Awards.',
     takeaway:
       'Navigated a product pivot, proved market fit at the biggest event of the year.',
+  },
+  {
+    company: 'BlaBlaCar',
+    headline: 'Live Nation Official Ridesharing Partner',
+    hook: 'Branded parking zones at the UK\u2019s biggest festivals.',
+    tags: ['Partnerships', 'Brand Activation', 'Grassroots'],
+    stats: [
+      { value: '3', label: 'Major festivals' },
+      { value: '200+', label: 'Meetup attendees' },
+      { value: '1M', label: 'UK members (contributed)' },
+      { value: '\u20AC5', label: 'CAC across 22 markets' },
+    ],
+    challenge:
+      'UK market had zero brand recognition for BlaBlaCar. Needed high-visibility, trust-building activations to reach a sceptical audience.',
+    approach:
+      'Secured Live Nation as Official Ridesharing Partner \u2014 unprecedented for a carpooling platform. Managed branded festival parking zones and community tents at Latitude, Leeds, and Reading. Ran on-site activations and community meetups. Combined festivals with grassroots CRM (35% open rate, 12% CTR \u2014 best in company) and social community building.',
+    takeaway:
+      'Turned festivals into a trust-building channel that made carpooling feel culturally normal in the UK. The kind of work that doesn\u2019t show up in dashboards but changes how people feel about your brand.',
   },
 ]
 
