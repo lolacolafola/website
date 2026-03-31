@@ -10,6 +10,8 @@ export default function Layout() {
           <NavLink to="/" className="nav-logo">Laura Cordrey</NavLink>
           <div className="nav-links">
             <NavLink to="/" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'} end>Home</NavLink>
+            <NavLink to="/case-studies" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Case Studies</NavLink>
+            <NavLink to="/portfolio" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Portfolio</NavLink>
             <NavLink to="/services" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Services</NavLink>
             <NavLink to="/flywheel" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Fandom Flywheel</NavLink>
             <a href={CALENDLY_URL} className="nav-cta" target="_blank" rel="noopener noreferrer">Book a Call</a>

@@ -31,18 +31,22 @@ export default function ServicesPage() {
             <div className="offering-card">
               <h3>Fan Growth Strategy</h3>
               <p>Audit your current fan ecosystem — brand, product, CRM, and community. Define where value is leaking and build a phased plan to capture it.</p>
+              <span className="offering-proof">Built at: Ubisoft (Delta Company &rarr; 500+ creators, 50M+ views, $0 ad spend)</span>
             </div>
             <div className="offering-card">
               <h3>Fan Engagement Workshops</h3>
               <p>Half-day or full-day sessions with your team to identify fan opportunities, map your retention gaps, and prioritise high-impact initiatives.</p>
+              <span className="offering-proof">Ran at: Ubisoft EMEA (18 subsidiaries onboarded, 100+ hrs/month ops work eliminated)</span>
             </div>
             <div className="offering-card">
               <h3>Fractional Leadership</h3>
               <p>Embedded strategic support as a fractional Head of Fan Growth — bridging brand, product, and community without the full-time overhead.</p>
+              <span className="offering-proof">Currently: Magic (founding team, fan growth &amp; engagement for entertainment). Previously: US Mobile (interim, reporting to CEO)</span>
             </div>
             <div className="offering-card">
               <h3>Brand &amp; Retention Audits</h3>
               <p>Deep-dive into your brand positioning, lifecycle engagement, and growth loops. You get a clear picture of what&apos;s driving repeat behaviour — and what isn&apos;t.</p>
+              <span className="offering-proof">Built at: BlaBlaCar (SWOT review &rarr; &minus;90% ad-hoc requests, freeing design team for strategic work)</span>
             </div>
           </div>
         </div>
@@ -62,18 +66,22 @@ export default function ServicesPage() {
             <div className="offering-card">
               <h3>Creator-Led Growth</h3>
               <p>Structure creators not as one-off promo, but as a repeatable media and participation channel. Recruitment, onboarding, content frameworks, and performance tracking.</p>
+              <span className="offering-proof">Built at: Ubisoft (Delta Company — 10K applications for 5 spots, E3 stage launch to 10M viewers)</span>
             </div>
             <div className="offering-card">
               <h3>Participation Systems</h3>
               <p>Build the structures that make people return, contribute, and share. Community spaces, events, and engagement loops that compound over time.</p>
+              <span className="offering-proof">Built at: Azarus (product pivot, 20% of 500K viewers converted to members)</span>
             </div>
             <div className="offering-card">
               <h3>Fan-First Campaigns</h3>
               <p>Campaign concepts built on fan identity and cultural instinct — not just performance thinking. From superfan product drops to community-generated content.</p>
+              <span className="offering-proof">Built at: US Mobile (Claw Mobile — parody ad campaign, 38% CAC reduction, 88% retention)</span>
             </div>
             <div className="offering-card">
               <h3>Repeat Behaviour Design</h3>
               <p>Gamified retention systems — streaks, progression, loyalty tiers — designed around fan psychology. Why people stay, participate, and talk.</p>
+              <span className="offering-proof">Built at: US Mobile (gamified landing pages, 50K+ visitors. VIP bundle sold out in 3 hours)</span>
             </div>
           </div>
         </div>

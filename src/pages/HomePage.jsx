@@ -4,8 +4,27 @@ import { Link } from 'react-router-dom'
 const Prism = lazy(() => import('../components/Prism'))
 const CALENDLY_URL = 'https://calendly.com/laura-lcordrey/30min'
 
+const testimonials = [
+  {
+    quote: "Laura is a start-up swiss knife\u2026 with some extra fun.",
+    name: "Nicolas Brusson",
+    title: "CEO of BlaBlaCar"
+  },
+  {
+    quote: "Placeholder \u2014 collect from US Mobile contact",
+    name: "TBC",
+    title: "US Mobile"
+  },
+  {
+    quote: "Placeholder \u2014 collect from Ubisoft contact",
+    name: "TBC",
+    title: "Ubisoft"
+  }
+]
+
 export default function HomePage() {
   const [shouldRenderPrism, setShouldRenderPrism] = useState(false)
+  const [activeIndex, setActiveIndex] = useState(0)
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -16,6 +35,13 @@ export default function HomePage() {
     }
     const id = window.setTimeout(() => setShouldRenderPrism(true), 200)
     return () => window.clearTimeout(id)
+  }, [])
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % testimonials.length)
+    }, 5000)
+    return () => clearInterval(timer)
   }, [])
 
   return (
@@ -39,15 +65,13 @@ export default function HomePage() {
           <div className="container">
             <div className="hero-content">
               <div className="hero-credentials">
-                <span>E3 Speaker</span>
+                <span>Fan-Powered Growth Engines</span>
+                <span className="dot">&middot;</span>
+                Ex-Ubisoft, BlaBlaCar, Amazon
                 <span className="dot">&middot;</span>
                 Paris
                 <span className="dot">&middot;</span>
-                London
-                <span className="dot">&middot;</span>
-                New York
-                <span className="dot">&middot;</span>
-                Since 2013
+                NYC
               </div>
               <h1>
                 <span className="highlight">Earn fans,</span><br />not just customers.
@@ -73,6 +97,8 @@ export default function HomePage() {
             <span className="logo-text">Amazon Games</span>
             <span className="logo-text">BlaBlaCar</span>
             <span className="logo-text">US Mobile</span>
+            <span className="logo-text">Azarus</span>
+            <span className="logo-text">Geode/Dazzly</span>
           </div>
         </div>
       </section>
@@ -82,15 +108,18 @@ export default function HomePage() {
         <div className="container">
           <div className="about-brief-content">
             <div className="about-brief-text">
-              <h2>I design, build, and ship.</h2>
+              <h2>I build fan-powered growth engines.</h2>
               <p>
-                I&apos;ve spent 12 years inside consumer tech and video games, at Ubisoft, Amazon Games, BlaBlaCar, and beyond. Building from zero, scaling to millions, and bridging audiences from one product to the next.
+                Not by relying on ad spend. But by building brand experiences people connect with, and designing systems that make audiences do the marketing for you.
               </p>
               <p>
-                For the past few years I&apos;ve been consulting for gaming studios, tech startups and consumer apps, bringing a unique blend to the table: cross-team fluency, product design, gamification thinking, community building, and brand storytelling.
+                I presented Delta Company on the E3 stage to 10 million viewers. Grew BlaBlaCar&apos;s UK community from zero to a million members. Converted 20% of a 500K-viewer Twitch event into platform signups (crashing the servers).
               </p>
               <p>
-                <strong>The outcome?</strong> Love brands people can&apos;t stop talking about. And fans who stay longer, spend more, and bring others with them.
+                12+ years across Ubisoft, Amazon Games, BlaBlaCar, and high-growth startups. Now I help gaming, entertainment, and consumer brands build the fan systems I used to build in-house, as a fractional lead or strategic consultant. I speak product, design, and marketing fluently, which means ideas actually ship.
+              </p>
+              <p>
+                <strong>The outcome?</strong> Fans who stay longer, spend more, and bring others with them.
               </p>
             </div>
             <div className="about-brief-right">
@@ -100,26 +129,29 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── PROOF ── */}
-      <section className="proof-section">
+      {/* ── TESTIMONIALS ── */}
+      <section className="testimonial-section">
         <div className="container">
-          <div className="proof-stats-grid">
-            <div className="proof-stat-item">
-              <div className="proof-stat-metric">60M+ UGC</div>
-              <p className="proof-stat-desc">Ubisoft &middot; community programs</p>
-            </div>
-            <div className="proof-stat-item">
-              <div className="proof-stat-metric">$32K revenue</div>
-              <p className="proof-stat-desc">US Mobile &middot; community bundle</p>
-            </div>
-            <div className="proof-stat-item">
-              <div className="proof-stat-metric">&minus;50% CAC</div>
-              <p className="proof-stat-desc">BlaBlaCar &middot; brand storytelling</p>
-            </div>
-            <div className="proof-stat-item">
-              <div className="proof-stat-metric">+80% MAU</div>
-              <p className="proof-stat-desc">Azarus &middot; Twitch campaign</p>
-            </div>
+          <div className="testimonial-carousel">
+            {testimonials.map((t, i) => (
+              <blockquote
+                key={i}
+                className={`testimonial-card ${i === activeIndex ? 'active' : ''}`}
+              >
+                <p className="testimonial-quote">&ldquo;{t.quote}&rdquo;</p>
+                <cite className="testimonial-cite">&mdash; {t.name}, {t.title}</cite>
+              </blockquote>
+            ))}
+          </div>
+          <div className="testimonial-dots">
+            {testimonials.map((_, i) => (
+              <button
+                key={i}
+                className={`dot ${i === activeIndex ? 'active' : ''}`}
+                onClick={() => setActiveIndex(i)}
+                aria-label={`Testimonial ${i + 1}`}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -131,8 +163,8 @@ export default function HomePage() {
           <div className="paths-grid">
             <Link to="/services" className="path-card">
               <span className="path-badge">Consulting</span>
-              <h3>Fan Growth Strategy &amp; Execution</h3>
-              <p>From participation systems and creator-led growth to retention mechanics and brand-led loyalty — I design and build what makes fans stay.</p>
+              <h3>Fan-Powered Growth Engines</h3>
+              <p>I build the systems that turn audiences into your most effective marketing channel — without paid media. Participation mechanics, creator-led growth, retention loops, brand storytelling. Ubisoft. BlaBlaCar. US Mobile. Azarus.</p>
               <span className="path-link">View services &rarr;</span>
             </Link>
             <Link to="/flywheel" className="path-card path-card-highlight">

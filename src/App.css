@@ -619,6 +619,318 @@
 
 /* ─── PRISM-TINTED SECTION OVERRIDES ─────────── */
 
+/* ─── CASE STUDIES PAGE ─────────────────────── */
+.cs-hero {
+  padding: 140px 0 60px;
+  background: #0D0D0D;
+}
+
+.cs-aggregate {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  margin-top: 40px;
+}
+
+.cs-agg-item {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cs-agg-value {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  color: #4BBFB0;
+  letter-spacing: -1px;
+}
+
+.cs-agg-label {
+  font-size: 12px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cs-list {
+  padding: 40px 0 80px;
+  background: #0D0D0D;
+}
+
+.cs-card {
+  border: 1px solid #1E1E1E;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  background: #141414;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.cs-card:hover,
+.cs-card-open {
+  border-color: #E8A020;
+}
+
+.cs-card-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 28px 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+}
+
+.cs-card-left {
+  flex: 1;
+}
+
+.cs-company {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #E8A020;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.cs-headline {
+  font-size: 22px;
+  font-weight: 800;
+  color: #F5F5F0;
+  margin-bottom: 4px;
+  letter-spacing: -0.5px;
+}
+
+.cs-hook {
+  font-size: 14px;
+  color: #888;
+  margin: 0;
+}
+
+.cs-card-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.cs-tag {
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: #1E1E1E;
+  color: #999;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.cs-toggle {
+  font-size: 24px;
+  color: #E8A020;
+  font-weight: 300;
+  flex-shrink: 0;
+  width: 32px;
+  text-align: center;
+}
+
+.cs-card-body {
+  padding: 0 32px 32px;
+}
+
+.cs-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 24px 0;
+  border-top: 1px solid #1E1E1E;
+  border-bottom: 1px solid #1E1E1E;
+  margin-bottom: 28px;
+}
+
+.cs-stat {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cs-stat-value {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  color: #4BBFB0;
+  letter-spacing: -0.5px;
+}
+
+.cs-stat-label {
+  font-size: 11px;
+  color: #666;
+}
+
+.cs-detail {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px 40px;
+}
+
+.cs-detail-block h4 {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #E8A020;
+  margin-bottom: 8px;
+}
+
+.cs-detail-block p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #999;
+}
+
+.cs-takeaway {
+  grid-column: 1 / -1;
+  padding-top: 20px;
+  border-top: 1px solid #1E1E1E;
+}
+
+.cs-takeaway p {
+  font-size: 15px;
+  font-weight: 600;
+  color: #F5F5F0;
+}
+
+.cs-quote {
+  margin-top: 24px;
+  padding: 20px 24px;
+  background: #1A1A1A;
+  border-radius: 8px;
+  border-left: 3px solid #E8A020;
+}
+
+.cs-quote p {
+  font-size: 16px;
+  font-style: italic;
+  color: #F5F5F0;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.cs-quote cite {
+  font-size: 13px;
+  font-style: normal;
+  color: #E8A020;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .cs-card-header { flex-direction: column; align-items: flex-start; }
+  .cs-card-tags { margin-top: 8px; }
+  .cs-toggle { position: absolute; top: 28px; right: 24px; }
+  .cs-card { position: relative; }
+  .cs-stats-row { grid-template-columns: repeat(2, 1fr); }
+  .cs-detail { grid-template-columns: 1fr; }
+  .cs-aggregate { gap: 24px; flex-wrap: wrap; }
+}
+
+/* ─── PORTFOLIO PAGE ────────────────────────── */
+.portfolio-hero {
+  padding: 140px 0 60px;
+  background: #0D0D0D;
+}
+
+.portfolio-grid-section {
+  padding: 0 0 80px;
+  background: #0D0D0D;
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+}
+
+.portfolio-card {
+  background: #141414;
+  border: 1px solid #1E1E1E;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+}
+
+.portfolio-card:hover {
+  border-color: #E8A020;
+  transform: translateY(-2px);
+}
+
+.portfolio-card-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #1A1A1A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.portfolio-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portfolio-card-placeholder {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+  letter-spacing: -0.5px;
+}
+
+.portfolio-card-body {
+  padding: 20px;
+}
+
+.portfolio-card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #F5F5F0;
+  margin-bottom: 8px;
+}
+
+.portfolio-card-desc {
+  font-size: 14px;
+  color: #999;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.portfolio-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.portfolio-tag {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: #1E1E1E;
+  color: #E8A020;
+  font-weight: 600;
+}
+
 /* ─── FINAL CTA — gold accent ────────────────── */
 .final-cta {
   padding: 120px 0;
@@ -802,39 +1114,76 @@
 
 /* ─── PROOF STATS STRIP ─────────────────────── */
 /* ─── PROOF STATS (homepage) ────────────────── */
-.proof-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 48px 0;
-  margin-top: 48px;
+/* ─── TESTIMONIAL CAROUSEL ──────────────────── */
+.testimonial-section {
+  padding: 80px 0;
+  background: #0D0D0D;
 }
 
-.proof-stat-item {
+.testimonial-carousel {
+  position: relative;
+  max-width: 650px;
+  margin: 0 auto;
+  min-height: 140px;
+}
+
+.testimonial-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-}
-
-.proof-stat-metric {
-  font-family: var(--font-display);
-  font-size: 32px;
-  font-weight: 800;
-  color: #4BBFB0;
-  letter-spacing: -1px;
-  line-height: 1;
-}
-
-.proof-stat-desc {
-  font-size: 14px;
-  color: #4A8A84;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none;
+  border: none;
   margin: 0;
+  padding: 0;
 }
 
-.proof-stat-tag {
-  font-size: 12px;
-  color: #2D6B65;
+.testimonial-card.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.testimonial-quote {
+  font-size: 24px;
+  font-weight: 600;
+  font-style: italic;
+  color: #F5F5F0;
+  line-height: 1.4;
+  margin-bottom: 16px;
+}
+
+.testimonial-cite {
+  font-size: 14px;
+  font-style: normal;
+  color: #E8A020;
+  font-weight: 600;
+}
+
+.testimonial-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.testimonial-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: #333;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.3s ease;
+}
+
+.testimonial-dots .dot.active {
+  background: #E8A020;
 }
 
 /* ─── TWO PATHS TEASE ───────────────────────── */
@@ -973,6 +1322,17 @@
   font-size: 13px;
   line-height: 1.65;
   color: #666;
+}
+
+.offering-proof {
+  display: block;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #1E1E1E;
+  font-size: 11px;
+  color: #E8A020;
+  line-height: 1.5;
+  font-style: italic;
 }
 
 /* ─── HOW I WORK ────────────────────────────── */
