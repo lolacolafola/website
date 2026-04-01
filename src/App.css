@@ -1217,6 +1217,75 @@
 
 /* ─── PROOF STATS STRIP ─────────────────────── */
 /* ─── PROOF STATS (homepage) ────────────────── */
+
+/* ─── STORY BEATS ───────────────────────────── */
+.story-section {
+  padding: 80px 0;
+  background: #0D0D0D;
+}
+
+.story-beats {
+  max-width: 580px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.story-beat {
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.story-beat.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.story-beat-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 20px;
+  color: #E8A020;
+}
+
+.story-beat-text {
+  font-size: 22px;
+  font-weight: 500;
+  color: #F5F5F0;
+  line-height: 1.5;
+}
+
+.story-beat-accent {
+  display: block;
+  margin-top: 8px;
+  font-size: 14px;
+  color: #4BBFB0;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.story-ctas {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.story-cta {
+  font-size: 14px;
+  color: #E8A020;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.story-cta:hover {
+  color: #F5F5F0;
+}
+
 /* ─── TESTIMONIAL CAROUSEL ──────────────────── */
 .testimonial-section {
   padding: 80px 0;

@@ -4,6 +4,71 @@ import { Link } from 'react-router-dom'
 const Prism = lazy(() => import('../components/Prism'))
 const CALENDLY_URL = 'https://calendly.com/laura-lcordrey/30min'
 
+const storyBeats = [
+  {
+    icon: "trending-up",
+    text: "Most brands pay more every year to reach the same people.",
+  },
+  {
+    icon: "users",
+    text: "Meanwhile, their biggest fans are already there \u2014 spending, sharing, creating \u2014 with no system behind it.",
+  },
+  {
+    icon: "git-merge",
+    text: "I\u2019ve spent 12 years at the intersection of product-led growth and fan-led growth. I found the gap between them.",
+  },
+  {
+    icon: "refresh-cw",
+    text: "Fan-powered growth is a system that turns your audience into your most effective marketing channel \u2014 without paid media.",
+    accent: "This is my methodology."
+  },
+  {
+    icon: "unlock",
+    text: "I help product-led consumer brands find revenue where they didn\u2019t know it existed.",
+    ctas: [
+      { label: "See how it works \u2192", href: "/flywheel" },
+      { label: "See the results \u2192", href: "/case-studies" }
+    ]
+  }
+]
+
+const beatIcons = {
+  "trending-up": (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+      <polyline points="17 6 23 6 23 12" />
+    </svg>
+  ),
+  "users": (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
+  ),
+  "git-merge": (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="18" cy="18" r="3" />
+      <circle cx="6" cy="6" r="3" />
+      <path d="M6 21V9a9 9 0 0 0 9 9" />
+    </svg>
+  ),
+  "refresh-cw": (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="23 4 23 10 17 10" />
+      <polyline points="1 20 1 14 7 14" />
+      <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+    </svg>
+  ),
+  "unlock": (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+      <path d="M7 11V7a5 5 0 0 1 9.9-1" />
+    </svg>
+  )
+}
+
 const testimonials = [
   {
     quote: "Laura is a start-up swiss knife\u2026 with some extra fun.",
@@ -42,6 +107,21 @@ export default function HomePage() {
       setActiveIndex((prev) => (prev + 1) % testimonials.length)
     }, 5000)
     return () => clearInterval(timer)
+  }, [])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible')
+          }
+        })
+      },
+      { threshold: 0.3 }
+    )
+    document.querySelectorAll('.story-beat').forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
   }, [])
 
   return (
@@ -124,6 +204,52 @@ export default function HomePage() {
             </div>
             <div className="about-brief-right">
               <img src="/Ubisoft+Debuts+New+Products+E3+Gaming+Event+UNgBGdNUMR-x 2.jpg" alt="Laura Cordrey speaking at E3" className="about-photo" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── STORY BEATS ── */}
+      <section className="story-section">
+        <div className="container">
+          <div className="story-beats">
+            {storyBeats.map((beat, i) => (
+              <div key={i} className="story-beat">
+                <div className="story-beat-icon">{beatIcons[beat.icon]}</div>
+                <p className="story-beat-text">{beat.text}</p>
+                {beat.accent && <span className="story-beat-accent">{beat.accent}</span>}
+                {beat.ctas && (
+                  <div className="story-ctas">
+                    {beat.ctas.map((cta, j) => (
+                      <Link key={j} to={cta.href} className="story-cta">{cta.label}</Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── PROOF STATS ── */}
+      <section className="home-stats">
+        <div className="container">
+          <div className="cs-aggregate">
+            <div className="cs-agg-item">
+              <span className="cs-agg-value">50M+</span>
+              <span className="cs-agg-label">Organic Views</span>
+            </div>
+            <div className="cs-agg-item">
+              <span className="cs-agg-value">€5</span>
+              <span className="cs-agg-label">CAC</span>
+            </div>
+            <div className="cs-agg-item">
+              <span className="cs-agg-value">$0</span>
+              <span className="cs-agg-label">Ad Spend</span>
+            </div>
+            <div className="cs-agg-item">
+              <span className="cs-agg-value">500+</span>
+              <span className="cs-agg-label">Community Leaders</span>
             </div>
           </div>
         </div>

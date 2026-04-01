@@ -100,13 +100,6 @@ const caseStudies = [
   },
 ]
 
-const aggregateStats = [
-  { value: '50M+', label: 'views' },
-  { value: '\u221238%', label: 'CAC' },
-  { value: '$0', label: 'Ad Spend' },
-  { value: '500+', label: 'Leaders' },
-]
-
 export default function CaseStudiesPage() {
   const [openIndex, setOpenIndex] = useState(null)
 
@@ -121,14 +114,6 @@ export default function CaseStudiesPage() {
           <p className="section-intro">
             Real results from fan-powered growth systems built at Ubisoft, US&nbsp;Mobile, BlaBlaCar, and Azarus.
           </p>
-          <div className="cs-aggregate">
-            {aggregateStats.map((s, i) => (
-              <div key={i} className="cs-agg-item">
-                <span className="cs-agg-value">{s.value}</span>
-                <span className="cs-agg-label">{s.label}</span>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
