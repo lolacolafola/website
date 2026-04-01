@@ -9,30 +9,35 @@ const stages = [
   {
     name: "Activation",
     summary: "Get passive audiences to act.",
+    pills: ["Fan events", "Creator partnerships"],
     example: "Delta Company launched on the E3 stage to 10M viewers. 10,000 applied from the US for 5 spots. The activation wasn\u2019t an ad \u2014 it was an invitation to belong.",
     source: "Ubisoft"
   },
   {
     name: "Habit",
     summary: "Turn first actions into repeat behaviour.",
+    pills: ["UGC", "Gamification", "Community"],
     example: "Overlay quizzes gave viewers a reason to come back every stream. 90% engagement rate \u2014 because the mechanic made participation the default.",
     source: "Azarus"
   },
   {
     name: "Belonging",
     summary: "Make fans feel part of something bigger.",
+    pills: ["Superfans", "Advocates"],
     example: "Delta Company had 5 community clusters: artists, cosplayers, explorers, feedback specialists, tournament players. Members had roles, not just access.",
     source: "Ubisoft"
   },
   {
     name: "Identity",
     summary: "Fans define themselves through the brand.",
+    pills: ["Brand love"],
     example: "The $129 VIP bundle sold out in 3 hours. Not because of the SIM kit \u2014 because being a VIP member meant something.",
     source: "US Mobile"
   },
   {
     name: "Advocacy",
     summary: "Fans become the marketing channel.",
+    pills: ["Word of mouth", "Referrals", "Organic reach"],
     example: "60M+ UGC views. $0 media spend. The community produced content, recruited members, and defended the brand in public.",
     source: "Ubisoft"
   }
@@ -71,6 +76,11 @@ export default function FlywheelPage() {
                   <div>
                     <h3 className="flywheel-stage-name">{stage.name}</h3>
                     <p className="flywheel-stage-summary">{stage.summary}</p>
+                    <div className="flywheel-stage-pills">
+                      {stage.pills.map((pill, j) => (
+                        <span key={j} className="info-tag info-tag--neutral tag-sm">{pill}</span>
+                      ))}
+                    </div>
                   </div>
                   <span className="flywheel-toggle">{openStage === i ? '\u2212' : '+'}</span>
                 </div>

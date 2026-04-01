@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import GradientText from '../components/GradientText'
 
 const Prism = lazy(() => import('../components/Prism'))
 const CALENDLY_URL = 'https://calendly.com/laura-lcordrey/30min'
@@ -10,28 +11,28 @@ const caseStudyTeasers = [
     stat: "50M+",
     statLabel: "organic views",
     outcome: "$0 ad spend. Fans became the marketing channel.",
-    href: "/portfolio"
+    href: "/case-studies#ubisoft"
   },
   {
     brand: "BlaBlaCar",
     stat: "\u20AC5",
     statLabel: "CAC",
     outcome: "0 to 1M UK members. 22 markets. One creative system.",
-    href: "/portfolio"
+    href: "/case-studies#blablacar"
   },
   {
     brand: "US Mobile",
     stat: "$32K",
     statLabel: "in 3 hours",
     outcome: "Community monetised directly for the first time.",
-    href: "/portfolio"
+    href: "/case-studies#us-mobile"
   },
   {
     brand: "Azarus",
     stat: "20%",
     statLabel: "viewer \u2192 member",
     outcome: "500K peak viewers. Servers crashed.",
-    href: "/portfolio"
+    href: "/case-studies#azarus"
   }
 ]
 
@@ -146,51 +147,34 @@ export default function HomePage() {
         <div className="container">
           <div className="fpg-intro">
             <h2 className="fpg-headline">
-              The love is there. Now turn it into growth.
+              The love is there.{' '}
+              <GradientText
+                colors={['#E8A020', '#4BBFB0', '#F5F5F0', '#E8A020']}
+                animationSpeed={8}
+              >
+                Now turn it into growth.
+              </GradientText>
             </h2>
             <p className="fpg-intro-text">
               Your most passionate users are your best untapped marketing channel. They refer friends, defend your brand, spend more — but only if you give them the system to do it. That&apos;s what I build.
             </p>
           </div>
 
-          <div className="infographic">
-            <p className="info-bridge">Fans outperform average customers in every metric that matters.</p>
-
-            <div className="info-tags info-tags--center">
-              <span className="info-tag info-tag--neutral tag-lg">Word of mouth</span>
-              <span className="info-tag info-tag--neutral">Referrals</span>
-              <span className="info-tag info-tag--neutral tag-lg">Community</span>
-              <span className="info-tag info-tag--neutral tag-sm">UGC</span>
-              <span className="info-tag info-tag--neutral tag-lg">Superfans</span>
-              <span className="info-tag info-tag--neutral">Creator partnerships</span>
-              <span className="info-tag info-tag--neutral tag-sm">Fan events</span>
-              <span className="info-tag info-tag--neutral">Advocates</span>
-              <span className="info-tag info-tag--neutral tag-sm">Organic reach</span>
-              <span className="info-tag info-tag--neutral">Brand love</span>
-            </div>
-
-            <div className="info-stats">
-              <div className="info-stat info-stat--gold">
-                <span className="info-stat-value">66–80%</span>
-                <span className="info-stat-label">more spend</span>
-              </div>
-              <div className="info-stat info-stat--gold">
-                <span className="info-stat-value">2–3×</span>
-                <span className="info-stat-label">longer LTV</span>
-              </div>
-              <div className="info-stat info-stat--gold">
-                <span className="info-stat-value">4×</span>
-                <span className="info-stat-label">more referrals</span>
-              </div>
-            </div>
-
-            <p className="info-sources">
-              Sources: Bain &amp; Company · Nielsen · Harvard Business Review · Wharton School of Business
-            </p>
+          <div className="fpg-cta">
+            <Link to="/flywheel" className="cta-button">My system: The Fandom Flywheel&trade; &rarr;</Link>
           </div>
 
-          <div className="fpg-cta">
-            <Link to="/flywheel" className="cta-teal">See the Fandom Flywheel →</Link>
+          <p className="fpg-proof-intro">See it in action:</p>
+          <div className="case-teaser-grid">
+            {caseStudyTeasers.map((cs, i) => (
+              <Link key={i} to={cs.href} className="case-teaser-card">
+                <span className="case-teaser-brand">{cs.brand}</span>
+                <span className="case-teaser-stat">{cs.stat}</span>
+                <span className="case-teaser-stat-label">{cs.statLabel}</span>
+                <p className="case-teaser-outcome">{cs.outcome}</p>
+                <span className="case-teaser-cta">Read the case study &rarr;</span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -235,23 +219,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── CASE STUDY TEASERS ── */}
-      <section className="case-teasers">
-        <div className="container">
-          <h2 className="section-title">It works. Here&apos;s the proof.</h2>
-          <div className="case-teaser-grid">
-            {caseStudyTeasers.map((cs, i) => (
-              <Link key={i} to={cs.href} className="case-teaser-card">
-                <span className="case-teaser-brand">{cs.brand}</span>
-                <span className="case-teaser-stat">{cs.stat}</span>
-                <span className="case-teaser-stat-label">{cs.statLabel}</span>
-                <p className="case-teaser-outcome">{cs.outcome}</p>
-                <span className="case-teaser-cta">Read the case study &rarr;</span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ── TESTIMONIALS ── */}
       <section className="testimonial-section">

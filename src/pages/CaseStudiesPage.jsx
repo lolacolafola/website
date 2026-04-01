@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 
 const CALENDLY_URL = 'https://calendly.com/laura-lcordrey/30min'
 
 const caseStudies = [
   {
+    id: 'ubisoft',
     company: 'Ubisoft',
     headline: '$500K+ in earned media value',
     hook: 'Zero ad spend. 50M+ organic views.',
@@ -22,6 +24,7 @@ const caseStudies = [
       'Built the system that turned Ubisoft\u2019s players into their most valuable marketing channel. Then proved it was repeatable across multiple franchises.',
   },
   {
+    id: 'us-mobile',
     company: 'US Mobile',
     headline: '$32K revenue in 3 hours',
     hook: 'From a free SIM kit to a $129 fan bundle.',
@@ -40,6 +43,7 @@ const caseStudies = [
       'Proved a community-first company can monetise its fans directly.',
   },
   {
+    id: 'blablacar',
     company: 'BlaBlaCar',
     headline: '0 \u2192 1M members',
     hook: '\u20AC5 CAC. 22 markets. One creative system.',
@@ -63,6 +67,7 @@ const caseStudies = [
       'Three promotions in four years. Launched a market, fixed the ops, built the creative engine.',
   },
   {
+    id: 'azarus',
     company: 'Azarus',
     headline: '20% of 500K viewers became members',
     hook: 'Product pivot. Team of 8. Servers crashed.',
@@ -81,6 +86,7 @@ const caseStudies = [
       'Navigated a product pivot, proved market fit at the biggest event of the year.',
   },
   {
+    id: 'blablacar-festivals',
     company: 'BlaBlaCar',
     headline: 'Live Nation Official Ridesharing Partner',
     hook: 'Branded parking zones at the UK\u2019s biggest festivals.',
@@ -102,6 +108,20 @@ const caseStudies = [
 
 export default function CaseStudiesPage() {
   const [openIndex, setOpenIndex] = useState(null)
+  const location = useLocation()
+
+  useEffect(() => {
+    const hash = location.hash.replace('#', '')
+    if (hash) {
+      const idx = caseStudies.findIndex((cs) => cs.id === hash)
+      if (idx !== -1) {
+        setOpenIndex(idx)
+        setTimeout(() => {
+          document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }, 100)
+      }
+    }
+  }, [location.hash])
 
   const toggle = (i) => setOpenIndex(openIndex === i ? null : i)
 
@@ -122,6 +142,7 @@ export default function CaseStudiesPage() {
           {caseStudies.map((cs, i) => (
             <div
               key={i}
+              id={cs.id}
               className={`cs-card ${openIndex === i ? 'cs-card-open' : ''}`}
             >
               <button className="cs-card-header" onClick={() => toggle(i)}>

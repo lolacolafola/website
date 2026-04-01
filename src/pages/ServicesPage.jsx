@@ -45,36 +45,93 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* ── QUALIFYING SECTION ── */}
+      <section className="qualifying-section">
+        <div className="container">
+          <h2 className="qualifying-title">You might be here if&hellip;</h2>
+          <ul className="qualifying-list">
+            <li>You have a loyal user base but acquisition is still dominated by paid spend</li>
+            <li>You have fans — people who genuinely love what you&apos;ve built — but no system to activate them</li>
+            <li>Retention is flat despite strong product quality</li>
+            <li>Your community exists, but it&apos;s not connected to your growth metrics</li>
+          </ul>
+          <p className="qualifying-close">If two or more of these sound familiar, this is where we start.</p>
+        </div>
+      </section>
+
       {/* ── OFFERINGS ── */}
       <section className="consulting-track">
         <div className="container">
-          <div className="offerings-grid offerings-grid-2col">
-            <div className="offering-card offering-card-priced">
-              <span className="offering-price">$15K</span>
-              <h3>Fandom Flywheel Diagnostic</h3>
-              <p>A deep-dive audit of your current fan ecosystem: who your fans are, where they drop off, and what&apos;s blocking organic growth. You get a scored assessment across the 5 Flywheel stages plus a prioritised action plan.</p>
-              <span className="offering-proof">Built the audit methodology behind Delta Company (Ubisoft), BlaBlaCar&apos;s brand overhaul, and US Mobile&apos;s community strategy</span>
+
+          {/* Fandom Flywheel — umbrella card with 3 tiers */}
+          <div className="flywheel-offering-card">
+            <div className="flywheel-offering-header">
+              <span className="flywheel-offering-badge">Fandom Flywheel&trade;</span>
+              <h2 className="flywheel-offering-title">My core methodology, in three stages.</h2>
+              <p className="flywheel-offering-intro">Each tier builds on the last — start with clarity, then design the system, then launch it.</p>
             </div>
-            <div className="offering-card offering-card-priced offering-card-featured">
-              <span className="offering-price">$45K&ndash;$65K</span>
-              <h3>Fandom Flywheel Blueprint</h3>
-              <p>The full system design. I map your fan journey across all 5 Flywheel stages and deliver the strategy, mechanics, content frameworks, and operational playbooks to build your fan-powered growth engine.</p>
-              <p className="offering-tiers"><strong>Blueprint Core ($45K):</strong> Strategy + system design + 90-day roadmap.<br /><strong>Blueprint + Launch ($60&ndash;65K):</strong> Everything in Core + hands-on support through first activation.</p>
-              <span className="offering-proof">Designed the systems behind Delta Company (50M+ views, $0 spend), BlaBlaCar&apos;s 22-market content engine (&euro;5 CAC), and US Mobile&apos;s community revenue model ($32K in 3 hours)</span>
+            <div className="flywheel-tiers">
+
+              <div className="flywheel-tier">
+                <span className="flywheel-tier-number">01</span>
+                <div className="flywheel-tier-price">$15K</div>
+                <h3 className="flywheel-tier-name">Diagnostic</h3>
+                <p className="flywheel-tier-outcome"><strong>You will get:</strong> Clarity on where your fan value is leaking and a prioritised roadmap to capture it.</p>
+                <p className="flywheel-tier-desc">A 2-week audit across brand, product, and community. Scored assessment across all 5 Flywheel stages plus a prioritised action plan with commercial impact sizing.</p>
+                <ul className="flywheel-tier-deliverables">
+                  <li>Fandom Flywheel audit across all five stages</li>
+                  <li>Gap analysis with commercial impact sizing</li>
+                  <li>Priority roadmap ranked by ROI</li>
+                  <li>90-min leadership presentation</li>
+                </ul>
+              </div>
+
+              <div className="flywheel-tier flywheel-tier--featured">
+                <span className="flywheel-tier-number">02</span>
+                <div className="flywheel-tier-price">$45K</div>
+                <h3 className="flywheel-tier-name">Diagnostic + Blueprint</h3>
+                <p className="flywheel-tier-outcome"><strong>You will get:</strong> The full audit plus a complete fan system designed and ready to execute.</p>
+                <p className="flywheel-tier-desc">Everything in the Diagnostic, then 6–8 weeks to design your complete Fandom Flywheel from Activation through to Advocacy.</p>
+                <ul className="flywheel-tier-deliverables">
+                  <li>Everything in Diagnostic</li>
+                  <li>Complete five-stage Flywheel design</li>
+                  <li>Creator and community program frameworks</li>
+                  <li>90-day implementation roadmap</li>
+                  <li>Success metrics and measurement framework</li>
+                </ul>
+              </div>
+
+              <div className="flywheel-tier">
+                <span className="flywheel-tier-number">03</span>
+                <div className="flywheel-tier-price">$60&ndash;65K</div>
+                <h3 className="flywheel-tier-name">Diagnostic + Blueprint + Launch</h3>
+                <p className="flywheel-tier-outcome"><strong>You will get:</strong> The full system designed and launched — from audit to live activation.</p>
+                <p className="flywheel-tier-desc">Everything in Diagnostic + Blueprint, plus I stay in to oversee the first launch — creator program, campaign, or community pilot — from design to live.</p>
+                <ul className="flywheel-tier-deliverables">
+                  <li>Everything in Diagnostic + Blueprint</li>
+                  <li>Hands-on first activation support</li>
+                  <li>AI-enabled content and automation workflows</li>
+                  <li>Cross-functional workshop sessions</li>
+                </ul>
+              </div>
+
             </div>
+          </div>
+
+          {/* Other engagements */}
+          <div className="other-offerings-grid">
             <div className="offering-card offering-card-priced">
               <span className="offering-price">$8&ndash;12K/month</span>
               <h3>Fractional Leadership</h3>
               <p>I embed in your team as a fractional Head of Fan Growth &amp; Engagement. I run the strategy, manage the team, and ship the work. Best for companies who need senior leadership but aren&apos;t ready for a full-time hire.</p>
-              <span className="offering-proof">Currently: Magic (founding team, fan growth &amp; engagement for entertainment). Previously: US Mobile (6 months in-house, reporting to CEO)</span>
             </div>
             <div className="offering-card offering-card-priced">
               <span className="offering-price">Custom</span>
               <h3>Campaigns &amp; Activation</h3>
               <p>Standalone campaign design and execution: creator programs, fan events, gamified experiences, brand content production. For teams that have a strategy but need a senior creative operator to make it happen.</p>
-              <span className="offering-proof">Claw Mobile ad campaign (US Mobile, 38% CAC reduction), BlaBlaCar &times; Live Nation festival partnerships, Azarus &times; 2022 Streamer Awards title sponsorship</span>
             </div>
           </div>
+
         </div>
       </section>
 
@@ -127,6 +184,9 @@ export default function ServicesPage() {
           <h2>Let&apos;s figure out what you need.</h2>
           <p>
             Every engagement starts with a conversation. Tell me what&apos;s going on and we&apos;ll find the right way to work together.
+          </p>
+          <p className="calculator-cta">
+            Not sure where to start? <Link to="/calculator" className="calculator-link">Run the numbers first &rarr;</Link>
           </p>
           <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">
             Book a Free 30-Min Call
