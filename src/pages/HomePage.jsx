@@ -159,6 +159,19 @@ export default function HomePage() {
             </p>
           </div>
 
+        </div>
+      </section>
+
+      {/* ── QUALIFYING ── */}
+      <section className="hp-qualifying">
+        <div className="container">
+          <ul className="hp-qualifying-list">
+            <li>Loyal users, but growth still depends on paid spend</li>
+            <li>Fans who love the product, but no system to activate them</li>
+            <li>Retention is flat despite strong product quality</li>
+            <li>Community exists, but isn&apos;t connected to growth metrics</li>
+          </ul>
+          <p className="hp-qualifying-bridge">Sound familiar?</p>
           <div className="fpg-cta">
             <Link to="/flywheel" className="cta-button">My system: The Fandom Flywheel&trade; &rarr;</Link>
           </div>
