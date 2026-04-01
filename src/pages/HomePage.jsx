@@ -1,7 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import GradientText from '../components/GradientText'
-
 const Prism = lazy(() => import('../components/Prism'))
 const CALENDLY_URL = 'https://calendly.com/laura-lcordrey/30min'
 
@@ -163,18 +162,25 @@ export default function HomePage() {
           <div className="fpg-cta">
             <Link to="/flywheel" className="cta-button">My system: The Fandom Flywheel&trade; &rarr;</Link>
           </div>
+        </div>
+      </section>
 
-          <p className="fpg-proof-intro">See it in action:</p>
-          <div className="case-teaser-grid">
+      {/* ── SEE IT IN ACTION ── */}
+      <section className="results-section bg-elevated">
+        <div className="container">
+          <div className="case-teaser-scroll">
             {caseStudyTeasers.map((cs, i) => (
               <Link key={i} to={cs.href} className="case-teaser-card">
                 <span className="case-teaser-brand">{cs.brand}</span>
                 <span className="case-teaser-stat">{cs.stat}</span>
                 <span className="case-teaser-stat-label">{cs.statLabel}</span>
                 <p className="case-teaser-outcome">{cs.outcome}</p>
-                <span className="case-teaser-cta">Read the case study &rarr;</span>
               </Link>
             ))}
+          </div>
+          <p className="results-intro">What fan-powered growth looks like in practice</p>
+          <div className="fpg-see-more">
+            <Link to="/case-studies">See more &rarr;</Link>
           </div>
         </div>
       </section>

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 
-const GAP = 24
-const CARD_RATIO = 0.38 // 38% of wrapper width
+const GAP = 20
+const CARD_RATIO = 0.31 // 31% of wrapper width — shows 3 cards
 
 export default function ProofCarousel({ children }) {
   const [active, setActive] = useState(0)
@@ -14,8 +14,15 @@ export default function ProofCarousel({ children }) {
     if (!wrapperRef.current) return 0
     const ww = wrapperRef.current.offsetWidth
     const cardW = ww * CARD_RATIO
-    const peek = (ww - cardW) / 2
-    return peek - index * (cardW + GAP)
+    const totalTrack = count * cardW + (count - 1) * GAP
+    // If all cards fit, no offset needed
+    if (totalTrack <= ww) return (ww - totalTrack) / 2
+    // Otherwise shift so active card is centered, but clamp edges
+    const center = (ww - cardW) / 2
+    const raw = center - index * (cardW + GAP)
+    const maxOffset = 0
+    const minOffset = ww - totalTrack
+    return Math.max(minOffset, Math.min(maxOffset, raw))
   }
 
   useEffect(() => {
