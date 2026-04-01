@@ -383,6 +383,30 @@
   font-weight: 300;
 }
 
+.flywheel-steps {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.flywheel-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #F5F5F0;
+  background: rgba(75, 191, 176, 0.12);
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+.flywheel-step-arrow {
+  color: #4BBFB0;
+  font-size: 14px;
+  margin-left: 4px;
+}
+
 .flywheel-stage-example {
   margin-top: 20px;
   padding: 16px 20px;

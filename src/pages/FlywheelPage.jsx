@@ -10,6 +10,7 @@ const stages = [
     name: "Activation",
     summary: "Get passive audiences to act.",
     pills: ["Fan events", "Creator partnerships"],
+    steps: ["Audit", "Strategy", "Creator Brief", "Launch"],
     example: "Delta Company launched on the E3 stage to 10M viewers. 10,000 applied from the US for 5 spots. The activation wasn\u2019t an ad \u2014 it was an invitation to belong.",
     source: "Ubisoft"
   },
@@ -17,6 +18,7 @@ const stages = [
     name: "Habit",
     summary: "Turn first actions into repeat behaviour.",
     pills: ["UGC", "Gamification", "Community"],
+    steps: ["Map Touchpoints", "Gamification Design", "Build Loops", "Measure"],
     example: "Overlay quizzes gave viewers a reason to come back every stream. 90% engagement rate \u2014 because the mechanic made participation the default.",
     source: "Azarus"
   },
@@ -24,6 +26,7 @@ const stages = [
     name: "Belonging",
     summary: "Make fans feel part of something bigger.",
     pills: ["Superfans", "Advocates"],
+    steps: ["Segment Fans", "Design Roles", "Build Spaces", "Activate Leaders"],
     example: "Delta Company had 5 community clusters: artists, cosplayers, explorers, feedback specialists, tournament players. Members had roles, not just access.",
     source: "Ubisoft"
   },
@@ -31,6 +34,7 @@ const stages = [
     name: "Identity",
     summary: "Fans define themselves through the brand.",
     pills: ["Brand love"],
+    steps: ["Define Status Tiers", "Design Rewards", "Launch Program", "Scale"],
     example: "The $129 VIP bundle sold out in 3 hours. Not because of the SIM kit \u2014 because being a VIP member meant something.",
     source: "US Mobile"
   },
@@ -38,6 +42,7 @@ const stages = [
     name: "Advocacy",
     summary: "Fans become the marketing channel.",
     pills: ["Word of mouth", "Referrals", "Organic reach"],
+    steps: ["Referral System", "UGC Framework", "Ambassador Program", "Amplify"],
     example: "60M+ UGC views. $0 media spend. The community produced content, recruited members, and defended the brand in public.",
     source: "Ubisoft"
   }
@@ -86,6 +91,13 @@ export default function FlywheelPage() {
                 </div>
                 {openStage === i && (
                   <div className="flywheel-stage-example">
+                    <div className="flywheel-steps">
+                      {stage.steps.map((step, k) => (
+                        <span key={k} className="flywheel-step">
+                          {step}{k < stage.steps.length - 1 && <span className="flywheel-step-arrow">&rarr;</span>}
+                        </span>
+                      ))}
+                    </div>
                     <p>{stage.example}</p>
                     <cite>&mdash; {stage.source}</cite>
                   </div>
