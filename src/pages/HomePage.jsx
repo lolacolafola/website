@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import GradientText from '../components/GradientText'
 import SpotlightCard from '../components/SpotlightCard'
 import BorderGlow from '../components/BorderGlow'
+import StarBorder from '../components/StarBorder'
+import useReveal from '../hooks/useReveal'
 const Prism = lazy(() => import('../components/Prism'))
 const CALENDLY_URL = 'https://calendly.com/laura-lcordrey/30min'
 
@@ -80,6 +82,14 @@ export default function HomePage() {
   const [shouldRenderPrism, setShouldRenderPrism] = useState(false)
   const [activeIndex, setActiveIndex] = useState(0)
 
+  const [resultsRef, resultsVisible] = useReveal()
+  const [bioRef, bioVisible] = useReveal()
+  const [testimonialsRef, testimonialsVisible] = useReveal()
+  const [pathsRef, pathsVisible] = useReveal()
+  const [faqRef, faqVisible] = useReveal()
+  const [qualifyingRef, qualifyingVisible] = useReveal()
+  const [ctaRef, ctaVisible] = useReveal()
+
   useEffect(() => {
     if (typeof window === 'undefined') return
     if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
@@ -120,8 +130,8 @@ export default function HomePage() {
                 Turn your audience into your most powerful growth channel. Earn fans, not just customers.
               </p>
               <div className="hero-actions">
-                <Link to="/services" className="hero-cta">How I Can Help</Link>
-                <a href={CALENDLY_URL} className="hero-cta-secondary" target="_blank" rel="noopener noreferrer">Book a Call</a>
+                <a href={CALENDLY_URL} className="hero-cta" target="_blank" rel="noopener noreferrer">Book a call</a>
+                <a href="#results" className="hero-cta-secondary" onClick={e => { e.preventDefault(); document.getElementById('results').scrollIntoView({ behavior: 'smooth' }) }}>Work with me</a>
               </div>
             </div>
           </div>
@@ -142,7 +152,7 @@ export default function HomePage() {
       </section>
 
       {/* ── RESULTS CARDS ── */}
-      <section className="results-section">
+      <section id="results" ref={resultsRef} className={`results-section reveal ${resultsVisible ? 'visible' : ''}`}>
         <div className="container">
           <h2 className="results-title">
             What happens<br />
@@ -152,48 +162,84 @@ export default function HomePage() {
             Your fans are there waiting, you just need to activate them.
           </p>
           <div
-            className="case-teaser-scroll-wrap"
+            className="case-ticker-wrap"
             ref={el => {
               if (!el) return
-              const scroll = el.querySelector('.case-teaser-scroll')
-              if (!scroll) return
-              const onScroll = () => el.classList.toggle('is-scrolled', scroll.scrollLeft > 20)
-              scroll.addEventListener('scroll', onScroll, { passive: true })
+              const ticker = el.querySelector('.case-ticker')
+              if (!ticker || ticker._dragInit) return
+              ticker._dragInit = true
+
+              let isDragging = false
+              let startX = 0
+              let currentOffset = 0
+
+              const getAnimOffset = () => {
+                const style = getComputedStyle(ticker)
+                const matrix = new DOMMatrix(style.transform)
+                return matrix.m41
+              }
+
+              el.addEventListener('mousedown', e => {
+                isDragging = true
+                startX = e.clientX
+                currentOffset = getAnimOffset()
+                ticker.style.animation = 'none'
+                ticker.style.transform = `translateX(${currentOffset}px)`
+                el.style.cursor = 'grabbing'
+                e.preventDefault()
+              })
+
+              window.addEventListener('mousemove', e => {
+                if (!isDragging) return
+                const delta = e.clientX - startX
+                ticker.style.transform = `translateX(${currentOffset + delta}px)`
+              })
+
+              window.addEventListener('mouseup', () => {
+                if (!isDragging) return
+                isDragging = false
+                el.style.cursor = 'grab'
+                const offset = getAnimOffset()
+                const totalWidth = ticker.scrollWidth / 3
+                const progress = ((-offset % totalWidth) + totalWidth) % totalWidth / totalWidth
+                ticker.style.animation = ''
+                ticker.style.animationDelay = `-${progress * 50}s`
+              })
             }}
           >
-          <div className="case-teaser-scroll">
-            {caseStudyTeasers.map((cs, i) => (
-              <BorderGlow
-                key={i}
-                edgeSensitivity={40}
-                glowColor="75 191 176"
-                backgroundColor="#141414"
-                borderRadius={12}
-                glowRadius={60}
-                glowIntensity={1}
-                animateOnHover={true}
-                colors={['#4BBFB0', '#E8A020', '#4BBFB0']}
-                style={{ flex: '0 0 31%', minWidth: '260px' }}
-              >
-                <div className="case-teaser-card" style={{ border: 'none', borderRadius: 11, height: '100%', boxSizing: 'border-box' }}>
-                  <span className="case-teaser-brand">{cs.brand}</span>
-                  <span className="case-teaser-stat">{cs.stat}</span>
-                  <span className="case-teaser-stat-label">{cs.statLabel}</span>
-                  <p className="case-teaser-outcome">{cs.outcome}</p>
-                </div>
-              </BorderGlow>
-            ))}
-          </div>
+            <div className="case-ticker">
+              {[...caseStudyTeasers, ...caseStudyTeasers, ...caseStudyTeasers].map((cs, i) => (
+                <BorderGlow
+                  key={i}
+                  edgeSensitivity={40}
+                  glowColor="75 191 176"
+                  backgroundColor="#141414"
+                  borderRadius={12}
+                  glowRadius={60}
+                  glowIntensity={1}
+                  animateOnHover={true}
+                  colors={['#4BBFB0', '#E8A020', '#4BBFB0']}
+                  style={{ flex: '0 0 320px' }}
+                >
+                  <div className="case-teaser-card" style={{ border: 'none', borderRadius: 11, height: '100%', boxSizing: 'border-box' }}>
+                    <span className="case-teaser-brand">{cs.brand}</span>
+                    <span className="case-teaser-stat">{cs.stat}</span>
+                    <span className="case-teaser-stat-label">{cs.statLabel}</span>
+                    <p className="case-teaser-outcome">{cs.outcome}</p>
+                  </div>
+                </BorderGlow>
+              ))}
+            </div>
           </div>
           <div className="results-actions">
-            <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">Want the same results? Let&apos;s talk &rarr;</a>
-            <Link to="/case-studies" className="results-see-more">See more case studies &rarr;</Link>
+            <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">Want the same results? Let&apos;s talk <span className="cta-arrow">&rarr;</span></a>
+            <Link to="/case-studies" className="results-see-more">See more case studies <span className="cta-arrow">&rarr;</span></Link>
           </div>
         </div>
       </section>
 
       {/* ── ABOUT (bio card) ── */}
-      <section className="about-brief">
+      <section ref={bioRef} className={`about-brief reveal ${bioVisible ? 'visible' : ''}`}>
         <div className="container">
           <div className="bio-card">
             <figure className="bio-figure">
@@ -212,7 +258,7 @@ export default function HomePage() {
                 I developed my skills at <strong>Ubisoft, Amazon Games, BlaBlaCar</strong> and high-growth startups. Now I&apos;m bringing my playbook to disruptor brands across gaming, entertainment and consumer, ready to change how they do community.
               </p>
               <p>
-                Based in Paris, <strong>bilingual in English and French</strong>, working globally with a strong knowledge of the <strong>American market</strong>, since 2013.
+                Based in Paris, bilingual in English and French, working globally with a strong knowledge of the American market, since 2013.
               </p>
               <p className="bio-signature">Laura Cordrey</p>
             </div>
@@ -234,7 +280,7 @@ export default function HomePage() {
       </section>
 
       {/* ── TESTIMONIALS ── */}
-      <section className="testimonial-section">
+      <section ref={testimonialsRef} className={`testimonial-section reveal ${testimonialsVisible ? 'visible' : ''}`}>
         <div className="container">
           <div className="review-carousel">
             {testimonials.map((t, i) => (
@@ -267,29 +313,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── TWO PATHS TEASE ── */}
-      <section className="paths-tease">
-        <div className="container">
-          <h2 className="section-title">Two ways I can help</h2>
-          <div className="paths-grid">
-            <Link to="/services" className="path-card">
-              <span className="path-badge">Consulting</span>
-              <h3>Fan-Powered Growth Engines</h3>
-              <p>I build the systems that turn audiences into your most effective marketing channel — without paid media. Participation mechanics, creator-led growth, retention loops, brand storytelling. Ubisoft. BlaBlaCar. US Mobile. Azarus.</p>
-              <span className="path-link">View services &rarr;</span>
-            </Link>
-            <Link to="/flywheel" className="path-card path-card-highlight">
-              <span className="path-badge">Methodology</span>
-              <h3>The Fandom Flywheel&trade;</h3>
-              <p>My proprietary five-stage system for turning passive audiences into active fans who drive repeat revenue and organic growth.</p>
-              <span className="path-link">Explore the Flywheel &rarr;</span>
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* ── QUALIFYING ── */}
-      <section className="hp-qualifying bg-elevated border-gold-top">
+      <section ref={qualifyingRef} className={`hp-qualifying bg-elevated reveal ${qualifyingVisible ? 'visible' : ''}`}>
         <div className="container">
           <h2 className="hp-qualifying-title">You might be here if you have&hellip;</h2>
           <ul className="hp-qualifying-list">
@@ -300,13 +325,34 @@ export default function HomePage() {
             <li>A community that isn&apos;t connected to your growth metrics</li>
           </ul>
           <div className="fpg-cta">
-            <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">Sound familiar? Let&apos;s talk &rarr;</a>
+            <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">Sound familiar? Let&apos;s talk <span className="cta-arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </section>
+
+      {/* ── TWO PATHS TEASE ── */}
+      <section ref={pathsRef} className={`paths-tease reveal ${pathsVisible ? 'visible' : ''}`}>
+        <div className="container">
+          <h2 className="section-title">Two ways I can help</h2>
+          <div className="paths-grid">
+            <Link to="/services" className="path-card">
+              <span className="path-badge">Consulting</span>
+              <h3>Fan-Powered Growth Engines</h3>
+              <p>I build the systems that turn audiences into your most effective marketing channel — without paid media. Participation mechanics, creator-led growth, retention loops, brand storytelling. Ubisoft. BlaBlaCar. US Mobile. Azarus.</p>
+              <span className="path-link">View services <span className="cta-arrow">&rarr;</span></span>
+            </Link>
+            <Link to="/flywheel" className="path-card path-card-highlight">
+              <span className="path-badge">Methodology</span>
+              <h3>The Fandom Flywheel&trade;</h3>
+              <p>My proprietary five-stage system for turning passive audiences into active fans who drive repeat revenue and organic growth.</p>
+              <span className="path-link">Explore the flywheel <span className="cta-arrow">&rarr;</span></span>
+            </Link>
           </div>
         </div>
       </section>
 
       {/* ── FAQ ── */}
-      <section className="faq-section border-gold-top">
+      <section ref={faqRef} className={`faq-section reveal ${faqVisible ? 'visible' : ''}`}>
         <div className="container">
           <h2 className="faq-title">Frequently asked questions</h2>
           <div className="faq-list">
@@ -346,25 +392,23 @@ export default function HomePage() {
       </section>
 
       {/* ── FINAL CTA ── */}
-      <section className="fpg-section final-cta bg-dark">
+      <section ref={ctaRef} className={`final-cta-section reveal ${ctaVisible ? 'visible' : ''}`}>
         <div className="container">
-          <div className="fpg-intro">
-            <h2 className="fpg-headline">
+          <div className="final-cta-card">
+            <h2 className="final-cta-headline">
               The love is there.{' '}
               <GradientText
-                colors={['#E8A020', '#4BBFB0', '#F5F5F0', '#E8A020']}
+                colors={['#F5F5F0', '#E8A020', '#F5F5F0']}
                 animationSpeed={8}
               >
                 Now turn it into growth.
               </GradientText>
             </h2>
-            <p className="fpg-intro-text">
+            <p className="final-cta-text">
               Your most passionate users are your best untapped marketing channel. They refer friends, defend your brand, spend more — but only if you give them the system to do it. That&apos;s what I build.
             </p>
-          </div>
-          <div className="fpg-cta">
-            <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">
-              Book a Free 30-Min Call
+            <a href={CALENDLY_URL} className="final-cta-button" target="_blank" rel="noopener noreferrer">
+              Book a free 30-min call
             </a>
           </div>
         </div>
