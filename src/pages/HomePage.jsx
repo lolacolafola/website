@@ -9,30 +9,30 @@ const CALENDLY_URL = 'https://calendly.com/laura-lcordrey/30min'
 const caseStudyTeasers = [
   {
     brand: "Ubisoft",
-    stat: "50M+",
+    stat: <>50M<sup className="bio-stat-plus">+</sup></>,
     statLabel: "organic views",
-    outcome: "$0 ad spend. Fans became the marketing channel.",
+    outcome: "$0 ad spend. Fans became the marketing channel. Powered by UGC.",
     href: "/case-studies#ubisoft"
   },
   {
     brand: "BlaBlaCar",
     stat: "\u20AC5",
     statLabel: "CAC",
-    outcome: "0 to 1M UK members. 22 markets. One creative system.",
+    outcome: "Through targeted storytelling to bring audiences inside the car.",
     href: "/case-studies#blablacar"
   },
   {
     brand: "US Mobile",
     stat: "$32K",
-    statLabel: "in 3 hours",
-    outcome: "Community monetised directly for the first time.",
+    statLabel: "revenue in 3 hours",
+    outcome: "Core community targeted and monetised for the first time.",
     href: "/case-studies#us-mobile"
   },
   {
     brand: "Azarus",
-    stat: "20%",
-    statLabel: "viewer \u2192 member",
-    outcome: "500K peak viewers. Servers crashed.",
+    stat: "90%",
+    statLabel: "engagement rate",
+    outcome: "Live event game design. 500K peak viewers. Servers crashed.",
     href: "/case-studies#azarus"
   }
 ]
@@ -59,17 +59,20 @@ const testimonials = [
   {
     quote: "Laura is a start-up swiss knife\u2026 with some extra fun.",
     name: "Nicolas Brusson",
-    title: "CEO of BlaBlaCar"
+    title: "CEO of BlaBlaCar",
+    photo: null
   },
   {
     quote: "Placeholder \u2014 collect from US Mobile contact",
     name: "TBC",
-    title: "US Mobile"
+    title: "US Mobile",
+    photo: null
   },
   {
     quote: "Placeholder \u2014 collect from Ubisoft contact",
     name: "TBC",
-    title: "Ubisoft"
+    title: "Ubisoft",
+    photo: null
   }
 ]
 
@@ -88,12 +91,7 @@ export default function HomePage() {
     return () => window.clearTimeout(id)
   }, [])
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % testimonials.length)
-    }, 5000)
-    return () => clearInterval(timer)
-  }, [])
+  /* Testimonial carousel is manual — dots only, no auto-rotate */
 
   return (
     <main>
@@ -143,33 +141,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── FAN-POWERED GROWTH INFOGRAPHIC ── */}
-      <section className="fpg-section">
-        <div className="container">
-          <div className="fpg-intro">
-            <h2 className="fpg-headline">
-              The love is there.{' '}
-              <GradientText
-                colors={['#E8A020', '#4BBFB0', '#F5F5F0', '#E8A020']}
-                animationSpeed={8}
-              >
-                Now turn it into growth.
-              </GradientText>
-            </h2>
-            <p className="fpg-intro-text">
-              Your most passionate users are your best untapped marketing channel. They refer friends, defend your brand, spend more — but only if you give them the system to do it. That&apos;s what I build.
-            </p>
-          </div>
-
-          <div className="fpg-cta">
-            <Link to="/flywheel" className="cta-button--outline">My system: The Fandom Flywheel&trade; &rarr;</Link>
-          </div>
-        </div>
-      </section>
-
       {/* ── RESULTS CARDS ── */}
       <section className="results-section">
         <div className="container">
+          <h2 className="results-title">
+            What happens<br />
+            <span className="results-title--gradient">when you focus on your fans</span>
+          </h2>
+          <p className="results-intro">
+            Your fans are there waiting, you just need to activate them.
+          </p>
           <div
             className="case-teaser-scroll-wrap"
             ref={el => {
@@ -190,22 +171,23 @@ export default function HomePage() {
                 borderRadius={12}
                 glowRadius={60}
                 glowIntensity={1}
+                animateOnHover={true}
                 colors={['#4BBFB0', '#E8A020', '#4BBFB0']}
                 style={{ flex: '0 0 31%', minWidth: '260px' }}
               >
-                <Link to={cs.href} className="case-teaser-card" style={{ border: 'none', borderRadius: 11, height: '100%', boxSizing: 'border-box' }}>
+                <div className="case-teaser-card" style={{ border: 'none', borderRadius: 11, height: '100%', boxSizing: 'border-box' }}>
                   <span className="case-teaser-brand">{cs.brand}</span>
                   <span className="case-teaser-stat">{cs.stat}</span>
                   <span className="case-teaser-stat-label">{cs.statLabel}</span>
                   <p className="case-teaser-outcome">{cs.outcome}</p>
-                </Link>
+                </div>
               </BorderGlow>
             ))}
           </div>
           </div>
-          <p className="results-bridge">Want results like these?</p>
-          <div className="fpg-cta">
-            <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">Let&apos;s talk &rarr;</a>
+          <div className="results-actions">
+            <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">Want the same results? Let&apos;s talk &rarr;</a>
+            <Link to="/case-studies" className="results-see-more">See more case studies &rarr;</Link>
           </div>
         </div>
       </section>
@@ -232,7 +214,20 @@ export default function HomePage() {
               <p>
                 Based in Paris, <strong>bilingual in English and French</strong>, working globally with a strong knowledge of the <strong>American market</strong>, since 2013.
               </p>
-              <p className="bio-signature">&mdash; Laura Cordrey</p>
+              <p className="bio-signature">Laura Cordrey</p>
+            </div>
+            <div className="bio-stats">
+              {[
+                { value: <>100M<sup className="bio-stat-plus">+</sup></>, label: "Community Footprint" },
+                { value: "8",    label: "Brands Scaled" },
+                { value: "22",   label: "Markets" },
+                { value: "12",   label: "Years' Experience" },
+              ].map((stat) => (
+                <div className="bio-stat-item" key={stat.label}>
+                  <span className="bio-stat-value">{stat.value}</span>
+                  <span className="bio-stat-label">{stat.label}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -241,14 +236,21 @@ export default function HomePage() {
       {/* ── TESTIMONIALS ── */}
       <section className="testimonial-section">
         <div className="container">
-          <div className="testimonial-carousel">
+          <div className="review-carousel">
             {testimonials.map((t, i) => (
-              <blockquote
-                key={i}
-                className={`testimonial-card ${i === activeIndex ? 'active' : ''}`}
-              >
-                <p className="testimonial-quote">&ldquo;{t.quote}&rdquo;</p>
-                <cite className="testimonial-cite">&mdash; {t.name}, {t.title}</cite>
+              <blockquote key={i} className={`review-card ${i === activeIndex ? 'active' : ''}`}>
+                <p className="review-quote">&ldquo;{t.quote}&rdquo;</p>
+                <div className="review-author">
+                  {t.photo ? (
+                    <img src={t.photo} alt={t.name} className="review-photo" />
+                  ) : (
+                    <div className="review-photo-placeholder" aria-hidden="true" />
+                  )}
+                  <div className="review-info">
+                    <span className="review-name">{t.name}</span>
+                    <span className="review-title">{t.title}</span>
+                  </div>
+                </div>
               </blockquote>
             ))}
           </div>
@@ -264,43 +266,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* ── QUALIFYING ── */}
-      <section className="hp-qualifying bg-elevated">
-        <div className="container">
-          <h2 className="hp-qualifying-title">You might be here if you have&hellip;</h2>
-          <ul className="hp-qualifying-list">
-            <li>Loyal users, but growth still depends on paid spend</li>
-            <li>Fans who love the product, but no system to activate them</li>
-            <li>Flat retention despite strong product quality</li>
-            <li>Engagement spikes around campaigns that then drop flat</li>
-            <li>A community that isn&apos;t connected to your growth metrics</li>
-          </ul>
-          <div className="fpg-cta">
-            <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">Sound familiar? Let&apos;s talk &rarr;</a>
-          </div>
-        </div>
-      </section>
-
-      {/* ── STATS BAR ── */}
-      <section className="stats-bar bg-dark">
-        <div className="container">
-          <div className="stats-bar-grid">
-            {[
-              { value: "50M+", label: "Organic Views" },
-              { value: "\u20AC5",   label: "CAC" },
-              { value: "$0",   label: "Ad Spend" },
-              { value: "500+", label: "Community Leaders" },
-            ].map((stat) => (
-              <div className="stats-bar-item" key={stat.label}>
-                <span className="stats-bar-value">{stat.value}</span>
-                <span className="stats-bar-label">{stat.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
 
       {/* ── TWO PATHS TEASE ── */}
       <section className="paths-tease">
@@ -323,18 +288,101 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── FINAL CTA ── */}
-      <section className="final-cta bg-dark border-gold-top">
+      {/* ── QUALIFYING ── */}
+      <section className="hp-qualifying bg-elevated border-gold-top">
         <div className="container">
-          <h2>Ready to turn your audience into<br />your most valuable growth channel?</h2>
-          <p>
-            Let&apos;s talk about where your fan value is going uncaptured — and what it would look like to build the system that turns it into retention, revenue, and word-of-mouth.
-          </p>
-          <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">
-            Book a Free 30-Min Call
-          </a>
+          <h2 className="hp-qualifying-title">You might be here if you have&hellip;</h2>
+          <ul className="hp-qualifying-list">
+            <li>Loyal users, but growth still depends on paid spend</li>
+            <li>Fans who love the product, but no system to activate them</li>
+            <li>Flat retention despite strong product quality</li>
+            <li>Engagement spikes around campaigns that then drop flat</li>
+            <li>A community that isn&apos;t connected to your growth metrics</li>
+          </ul>
+          <div className="fpg-cta">
+            <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">Sound familiar? Let&apos;s talk &rarr;</a>
+          </div>
         </div>
       </section>
+
+      {/* ── FAQ ── */}
+      <section className="faq-section border-gold-top">
+        <div className="container">
+          <h2 className="faq-title">Frequently asked questions</h2>
+          <div className="faq-list">
+            {[
+              {
+                q: "What is fan-powered growth?",
+                a: "Fan-powered growth is a strategy that turns your most passionate users into your primary growth channel — driving referrals, retention and revenue through community systems rather than paid media."
+              },
+              {
+                q: "How is this different from community management?",
+                a: "Community management keeps people engaged. Fan-powered growth turns that engagement into measurable business outcomes — lower CAC, higher LTV, organic acquisition. It\u2019s a growth strategy, not a support function."
+              },
+              {
+                q: "What industries do you work with?",
+                a: "Gaming, entertainment, and consumer tech — brands with passionate user bases that aren\u2019t yet being leveraged for growth."
+              },
+              {
+                q: "What\u2019s the Fandom Flywheel\u2122?",
+                a: "My proprietary five-stage framework for mapping the fan journey from first touchpoint to active advocate, and turning the value in between into retention, referrals and revenue."
+              },
+              {
+                q: "How long does a typical engagement take?",
+                a: "It depends on the scope. A focused sprint can be 4\u20136 weeks. A full growth engine build is typically 3\u20136 months. We\u2019ll scope it together on a call."
+              },
+              {
+                q: "Do you work with early-stage startups?",
+                a: "Yes — if you have a product people love and you\u2019re ready to build the system that turns that love into growth. I\u2019ve worked with pre-seed to Series C."
+              }
+            ].map((item, i) => (
+              <details key={i} className="faq-item">
+                <summary className="faq-question">{item.q}</summary>
+                <p className="faq-answer">{item.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── FINAL CTA ── */}
+      <section className="fpg-section final-cta bg-dark">
+        <div className="container">
+          <div className="fpg-intro">
+            <h2 className="fpg-headline">
+              The love is there.{' '}
+              <GradientText
+                colors={['#E8A020', '#4BBFB0', '#F5F5F0', '#E8A020']}
+                animationSpeed={8}
+              >
+                Now turn it into growth.
+              </GradientText>
+            </h2>
+            <p className="fpg-intro-text">
+              Your most passionate users are your best untapped marketing channel. They refer friends, defend your brand, spend more — but only if you give them the system to do it. That&apos;s what I build.
+            </p>
+          </div>
+          <div className="fpg-cta">
+            <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">
+              Book a Free 30-Min Call
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FOOTER ── */}
+      <footer className="site-footer">
+        <div className="container">
+          <div className="footer-content">
+            <p className="footer-credit">&copy; 2025 Laura Cordrey. All rights reserved.</p>
+            <nav className="footer-links">
+              <Link to="/services">Services</Link>
+              <Link to="/flywheel">Flywheel</Link>
+              <Link to="/case-studies">Case Studies</Link>
+            </nav>
+          </div>
+        </div>
+      </footer>
 
     </main>
   )

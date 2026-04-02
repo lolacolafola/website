@@ -10,12 +10,14 @@ export default function BorderGlow({
   glowIntensity = 1,
   coneSpread = 25,
   animated = false,
+  animateOnHover = false,
   colors = ['#4BBFB0', '#E8A020', '#4BBFB0'],
   style = {},
   className = '',
 }) {
   const ref = useRef(null)
   const [glow, setGlow] = useState(null)
+  const [isHovered, setIsHovered] = useState(false)
 
   const handleMouseMove = e => {
     const rect = ref.current.getBoundingClientRect()
@@ -46,7 +48,14 @@ export default function BorderGlow({
     setGlow({ angle, progress, x, y })
   }
 
-  const handleMouseLeave = () => setGlow(null)
+  const handleMouseLeave = () => {
+    setGlow(null)
+    setIsHovered(false)
+  }
+
+  const handleMouseEnter = () => {
+    if (animateOnHover) setIsHovered(true)
+  }
 
   const borderGradient = glow
     ? `linear-gradient(${glow.angle}deg, ${colors.join(', ')})`
@@ -54,17 +63,20 @@ export default function BorderGlow({
 
   const glowOpacity = glow ? glow.progress * glowIntensity : 0
 
+  const spinning = animateOnHover && isHovered
+
   return (
     <div
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={className}
+      onMouseEnter={handleMouseEnter}
+      className={`${className} ${spinning ? 'border-glow--spinning' : ''}`.trim()}
       style={{
         position: 'relative',
         borderRadius,
         padding: '1px',
-        background: borderGradient,
+        background: spinning ? undefined : borderGradient,
         display: 'flex',
         flexDirection: 'column',
         transition: animated ? 'background 0.3s ease' : undefined,
