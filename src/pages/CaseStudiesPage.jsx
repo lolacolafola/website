@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
+import SiteFooter from '../components/SiteFooter'
 
 const CALENDLY_URL = 'https://calendly.com/laura-lcordrey/30min'
 
@@ -207,6 +208,7 @@ export default function CaseStudiesPage() {
           </a>
         </div>
       </section>
+      <SiteFooter />
     </main>
   )
 }

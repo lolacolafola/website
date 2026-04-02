@@ -4,6 +4,7 @@ import GradientText from '../components/GradientText'
 import SpotlightCard from '../components/SpotlightCard'
 import BorderGlow from '../components/BorderGlow'
 import StarBorder from '../components/StarBorder'
+import SiteFooter from '../components/SiteFooter'
 import useReveal from '../hooks/useReveal'
 const Prism = lazy(() => import('../components/Prism'))
 const CALENDLY_URL = 'https://calendly.com/laura-lcordrey/30min'
@@ -415,18 +416,7 @@ export default function HomePage() {
       </section>
 
       {/* ── FOOTER ── */}
-      <footer className="site-footer">
-        <div className="container">
-          <div className="footer-content">
-            <p className="footer-credit">&copy; 2025 Laura Cordrey. All rights reserved.</p>
-            <nav className="footer-links">
-              <Link to="/services">Services</Link>
-              <Link to="/flywheel">Flywheel</Link>
-              <Link to="/case-studies">Case Studies</Link>
-            </nav>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
 
     </main>
   )

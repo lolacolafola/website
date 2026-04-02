@@ -1,3 +1,4 @@
+import SiteFooter from '../components/SiteFooter'
 const CALENDLY_URL = 'https://calendly.com/laura-lcordrey/30min'
 
 const portfolioItems = [
@@ -99,6 +100,7 @@ export default function PortfolioPage() {
         </div>
       </section>
 
+      <SiteFooter />
     </main>
   )
 }

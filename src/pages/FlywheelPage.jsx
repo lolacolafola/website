@@ -1,56 +1,69 @@
-import { lazy, Suspense, useState } from 'react'
 import { Link } from 'react-router-dom'
+import BorderGlow from '../components/BorderGlow'
+import SiteFooter from '../components/SiteFooter'
 
-const FlywheelDiagram = lazy(() => import('../components/FlywheelDiagram'))
-const SoftAurora = lazy(() => import('../components/SoftAurora'))
 const CALENDLY_URL = 'https://calendly.com/laura-lcordrey/30min'
+
+const caseStudyTeasers = [
+  {
+    brand: "Ubisoft",
+    stat: <>50M<sup className="bio-stat-plus">+</sup></>,
+    statLabel: "organic views",
+    outcome: "$0 ad spend. Fans became the marketing channel. Powered by UGC.",
+    href: "/case-studies#ubisoft"
+  },
+  {
+    brand: "BlaBlaCar",
+    stat: "\u20AC5",
+    statLabel: "CAC",
+    outcome: "Through targeted storytelling to bring audiences inside the car.",
+    href: "/case-studies#blablacar"
+  },
+  {
+    brand: "US Mobile",
+    stat: "$32K",
+    statLabel: "revenue in 3 hours",
+    outcome: "Core community targeted and monetised for the first time.",
+    href: "/case-studies#us-mobile"
+  },
+  {
+    brand: "Azarus",
+    stat: "90%",
+    statLabel: "engagement rate",
+    outcome: "Live event game design. 500K peak viewers. Servers crashed.",
+    href: "/case-studies#azarus"
+  }
+]
 
 const stages = [
   {
     name: "Activation",
-    summary: "Get passive audiences to act.",
-    pills: ["Fan events", "Creator partnerships"],
-    steps: ["Audit", "Strategy", "Creator Brief", "Launch"],
-    example: "Delta Company launched on the E3 stage to 10M viewers. 10,000 applied from the US for 5 spots. The activation wasn\u2019t an ad \u2014 it was an invitation to belong.",
-    source: "Ubisoft"
+    hook: "Get passive audiences to take their first action.",
+    outcome: "First interactions are designed to feel like an invitation, not a campaign — so the relationship begins on their terms.",
   },
   {
     name: "Habit",
-    summary: "Turn first actions into repeat behaviour.",
-    pills: ["UGC", "Gamification", "Community"],
-    steps: ["Map Touchpoints", "Gamification Design", "Build Loops", "Measure"],
-    example: "Overlay quizzes gave viewers a reason to come back every stream. 90% engagement rate \u2014 because the mechanic made participation the default.",
-    source: "Azarus"
+    hook: "Turn one-time engagement into repeat behaviour.",
+    outcome: "Participation mechanics make coming back feel natural, not forced — turning casual users into regulars.",
   },
   {
     name: "Belonging",
-    summary: "Make fans feel part of something bigger.",
-    pills: ["Superfans", "Advocates"],
-    steps: ["Segment Fans", "Design Roles", "Build Spaces", "Activate Leaders"],
-    example: "Delta Company had 5 community clusters: artists, cosplayers, explorers, feedback specialists, tournament players. Members had roles, not just access.",
-    source: "Ubisoft"
+    hook: "Move fans from audience to community.",
+    outcome: "They find their people, take on roles, and start contributing — because they feel ownership, not just access.",
   },
   {
     name: "Identity",
-    summary: "Fans define themselves through the brand.",
-    pills: ["Brand love"],
-    steps: ["Define Status Tiers", "Design Rewards", "Launch Program", "Scale"],
-    example: "The $129 VIP bundle sold out in 3 hours. Not because of the SIM kit \u2014 because being a VIP member meant something.",
-    source: "US Mobile"
+    hook: "Make your brand part of how fans see themselves.",
+    outcome: "Status, recognition, and shared values create emotional loyalty that competitors can't undercut on price.",
   },
   {
     name: "Advocacy",
-    summary: "Fans become the marketing channel.",
-    pills: ["Word of mouth", "Referrals", "Organic reach"],
-    steps: ["Referral System", "UGC Framework", "Ambassador Program", "Amplify"],
-    example: "60M+ UGC views. $0 media spend. The community produced content, recruited members, and defended the brand in public.",
-    source: "Ubisoft"
+    hook: "Fans become the growth channel.",
+    outcome: "They create content, recruit others, and defend the brand — without being asked, without being paid.",
   }
 ]
 
 export default function FlywheelPage() {
-  const [openStage, setOpenStage] = useState(null)
-
   return (
     <main>
 
@@ -58,124 +71,98 @@ export default function FlywheelPage() {
       <section className="the-system">
         <div className="container">
           <div className="section-badge">The Methodology</div>
-          <h2 className="section-title">Tune your fans into<br />your next growth engine.</h2>
+          <h2 className="section-title">Turn your fans into<br />your next growth engine.</h2>
           <p className="system-intro">
-            The Fandom Flywheel&trade; is my five-stage system for turning passive audiences into active fans who drive repeat revenue, participation, and organic growth — from first login to lifelong advocate.
+            The Fandom Flywheel&trade; is a five-stage system that turns passive audiences into active fans who drive retention, revenue, and organic growth.
+          </p>
+          <p className="system-intro system-intro--sub">
+            I audit across brand, product, and community — because they feed into each other — and deliver strategy that works across all three. Every flywheel is tailored to your business plan, product and marketing roadmap, and available budget.
           </p>
 
-          <div className="flywheel-diagram" aria-label="Fandom Flywheel Diagram">
-            <Suspense fallback={<p className="diagram-placeholder">Loading flywheel...</p>}>
-              <FlywheelDiagram />
-            </Suspense>
-          </div>
-
-          <div className="flywheel-stages-accordion">
+          <div className="flywheel-stages">
             {stages.map((stage, i) => (
-              <div
-                key={i}
-                className={`flywheel-stage-card ${openStage === i ? 'expanded' : ''}`}
-                onClick={() => setOpenStage(openStage === i ? null : i)}
-              >
-                <div className="flywheel-stage-header">
-                  <span className="flywheel-stage-number">{i + 1}</span>
-                  <div>
-                    <h3 className="flywheel-stage-name">{stage.name}</h3>
-                    <p className="flywheel-stage-summary">{stage.summary}</p>
-                    <div className="flywheel-stage-pills">
-                      {stage.pills.map((pill, j) => (
-                        <span key={j} className="info-tag info-tag--neutral tag-sm">{pill}</span>
-                      ))}
-                    </div>
-                  </div>
-                  <span className="flywheel-toggle">{openStage === i ? '\u2212' : '+'}</span>
+              <div key={i} className="flywheel-stage-row">
+                <span className="flywheel-stage-number">{i + 1}</span>
+                <div>
+                  <h3 className="flywheel-stage-name">{stage.name}</h3>
+                  <p className="flywheel-stage-hook">{stage.hook}</p>
+                  <p className="flywheel-stage-outcome">{stage.outcome}</p>
                 </div>
-                {openStage === i && (
-                  <div className="flywheel-stage-example">
-                    <div className="flywheel-steps">
-                      {stage.steps.map((step, k) => (
-                        <span key={k} className="flywheel-step">
-                          {step}{k < stage.steps.length - 1 && <span className="flywheel-step-arrow">&rarr;</span>}
-                        </span>
-                      ))}
-                    </div>
-                    <p>{stage.example}</p>
-                    <cite>&mdash; {stage.source}</cite>
-                  </div>
-                )}
               </div>
             ))}
           </div>
 
-          <div className="creator-callout">
-            <p>Before designing your Fandom Flywheel&trade;, I run a full audit across brand health, community KPIs, and campaign performance — mapping your current position at each stage to identify where fan value is leaking and where the biggest opportunity sits.</p>
+          <div className="flywheel-stage-cta">
+            <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">See how this applies to your brand <span className="cta-arrow">&rarr;</span></a>
           </div>
         </div>
       </section>
 
-      {/* ── WHY IT WORKS ── */}
-      <section className="how-it-works">
-        <div className="how-it-works-bg" aria-hidden="true">
-          <Suspense fallback={null}>
-            <SoftAurora
-              speed={0.5}
-              scale={1.5}
-              brightness={1.3}
-              color1="#E8A020"
-              color2="#4BBFB0"
-              noiseFrequency={2.0}
-              noiseAmplitude={0.8}
-              bandHeight={0.4}
-              bandSpread={1.2}
-              octaveDecay={0.15}
-              layerOffset={0}
-              colorSpeed={0.7}
-              enableMouseInteraction
-              mouseInfluence={0.15}
-            />
-          </Suspense>
-        </div>
+      {/* ── RESULTS ── */}
+      <section className="flywheel-results">
         <div className="container">
-          <div className="section-badge">Why It Works</div>
-          <h2 className="section-title">The research is settled.<br />Fan mechanics move the needle.</h2>
-          <p className="section-intro">
-            Across retention, conversion, referral, and revenue — the data points the same direction every time. Here&apos;s what the numbers say.
-          </p>
-
-          <div className="mechanics-simple-grid">
-            <div className="mechanic-card">
-              <div className="mechanic-stat">22x</div>
-              <p className="mechanic-name">more memorable</p>
-              <p className="mechanic-data">Brand storytelling drives 30% higher customer retention</p>
-            </div>
-            <div className="mechanic-card">
-              <div className="mechanic-stat">48%</div>
-              <p className="mechanic-name">higher engagement</p>
-              <p className="mechanic-data">Progression mechanics improve retention by 22%</p>
-            </div>
-            <div className="mechanic-card">
-              <div className="mechanic-stat">18%</div>
-              <p className="mechanic-name">more revenue</p>
-              <p className="mechanic-data">Loyalty members outspend non-members every year</p>
-            </div>
-            <div className="mechanic-card">
-              <div className="mechanic-stat">161%</div>
-              <p className="mechanic-name">more conversions</p>
-              <p className="mechanic-data">UGC increases revenue per visitor by 154%</p>
-            </div>
-            <div className="mechanic-card">
-              <div className="mechanic-stat">4x</div>
-              <p className="mechanic-name">referral rate</p>
-              <p className="mechanic-data">Word-of-mouth users stay 2x longer</p>
-            </div>
-            <div className="mechanic-card">
-              <div className="mechanic-stat">80%</div>
-              <p className="mechanic-name">more spend</p>
-              <p className="mechanic-data">Top 15–20% of fans drive most organic growth</p>
-            </div>
-          </div>
-
-          <div className="sources-note">
-            <p>Stanford, Harvard Business Review, Goldman Sachs, Nielsen, Luminate, Bazaarvoice (2023-2025)</p>
+          <h2 className="section-title">The system in action.</h2>
+          <p className="section-intro">Real results from brands that built their flywheel.</p>
+        </div>
+        <div
+          className="case-ticker-wrap"
+          ref={el => {
+            if (!el) return
+            const ticker = el.querySelector('.case-ticker')
+            if (!ticker || ticker._dragInit) return
+            ticker._dragInit = true
+            let isDragging = false
+            let startX = 0
+            let currentOffset = 0
+            const getAnimOffset = () => {
+              const style = getComputedStyle(ticker)
+              const matrix = new DOMMatrix(style.transform)
+              return matrix.m41
+            }
+            el.addEventListener('mousedown', e => {
+              isDragging = true
+              startX = e.clientX
+              currentOffset = getAnimOffset()
+              ticker.style.animation = 'none'
+              ticker.style.transform = `translateX(${currentOffset}px)`
+              el.style.cursor = 'grabbing'
+              e.preventDefault()
+            })
+            window.addEventListener('mousemove', e => {
+              if (!isDragging) return
+              const delta = e.clientX - startX
+              ticker.style.transform = `translateX(${currentOffset + delta}px)`
+            })
+            window.addEventListener('mouseup', () => {
+              if (!isDragging) return
+              isDragging = false
+              el.style.cursor = 'grab'
+              const offset = getAnimOffset()
+              const totalWidth = ticker.scrollWidth / 3
+              const progress = ((-offset % totalWidth) + totalWidth) % totalWidth / totalWidth
+              ticker.style.animation = ''
+              ticker.style.animationDelay = `-${progress * 50}s`
+            })
+          }}
+        >
+          <div className="case-ticker">
+            {[...caseStudyTeasers, ...caseStudyTeasers, ...caseStudyTeasers].map((cs, i) => (
+              <BorderGlow
+                key={i}
+                backgroundColor="#141414"
+                borderRadius={12}
+                animateOnHover={true}
+                colors={['#4BBFB0', '#E8A020', '#4BBFB0']}
+                style={{ flex: '0 0 320px' }}
+              >
+                <div className="case-teaser-card" style={{ border: 'none', borderRadius: 11, height: '100%', boxSizing: 'border-box' }}>
+                  <span className="case-teaser-brand">{cs.brand}</span>
+                  <span className="case-teaser-stat">{cs.stat}</span>
+                  <span className="case-teaser-stat-label">{cs.statLabel}</span>
+                  <p className="case-teaser-outcome">{cs.outcome}</p>
+                </div>
+              </BorderGlow>
+            ))}
           </div>
         </div>
       </section>
@@ -184,29 +171,31 @@ export default function FlywheelPage() {
       <section className="flywheel-pricing">
         <div className="container">
           <h2 className="section-title">Ready to build yours?</h2>
+          <p className="section-intro">Every flywheel is custom-built. Here&apos;s how engagements typically start.</p>
           <div className="flywheel-pricing-grid">
             <div className="flywheel-pricing-card">
-              <h3>Fandom Flywheel Diagnostic</h3>
+              <h3>Diagnostic</h3>
               <span className="flywheel-pricing-price">$15K</span>
-              <p>Score your current fan ecosystem across all 5 stages. Get a prioritised action plan.</p>
+              <p>A full audit of your fan ecosystem — scored across all 5 stages with a prioritised roadmap.</p>
             </div>
-            <div className="flywheel-pricing-card">
-              <h3>Fandom Flywheel Blueprint</h3>
+            <div className="flywheel-pricing-card flywheel-pricing-card--featured">
+              <h3>Blueprint</h3>
               <span className="flywheel-pricing-price">from $45K</span>
-              <p>Full system design: strategy, mechanics, content frameworks, and a 90-day launch roadmap.</p>
+              <p>Complete system design — strategy, mechanics, and a 90-day launch plan tailored to your brand.</p>
             </div>
           </div>
           <div className="flywheel-pricing-cta">
             <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">
-              Book a Discovery Call &rarr;
+              Book a discovery call <span className="cta-arrow">&rarr;</span>
             </a>
           </div>
           <div className="larger-engagements">
-            <p>Want to see all services? <Link to="/services">View full services &rarr;</Link></p>
+            <p>Looking for something else? <Link to="/services">View all services <span className="cta-arrow">&rarr;</span></Link></p>
           </div>
         </div>
       </section>
 
+      <SiteFooter />
     </main>
   )
 }

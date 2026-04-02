@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import SiteFooter from '../components/SiteFooter'
 
 const CALENDLY_URL = 'https://calendly.com/laura-lcordrey/30min'
 
@@ -194,6 +195,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      <SiteFooter />
     </main>
   )
 }
