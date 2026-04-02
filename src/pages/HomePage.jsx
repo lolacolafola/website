@@ -1,6 +1,8 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import GradientText from '../components/GradientText'
+import SpotlightCard from '../components/SpotlightCard'
+import BorderGlow from '../components/BorderGlow'
 const Prism = lazy(() => import('../components/Prism'))
 const CALENDLY_URL = 'https://calendly.com/laura-lcordrey/30min'
 
@@ -159,41 +161,51 @@ export default function HomePage() {
             </p>
           </div>
 
-        </div>
-      </section>
-
-      {/* ── QUALIFYING ── */}
-      <section className="hp-qualifying">
-        <div className="container">
-          <ul className="hp-qualifying-list">
-            <li>Loyal users, but growth still depends on paid spend</li>
-            <li>Fans who love the product, but no system to activate them</li>
-            <li>Retention is flat despite strong product quality</li>
-            <li>Community exists, but isn&apos;t connected to growth metrics</li>
-          </ul>
-          <p className="hp-qualifying-bridge">Sound familiar?</p>
           <div className="fpg-cta">
-            <Link to="/flywheel" className="cta-button">My system: The Fandom Flywheel&trade; &rarr;</Link>
+            <Link to="/flywheel" className="cta-button--outline">My system: The Fandom Flywheel&trade; &rarr;</Link>
           </div>
         </div>
       </section>
 
-      {/* ── SEE IT IN ACTION ── */}
-      <section className="results-section bg-elevated">
+      {/* ── RESULTS CARDS ── */}
+      <section className="results-section">
         <div className="container">
+          <div
+            className="case-teaser-scroll-wrap"
+            ref={el => {
+              if (!el) return
+              const scroll = el.querySelector('.case-teaser-scroll')
+              if (!scroll) return
+              const onScroll = () => el.classList.toggle('is-scrolled', scroll.scrollLeft > 20)
+              scroll.addEventListener('scroll', onScroll, { passive: true })
+            }}
+          >
           <div className="case-teaser-scroll">
             {caseStudyTeasers.map((cs, i) => (
-              <Link key={i} to={cs.href} className="case-teaser-card">
-                <span className="case-teaser-brand">{cs.brand}</span>
-                <span className="case-teaser-stat">{cs.stat}</span>
-                <span className="case-teaser-stat-label">{cs.statLabel}</span>
-                <p className="case-teaser-outcome">{cs.outcome}</p>
-              </Link>
+              <BorderGlow
+                key={i}
+                edgeSensitivity={40}
+                glowColor="75 191 176"
+                backgroundColor="#141414"
+                borderRadius={12}
+                glowRadius={60}
+                glowIntensity={1}
+                colors={['#4BBFB0', '#E8A020', '#4BBFB0']}
+                style={{ flex: '0 0 31%', minWidth: '260px' }}
+              >
+                <Link to={cs.href} className="case-teaser-card" style={{ border: 'none', borderRadius: 11, height: '100%', boxSizing: 'border-box' }}>
+                  <span className="case-teaser-brand">{cs.brand}</span>
+                  <span className="case-teaser-stat">{cs.stat}</span>
+                  <span className="case-teaser-stat-label">{cs.statLabel}</span>
+                  <p className="case-teaser-outcome">{cs.outcome}</p>
+                </Link>
+              </BorderGlow>
             ))}
           </div>
-          <p className="results-intro">What fan-powered growth looks like in practice</p>
-          <div className="fpg-see-more">
-            <Link to="/case-studies">See more &rarr;</Link>
+          </div>
+          <p className="results-bridge">Want results like these?</p>
+          <div className="fpg-cta">
+            <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">Let&apos;s talk &rarr;</a>
           </div>
         </div>
       </section>
@@ -202,42 +214,29 @@ export default function HomePage() {
       <section className="about-brief">
         <div className="container">
           <div className="bio-card">
-            <img src="/Ubisoft+Debuts+New+Products+E3+Gaming+Event+UNgBGdNUMR-x 2.jpg" alt="Laura Cordrey speaking at E3" className="bio-photo" />
+            <figure className="bio-figure">
+              <img src={`${import.meta.env.BASE_URL}laura-e3.jpg`} alt="Laura Cordrey speaking at E3" className="bio-photo" />
+              <figcaption className="bio-caption">Public speaking, E3 2019</figcaption>
+            </figure>
             <div className="bio-text">
               <h2>I build fan-powered growth engines.</h2>
               <p>
-                I&apos;ve spent 12 years at the intersection of <strong>product-led growth</strong> and <strong>fan-led growth</strong> — building the systems that turn your user base into your most powerful growth channel.
+                I&apos;ve spent 12 years at the intersection of <strong>product-led growth</strong> and <strong>fan-led growth</strong>, building the systems that turn your user base into your most powerful growth channel.
               </p>
               <p>
-                That includes the <strong>Fandom Flywheel&trade;</strong>, my proprietary framework for mapping your fan journey from first touchpoint to active advocate, and finding the revenue hiding in between.
+                That&apos;s how I designed the <strong>Fandom Flywheel&trade;</strong> — my proprietary framework for mapping the fan journey from first touchpoint to active advocate, and turning the value in between into <strong>retention, referrals and revenue</strong>.
               </p>
               <p>
-                I&apos;ve done it for Ubisoft, Amazon Games, and BlaBlaCar. Now I do it for gaming, entertainment, and consumer brands as a fractional lead or strategic consultant. Based in Paris, working globally since 2013.
+                I developed my skills at <strong>Ubisoft, Amazon Games, BlaBlaCar</strong> and high-growth startups. Now I&apos;m bringing my playbook to disruptor brands across gaming, entertainment and consumer, ready to change how they do community.
               </p>
+              <p>
+                Based in Paris, <strong>bilingual in English and French</strong>, working globally with a strong knowledge of the <strong>American market</strong>, since 2013.
+              </p>
+              <p className="bio-signature">&mdash; Laura Cordrey</p>
             </div>
           </div>
         </div>
       </section>
-
-      {/* ── STATS BAR ── */}
-      <section className="stats-bar bg-dark">
-        <div className="container">
-          <div className="stats-bar-grid">
-            {[
-              { value: "50M+", label: "Organic Views" },
-              { value: "\u20AC5",   label: "CAC" },
-              { value: "$0",   label: "Ad Spend" },
-              { value: "500+", label: "Community Leaders" },
-            ].map((stat) => (
-              <div className="stats-bar-item" key={stat.label}>
-                <span className="stats-bar-value">{stat.value}</span>
-                <span className="stats-bar-label">{stat.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
 
       {/* ── TESTIMONIALS ── */}
       <section className="testimonial-section">
@@ -265,6 +264,43 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── QUALIFYING ── */}
+      <section className="hp-qualifying bg-elevated">
+        <div className="container">
+          <h2 className="hp-qualifying-title">You might be here if you have&hellip;</h2>
+          <ul className="hp-qualifying-list">
+            <li>Loyal users, but growth still depends on paid spend</li>
+            <li>Fans who love the product, but no system to activate them</li>
+            <li>Flat retention despite strong product quality</li>
+            <li>Engagement spikes around campaigns that then drop flat</li>
+            <li>A community that isn&apos;t connected to your growth metrics</li>
+          </ul>
+          <div className="fpg-cta">
+            <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">Sound familiar? Let&apos;s talk &rarr;</a>
+          </div>
+        </div>
+      </section>
+
+      {/* ── STATS BAR ── */}
+      <section className="stats-bar bg-dark">
+        <div className="container">
+          <div className="stats-bar-grid">
+            {[
+              { value: "50M+", label: "Organic Views" },
+              { value: "\u20AC5",   label: "CAC" },
+              { value: "$0",   label: "Ad Spend" },
+              { value: "500+", label: "Community Leaders" },
+            ].map((stat) => (
+              <div className="stats-bar-item" key={stat.label}>
+                <span className="stats-bar-value">{stat.value}</span>
+                <span className="stats-bar-label">{stat.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
 
       {/* ── TWO PATHS TEASE ── */}
       <section className="paths-tease">
