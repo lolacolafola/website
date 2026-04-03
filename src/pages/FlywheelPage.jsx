@@ -210,29 +210,37 @@ export default function FlywheelPage() {
               <div className="editorial-card fw-reveal">
                 <div className="editorial-visual">
                   <div className="promise-stats-vertical">
-                    <div className="promise-stat">
-                      <span className="promise-stat-number">70%</span>
-                      <span className="promise-stat-label">of sales from just 10% of customers</span>
+                    <div className="promise-stat promise-stat--featured">
+                      <span className="promise-stat-number">$4.2B</span>
+                      <span className="promise-stat-label">superfan revenue opportunity by 2030 — music alone</span>
+                      <span className="promise-stat-source">Goldman Sachs</span>
                     </div>
                     <div className="promise-stat">
-                      <span className="promise-stat-number">2–3&times;</span>
-                      <span className="promise-stat-label">longer customer lifetime value</span>
+                      <span className="promise-stat-number">30–70%</span>
+                      <span className="promise-stat-label">of revenue from just 10% of customers</span>
+                      <span className="promise-stat-source">Eddie Yoon / HBR</span>
+                    </div>
+                    <div className="promise-stat">
+                      <span className="promise-stat-number">80%</span>
+                      <span className="promise-stat-label">more spent by superfans vs average customers</span>
+                      <span className="promise-stat-source">Luminate</span>
                     </div>
                     <div className="promise-stat">
                       <span className="promise-stat-number">4&times;</span>
-                      <span className="promise-stat-label">more likely to convert when referred</span>
+                      <span className="promise-stat-label">more likely to convert when referred by a fan</span>
+                      <span className="promise-stat-source">Nielsen</span>
                     </div>
                     <div className="promise-stat">
                       <span className="promise-stat-number">5–7&times;</span>
                       <span className="promise-stat-label">cheaper to retain than replace</span>
+                      <span className="promise-stat-source">Bain &amp; Company</span>
                     </div>
                   </div>
                 </div>
                 <div className="editorial-text editorial-text--light">
                   <h3 className="editorial-title">The business case for superfandom.</h3>
-                  <p className="editorial-body">Superfans aren&apos;t born, they&apos;re made. They spend more, stay longer, and bring others with them. They&apos;re your most valuable cohort, and the one worth investing in.</p>
+                  <p className="editorial-body">The superfan economy is a multi-billion dollar opportunity, and it&apos;s growing. Superfans aren&apos;t born, they&apos;re made. They spend more, stay longer, and bring others with them. They&apos;re your most valuable cohort, and the one worth investing in.</p>
                   <p className="editorial-body editorial-body--standout">The Fandom Flywheel&trade; is how you systematically turn users into fans, and fans into the growth engine behind your brand.</p>
-                  <p className="editorial-example">Sources: Eddie Yoon / HBR Press, Nielsen, Ehrenberg-Bass Institute, Bain &amp; Company</p>
                 </div>
               </div>
 
@@ -342,33 +350,6 @@ export default function FlywheelPage() {
                 </div>
               </BorderGlow>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── SUPERFAN ECONOMY ── */}
-      <section className="superfan-economy">
-        <div className="container">
-          <div className="superfan-economy-inner fw-reveal">
-            <span className="superfan-economy-eyebrow">The superfan economy</span>
-            <div className="superfan-economy-stats">
-              <div className="superfan-economy-stat">
-                <span className="superfan-economy-value">$4.2B</span>
-                <span className="superfan-economy-label">projected superfan revenue opportunity in music alone by 2030</span>
-                <span className="superfan-economy-source">Goldman Sachs</span>
-              </div>
-              <div className="superfan-economy-stat">
-                <span className="superfan-economy-value">30–70%</span>
-                <span className="superfan-economy-label">of revenue driven by just 10% of customers across categories</span>
-                <span className="superfan-economy-source">Eddie Yoon / HBR</span>
-              </div>
-              <div className="superfan-economy-stat">
-                <span className="superfan-economy-value">80%</span>
-                <span className="superfan-economy-label">more spent by superfans vs average customers</span>
-                <span className="superfan-economy-source">Luminate</span>
-              </div>
-            </div>
-            <p className="superfan-economy-cta">Want a piece of the pie?</p>
           </div>
         </div>
       </section>

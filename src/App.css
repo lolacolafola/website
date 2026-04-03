@@ -737,6 +737,18 @@
   max-width: 160px;
 }
 
+.promise-stat-source {
+  font-size: 10px;
+  color: rgba(245, 245, 240, 0.25);
+  font-style: italic;
+  margin-top: 4px;
+}
+
+.promise-stat--featured .promise-stat-number {
+  font-size: clamp(32px, 4vw, 42px);
+  color: #F5F5F0;
+}
+
 .promise-stat-desc {
   display: block;
   font-size: 13px;
