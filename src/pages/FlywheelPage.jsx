@@ -346,6 +346,33 @@ export default function FlywheelPage() {
         </div>
       </section>
 
+      {/* ── SUPERFAN ECONOMY ── */}
+      <section className="superfan-economy">
+        <div className="container">
+          <div className="superfan-economy-inner fw-reveal">
+            <span className="superfan-economy-eyebrow">The superfan economy</span>
+            <div className="superfan-economy-stats">
+              <div className="superfan-economy-stat">
+                <span className="superfan-economy-value">$4.2B</span>
+                <span className="superfan-economy-label">projected superfan revenue opportunity in music alone by 2030</span>
+                <span className="superfan-economy-source">Goldman Sachs</span>
+              </div>
+              <div className="superfan-economy-stat">
+                <span className="superfan-economy-value">30–70%</span>
+                <span className="superfan-economy-label">of revenue driven by just 10% of customers across categories</span>
+                <span className="superfan-economy-source">Eddie Yoon / HBR</span>
+              </div>
+              <div className="superfan-economy-stat">
+                <span className="superfan-economy-value">80%</span>
+                <span className="superfan-economy-label">more spent by superfans vs average customers</span>
+                <span className="superfan-economy-source">Luminate</span>
+              </div>
+            </div>
+            <p className="superfan-economy-cta">Want a piece of the pie?</p>
+          </div>
+        </div>
+      </section>
+
       {/* ── CALCULATOR ── */}
       <section className="flywheel-calculator">
         <div className="container">
