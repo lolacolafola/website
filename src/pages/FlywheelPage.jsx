@@ -210,11 +210,6 @@ export default function FlywheelPage() {
               <div className="editorial-card fw-reveal">
                 <div className="editorial-visual">
                   <div className="promise-stats-vertical">
-                    <div className="promise-stat promise-stat--featured">
-                      <span className="promise-stat-number">$4.2B</span>
-                      <span className="promise-stat-label">superfan revenue opportunity by 2030 — music alone</span>
-                      <span className="promise-stat-source">Goldman Sachs</span>
-                    </div>
                     <div className="promise-stat">
                       <span className="promise-stat-number">30–70%</span>
                       <span className="promise-stat-label">of revenue from just 10% of customers</span>
@@ -239,7 +234,7 @@ export default function FlywheelPage() {
                 </div>
                 <div className="editorial-text editorial-text--light">
                   <h3 className="editorial-title">The business case for superfandom.</h3>
-                  <p className="editorial-body">The superfan economy is a multi-billion dollar opportunity, and it&apos;s growing. Superfans aren&apos;t born, they&apos;re made. They spend more, stay longer, and bring others with them. They&apos;re your most valuable cohort, and the one worth investing in.</p>
+                  <p className="editorial-body">Goldman Sachs values the superfan economy at $4.2 billion and growing. Superfans aren&apos;t born, they&apos;re made. They spend more, stay longer, and bring others with them. They&apos;re your most valuable cohort, and the one worth investing in.</p>
                   <p className="editorial-body editorial-body--standout">The Fandom Flywheel&trade; is how you systematically turn users into fans, and fans into the growth engine behind your brand.</p>
                 </div>
               </div>
