@@ -11,9 +11,9 @@ export default function ServicesPage() {
       <section className="services-hero">
         <div className="container">
           <div className="section-badge">Services</div>
-          <h1 className="section-title">How I can help</h1>
+          <h1 className="section-title">Ways to work together</h1>
           <p className="section-intro">
-            I help brands turn passive audiences into active fans who stay longer, spend more, and bring others with them. From strategy to hands-on execution.
+            I help consumer brands build stronger retention, deeper participation, and more organic word of mouth — across brand, product, community, and real-world experience.
           </p>
         </div>
       </section>
@@ -51,10 +51,11 @@ export default function ServicesPage() {
         <div className="container">
           <h2 className="qualifying-title">You might be here if&hellip;</h2>
           <ul className="qualifying-list">
-            <li>You have a loyal user base but acquisition is still dominated by paid spend</li>
+            <li>You have a loyal customer base but acquisition is still dominated by paid spend</li>
             <li>You have fans — people who genuinely love what you&apos;ve built — but no system to activate them</li>
             <li>Retention is flat despite strong product quality</li>
             <li>Your community exists, but it&apos;s not connected to your growth metrics</li>
+            <li>You know your brand experience should feel more joined-up across digital, content, and real life</li>
           </ul>
           <p className="qualifying-close">If two or more of these sound familiar, this is where we start.</p>
         </div>
@@ -64,73 +65,86 @@ export default function ServicesPage() {
       <section className="consulting-track">
         <div className="container">
 
-          {/* Fandom Flywheel — umbrella card with 3 tiers */}
           <div className="flywheel-offering-card">
             <div className="flywheel-offering-header">
               <span className="flywheel-offering-badge">Fandom Flywheel&trade;</span>
-              <h2 className="flywheel-offering-title">My core methodology, in three stages.</h2>
-              <p className="flywheel-offering-intro">Each tier builds on the last — start with clarity, then design the system, then launch it.</p>
+              <h2 className="flywheel-offering-title">From quick diagnosis to full system build.</h2>
+              <p className="flywheel-offering-intro">Every engagement is built around strategy first. Implementation, messaging, and execution support can be added as needed.</p>
             </div>
-            <div className="flywheel-tiers">
+            <div className="flywheel-tiers flywheel-tiers--four">
 
               <div className="flywheel-tier">
                 <span className="flywheel-tier-number">01</span>
-                <div className="flywheel-tier-price">$15K</div>
+                <div className="flywheel-tier-price">from &euro;4K <span className="flywheel-tier-price-alt">/ $4.5K</span></div>
                 <h3 className="flywheel-tier-name">Diagnostic</h3>
-                <p className="flywheel-tier-outcome"><strong>You will get:</strong> Clarity on where your fan value is leaking and a prioritised roadmap to capture it.</p>
-                <p className="flywheel-tier-desc">A 2-week audit across brand, product, and community. Scored assessment across all 5 Flywheel stages plus a prioritised action plan with commercial impact sizing.</p>
+                <p className="flywheel-tier-outcome"><strong>2 weeks.</strong> A strategic review of your current growth system across brand, product, retention, and participation.</p>
                 <ul className="flywheel-tier-deliverables">
-                  <li>Fandom Flywheel audit across all five stages</li>
-                  <li>Gap analysis with commercial impact sizing</li>
-                  <li>Priority roadmap ranked by ROI</li>
-                  <li>90-min leadership presentation</li>
+                  <li>Current-state audit across brand, product &amp; participation</li>
+                  <li>Key gaps, quick wins, and missed opportunities</li>
+                  <li>Prioritised recommendations</li>
+                  <li>90-day action roadmap</li>
+                  <li>Final readout session</li>
                 </ul>
-              </div>
-
-              <div className="flywheel-tier flywheel-tier--featured">
-                <span className="flywheel-tier-number">02</span>
-                <div className="flywheel-tier-price">$45K</div>
-                <h3 className="flywheel-tier-name">Diagnostic + Blueprint</h3>
-                <p className="flywheel-tier-outcome"><strong>You will get:</strong> The full audit plus a complete fan system designed and ready to execute.</p>
-                <p className="flywheel-tier-desc">Everything in the Diagnostic, then 6–8 weeks to design your complete Fandom Flywheel from Activation through to Advocacy.</p>
-                <ul className="flywheel-tier-deliverables">
-                  <li>Everything in Diagnostic</li>
-                  <li>Complete five-stage Flywheel design</li>
-                  <li>Creator and community program frameworks</li>
-                  <li>90-day implementation roadmap</li>
-                  <li>Success metrics and measurement framework</li>
-                </ul>
+                <span className="flywheel-pricing-tagline">Find out where you stand.</span>
               </div>
 
               <div className="flywheel-tier">
-                <span className="flywheel-tier-number">03</span>
-                <div className="flywheel-tier-price">$60&ndash;65K</div>
-                <h3 className="flywheel-tier-name">Diagnostic + Blueprint + Launch</h3>
-                <p className="flywheel-tier-outcome"><strong>You will get:</strong> The full system designed and launched — from audit to live activation.</p>
-                <p className="flywheel-tier-desc">Everything in Diagnostic + Blueprint, plus I stay in to oversee the first launch — creator program, campaign, or community pilot — from design to live.</p>
+                <span className="flywheel-tier-number">02</span>
+                <div className="flywheel-tier-price">from &euro;6K <span className="flywheel-tier-price-alt">/ $6.5K</span></div>
+                <h3 className="flywheel-tier-name">Focused Sprint</h3>
+                <p className="flywheel-tier-outcome"><strong>2&ndash;3 weeks.</strong> A fast-moving engagement built around one high-leverage growth lever.</p>
                 <ul className="flywheel-tier-deliverables">
-                  <li>Everything in Diagnostic + Blueprint</li>
-                  <li>Hands-on first activation support</li>
-                  <li>AI-enabled content and automation workflows</li>
-                  <li>Cross-functional workshop sessions</li>
+                  <li>Sprint strategy &amp; core concepts</li>
+                  <li>Participation or recommendation mechanics</li>
+                  <li>KPI recommendations</li>
+                  <li>Launch or rollout plan</li>
+                  <li>Implementation guidance</li>
                 </ul>
+                <span className="flywheel-pricing-tagline">Fix one lever fast.</span>
+              </div>
+
+              <div className="flywheel-tier flywheel-tier--featured">
+                <span className="flywheel-tier-number">03</span>
+                <div className="flywheel-tier-price">from &euro;15K <span className="flywheel-tier-price-alt">/ $16.5K</span></div>
+                <h3 className="flywheel-tier-name">Flywheel Strategy</h3>
+                <p className="flywheel-tier-outcome"><strong>4&ndash;6 weeks.</strong> A full Fandom Flywheel&trade; engagement designed around your business model, product roadmap, and growth goals.</p>
+                <ul className="flywheel-tier-deliverables">
+                  <li>Full five-stage strategy</li>
+                  <li>Brand, product &amp; participation recommendations</li>
+                  <li>Retention, advocacy &amp; recommendation loops</li>
+                  <li>KPI framework &amp; measurement plan</li>
+                  <li>Prioritised 90-day / 6-month roadmap</li>
+                </ul>
+                <span className="flywheel-pricing-tagline">Design the system.</span>
+              </div>
+
+              <div className="flywheel-tier">
+                <span className="flywheel-tier-number">04</span>
+                <div className="flywheel-tier-price">tailored</div>
+                <h3 className="flywheel-tier-name">Embedded Support</h3>
+                <p className="flywheel-tier-outcome"><strong>Monthly.</strong> Senior strategic support to help your team build, activate, and refine the system in practice.</p>
+                <ul className="flywheel-tier-deliverables">
+                  <li>Monthly working sessions</li>
+                  <li>Strategic review &amp; iteration</li>
+                  <li>Priority guidance across brand, product &amp; CRM</li>
+                  <li>Ongoing advisory &amp; feedback</li>
+                </ul>
+                <span className="flywheel-pricing-tagline">Build it with me.</span>
               </div>
 
             </div>
           </div>
 
-          {/* Other engagements */}
-          <div className="other-offerings-grid">
-            <div className="offering-card offering-card-priced">
-              <span className="offering-price">$8&ndash;12K/month</span>
-              <h3>Fractional Leadership</h3>
-              <p>I embed in your team as a fractional Head of Fan Growth &amp; Engagement. I run the strategy, manage the team, and ship the work. Best for companies who need senior leadership but aren&apos;t ready for a full-time hire.</p>
-            </div>
-            <div className="offering-card offering-card-priced">
-              <span className="offering-price">Custom</span>
-              <h3>Campaigns &amp; Activation</h3>
-              <p>Standalone campaign design and execution: creator programs, fan events, gamified experiences, brand content production. For teams that have a strategy but need a senior creative operator to make it happen.</p>
-            </div>
+          {/* Sprint examples */}
+          <div className="flywheel-bridge" style={{ marginTop: '3rem' }}>
+            <h3 className="flywheel-bridge-title">Focused Sprint examples</h3>
+            <p className="flywheel-bridge-body">Recommendation system design &middot; UGC programmes &middot; Retention strategy &middot; Launch &amp; participation campaigns &middot; IRL brand activations &middot; Fan strategy workshops &middot; Community audits &middot; CRM &amp; lifecycle sprints</p>
+          </div>
+
+          {/* Add-ons */}
+          <div className="flywheel-bridge">
+            <h3 className="flywheel-bridge-title">Need more than the strategy?</h3>
+            <p className="flywheel-bridge-body">I also offer add-on support across messaging, campaign concepts, CRM journeys, creator and community mechanics, IRL activations, event design, and team workshops.</p>
           </div>
 
         </div>
@@ -143,8 +157,8 @@ export default function ServicesPage() {
           <div className="work-style-grid">
             <div className="work-style-item">
               <span className="work-style-icon">&#127758;</span>
-              <h3>Remote-first</h3>
-              <p>Based in Paris, working with clients globally. US timezone friendly.</p>
+              <h3>US &amp; European markets</h3>
+              <p>Deep American market experience since 2018 — Ubisoft, Amazon Games, US startups. Based in Paris, working US-timezone hours.</p>
             </div>
             <div className="work-style-item">
               <span className="work-style-icon">&#127919;</span>
@@ -154,7 +168,7 @@ export default function ServicesPage() {
             <div className="work-style-item">
               <span className="work-style-icon">&#127468;&#127463;</span>
               <h3>Bilingual</h3>
-              <p>English and French. Comfortable across European and US markets.</p>
+              <p>English and French. Comfortable leading across US, UK, and European teams and stakeholders.</p>
             </div>
             <div className="work-style-item">
               <span className="work-style-icon">&#9889;</span>
@@ -169,10 +183,10 @@ export default function ServicesPage() {
       <section className="flywheel-tease">
         <div className="container">
           <div className="flywheel-tease-card">
-            <span className="path-badge">Premium Methodology</span>
-            <h2>Looking for a complete fan system?</h2>
+            <span className="path-badge">The Methodology</span>
+            <h2>See the full growth system.</h2>
             <p>
-              The Fandom Flywheel&trade; is my proprietary five-stage methodology for turning users into lifelong fans. It includes structured audit packages and full system design.
+              The Fandom Flywheel&trade; is a five-stage growth system that aligns brand, product, and participation to turn attention into retention, advocacy, and organic growth.
             </p>
             <Link to="/flywheel" className="cta-button">Explore the Fandom Flywheel &rarr;</Link>
           </div>

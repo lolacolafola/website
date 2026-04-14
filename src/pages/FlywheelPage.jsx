@@ -9,58 +9,86 @@ const CALENDLY_URL = 'https://calendly.com/laura-lcordrey/30min'
 const caseStudyTeasers = [
   {
     brand: "Ubisoft",
-    stat: <>50M<sup className="bio-stat-plus">+</sup></>,
-    statLabel: "organic views",
-    outcome: "$0 ad spend. Fans became the marketing channel. Powered by UGC.",
+    stat: "$500K+",
+    statLabel: "Earned media. $0 ad spend.",
+    outcome: "Community creator programs for 3 of Ubisoft\u2019s biggest IPs. 60M+ UGC total views.",
     href: "/case-studies#ubisoft"
+  },
+  {
+    brand: "BlaBlaCar",
+    stat: "0\u20921M",
+    statLabel: "Members",
+    outcome: "Community growth from zero to one million. From newcomer to advocate.",
+    href: "/case-studies#blablacar"
+  },
+  {
+    brand: "Ubisoft",
+    stat: "10,000",
+    statLabel: "US applications",
+    outcome: "Built a fan advocacy program so compelling it sold itself. Launched at E3 to 10M viewers. Applications exceeded capacity.",
+    href: "/case-studies#ubisoft"
+  },
+  {
+    brand: "US Mobile",
+    stat: "$32K",
+    statLabel: "Superfan revenue in 3hrs",
+    outcome: "Core community targeted and monetised for the first time. Complete sell-out.",
+    href: "/case-studies#us-mobile"
   },
   {
     brand: "BlaBlaCar",
     stat: "\u20AC5",
     statLabel: "CAC",
-    outcome: "Through targeted storytelling to bring audiences inside the car.",
+    outcome: "Developed the brand\u2019s first-person narrative, shot on smartphones. One paid campaign across 22 markets. 3% CTR.",
     href: "/case-studies#blablacar"
-  },
-  {
-    brand: "US Mobile",
-    stat: "$32K",
-    statLabel: "revenue in 3 hours",
-    outcome: "Core community targeted and monetised for the first time.",
-    href: "/case-studies#us-mobile"
   },
   {
     brand: "Azarus",
     stat: "90%",
-    statLabel: "engagement rate",
-    outcome: "Live event game design. 500K peak viewers. Servers crashed.",
+    statLabel: "Engagement rate",
+    outcome: "Turned 500K passive viewers into active participants through live overlay game design. Servers crashed from demand.",
     href: "/case-studies#azarus"
+  },
+  {
+    brand: "Ubisoft",
+    stat: "2.4M",
+    statLabel: "Live watch hours",
+    outcome: "2.4M live watch hours generated entirely through community, no paid amplification.",
+    href: "/case-studies#ubisoft"
+  },
+  {
+    brand: "US Mobile",
+    stat: "55%",
+    statLabel: "Video view-through rate on Meta",
+    outcome: "Stunt creative designed for community buzz. Over half of all viewers watched the full ad.",
+    href: "/case-studies#us-mobile"
   }
 ]
 
 const stages = [
   {
     name: "Activation",
-    hook: "Help new audiences to take their first action.",
+    hook: "Give new audiences a clear reason to take the first meaningful action.",
     outcome: "First interactions are designed to feel like an invitation, not a campaign — so the relationship begins on their terms.",
   },
   {
     name: "Habit",
-    hook: "Turn one-time engagement into repeat behaviour.",
+    hook: "Turn early engagement into repeat behaviour and return visits.",
     outcome: "Participation mechanics make coming back feel natural, not forced — turning casual users into regulars.",
   },
   {
     name: "Belonging",
-    hook: "Move fans from audience to community.",
+    hook: "Create participation, recognition, and reasons to stay connected.",
     outcome: "They find their people, take on roles, and start contributing — because they feel ownership, not just access.",
   },
   {
     name: "Identity",
-    hook: "Make your brand part of how fans see themselves.",
+    hook: "Make the brand part of how customers express taste, status, or values.",
     outcome: "Status, recognition, and shared values create emotional loyalty that competitors can't undercut on price.",
   },
   {
     name: "Advocacy",
-    hook: "Fans become the growth channel, bringing others with them.",
+    hook: "Turn loyal customers into visible proof, referrals, and organic growth.",
     outcome: "They create content, recruit others, and defend the brand — without being asked, without being paid.",
   }
 ]
@@ -125,9 +153,9 @@ export default function FlywheelPage() {
         <div className="flywheel-content">
           <div className="container">
             <div className="section-badge fw-reveal">The Methodology</div>
-            <h2 className="flywheel-hero-title fw-reveal">Turn your fans into<br />your growth engine.</h2>
+            <h2 className="flywheel-hero-title fw-reveal">Turn attention into retention,<br />advocacy, and growth.</h2>
             <p className="flywheel-hero-sub fw-reveal">
-              The Fandom Flywheel&trade; is a five-stage system that turns passive audiences into superfans who drive retention, revenue, and organic growth.
+              The Fandom Flywheel&trade; is a five-stage growth system that aligns brand, product, and participation to turn passive audiences into repeat customers, active communities, and organic growth.
             </p>
           </div>
 
@@ -163,24 +191,24 @@ export default function FlywheelPage() {
                     {/* Node: Brand */}
                     <circle cx="80" cy="112" r="65" fill="rgba(13,13,13,0.92)" stroke="rgba(75,191,176,0.4)" strokeWidth="1.5" />
                     <text x="80" y="106" textAnchor="middle" className="triad-label">Brand</text>
-                    <text x="80" y="124" textAnchor="middle" className="triad-sublabel-line1">Identity</text>
-                    <text x="80" y="137" textAnchor="middle" className="triad-sublabel-line2">&amp; experience</text>
+                    <text x="80" y="124" textAnchor="middle" className="triad-sublabel-line1">Meaning, world,</text>
+                    <text x="80" y="137" textAnchor="middle" className="triad-sublabel-line2">positioning</text>
                     {/* Node: Product */}
                     <circle cx="260" cy="112" r="65" fill="rgba(13,13,13,0.92)" stroke="rgba(232,160,32,0.4)" strokeWidth="1.5" />
                     <text x="260" y="106" textAnchor="middle" className="triad-label">Product</text>
-                    <text x="260" y="124" textAnchor="middle" className="triad-sublabel-line1">Journey</text>
-                    <text x="260" y="137" textAnchor="middle" className="triad-sublabel-line2">&amp; gamification</text>
-                    {/* Node: Community */}
+                    <text x="260" y="124" textAnchor="middle" className="triad-sublabel-line1">Journey, habit,</text>
+                    <text x="260" y="137" textAnchor="middle" className="triad-sublabel-line2">experience</text>
+                    {/* Node: Participation */}
                     <circle cx="170" cy="268" r="65" fill="rgba(13,13,13,0.92)" stroke="rgba(196,166,232,0.4)" strokeWidth="1.5" />
-                    <text x="170" y="262" textAnchor="middle" className="triad-label">Community</text>
-                    <text x="170" y="280" textAnchor="middle" className="triad-sublabel-line1">Retention</text>
-                    <text x="170" y="293" textAnchor="middle" className="triad-sublabel-line2">&amp; advocacy</text>
+                    <text x="170" y="262" textAnchor="middle" className="triad-label">Participation</text>
+                    <text x="170" y="280" textAnchor="middle" className="triad-sublabel-line1">Community,</text>
+                    <text x="170" y="293" textAnchor="middle" className="triad-sublabel-line2">advocacy, recommendation</text>
                   </svg>
                 </div>
                 <div className="editorial-text editorial-text--light">
-                  <h3 className="editorial-title">Three pillars. One system.</h3>
-                  <p className="editorial-body">I work across brand, product, and community holistically, because they&apos;re never separate for your fans. Your audience doesn&apos;t see three departments — they see one experience.</p>
-                  <p className="editorial-body editorial-body--standout">So when your influencer budget is in the millions, are you looking at the full picture? The brand fit from awareness to consideration to conversion. Whether the creator&apos;s voice matches what that prospect actually lands on. And if they do convert, how you&apos;re keeping them engaged and coming back.</p>
+                  <h3 className="editorial-title">Three layers. One system.</h3>
+                  <p className="editorial-body">I work across brand, product, and participation because your customers don&apos;t experience your business in departments. They experience one joined-up journey.</p>
+                  <p className="editorial-body editorial-body--standout">So when growth stalls, the issue is rarely isolated. The creator campaign drives awareness, but the landing experience feels off. The product gets attention, but there&apos;s no system bringing people back. Customers convert, but nothing turns that momentum into participation, loyalty, or recommendation.</p>
                 </div>
               </div>
 
@@ -201,8 +229,8 @@ export default function FlywheelPage() {
                 </div>
                 <div className="editorial-text editorial-text--light">
                   <h3 className="editorial-title">Five stages. One flywheel.</h3>
-                  <p className="editorial-body">The Fandom Flywheel&trade; maps every fan from first interaction to active advocate. Each stage builds on the last — turning passive audiences into repeat behaviour, repeat behaviour into belonging, and belonging into organic growth that compounds over time.</p>
-                  <p className="editorial-body editorial-body--standout">Every Fandom Flywheel&trade; is tailored to your business plan, product roadmap, and available marketing budget. I won&apos;t deliver a plan you can&apos;t use.</p>
+                  <p className="editorial-body">The Fandom Flywheel&trade; maps how customers move from first interaction to active advocacy. Each stage builds on the last — turning attention into repeat behaviour, repeat behaviour into belonging, and belonging into compounding growth.</p>
+                  <p className="editorial-body editorial-body--standout">Every Fandom Flywheel&trade; is tailored to your business model, product roadmap, and available resources. I won&apos;t deliver a strategy your team can&apos;t actually execute.</p>
                 </div>
               </div>
 
@@ -211,31 +239,35 @@ export default function FlywheelPage() {
                 <div className="editorial-visual">
                   <div className="promise-stats-vertical">
                     <div className="promise-stat">
-                      <span className="promise-stat-number">30–70%</span>
-                      <span className="promise-stat-label">of revenue from just 10% of customers</span>
-                      <span className="promise-stat-source">Eddie Yoon / HBR</span>
+                      <span className="promise-stat-number">3&times;</span>
+                      <span className="promise-stat-unit">more spend</span>
+                      <span className="promise-stat-label">from your most engaged customers</span>
+                      <span className="promise-stat-source">Rosetta Consulting</span>
                     </div>
                     <div className="promise-stat">
-                      <span className="promise-stat-number">80%</span>
-                      <span className="promise-stat-label">more spent by superfans vs average customers</span>
-                      <span className="promise-stat-source">Luminate</span>
+                      <span className="promise-stat-number">95%</span>
+                      <span className="promise-stat-unit">more profit</span>
+                      <span className="promise-stat-label">from just a 5% lift in retention</span>
+                      <span className="promise-stat-source">Bain &amp; Company</span>
                     </div>
                     <div className="promise-stat">
-                      <span className="promise-stat-number">4&times;</span>
-                      <span className="promise-stat-label">more likely to convert when referred by a fan</span>
+                      <span className="promise-stat-number">92%</span>
+                      <span className="promise-stat-unit">trust</span>
+                      <span className="promise-stat-label">personal recommendations over ads</span>
                       <span className="promise-stat-source">Nielsen</span>
                     </div>
                     <div className="promise-stat">
-                      <span className="promise-stat-number">5–7&times;</span>
-                      <span className="promise-stat-label">cheaper to retain than replace</span>
-                      <span className="promise-stat-source">Bain &amp; Company</span>
+                      <span className="promise-stat-number">5&times;</span>
+                      <span className="promise-stat-unit">cheaper to retain</span>
+                      <span className="promise-stat-label">than to acquire a new customer</span>
+                      <span className="promise-stat-source">Bain / HBR</span>
                     </div>
                   </div>
                 </div>
                 <div className="editorial-text editorial-text--light">
-                  <h3 className="editorial-title">The business case for superfandom.</h3>
-                  <p className="editorial-body">Goldman Sachs values the superfan economy at $4.2 billion and growing. Superfans aren&apos;t born, they&apos;re made. They spend more, stay longer, and bring others with them. They&apos;re your most valuable cohort, and the one worth investing in.</p>
-                  <p className="editorial-body editorial-body--standout">The Fandom Flywheel&trade; is how you systematically turn users into fans, and fans into the growth engine behind your brand.</p>
+                  <h3 className="editorial-title">The business case for fandom.</h3>
+                  <p className="editorial-body">Superfans aren&apos;t born. They&apos;re built through repeated positive experiences, participation, and recognition. They spend more, stay longer, and bring others with them — making them one of the most valuable growth levers in any customer base.</p>
+                  <p className="editorial-body editorial-body--standout">The Fandom Flywheel&trade; is designed to help brands build that behaviour intentionally — by increasing retention, deepening participation, and creating stronger recommendation loops over time. Goldman Sachs values the superfan economy at $4.2B+ and growing.</p>
                 </div>
               </div>
 
@@ -264,8 +296,8 @@ export default function FlywheelPage() {
                 </div>
                 <div className="editorial-text editorial-text--light">
                   <h3 className="editorial-title">Built for the metrics that matter.</h3>
-                  <p className="editorial-body">Every stage of the Fandom Flywheel&trade; is designed to move a specific business metric. Lower acquisition costs. Higher retention. More organic content from the people who love what you do.</p>
-                  <p className="editorial-body editorial-body--standout">In the world of AI, this matters more than ever. You can optimise your owned channels all you want — you need real people talking about you to show up in LLM answers.</p>
+                  <p className="editorial-body">Every stage of the Fandom Flywheel&trade; is designed to move a specific business metric — from retention and repeat purchase to referral, organic content, and discoverability.</p>
+                  <p className="editorial-body editorial-body--standout">In the AI era, brand visibility is increasingly shaped by real-world proof: what customers say, where your brand gets discussed, and whether you generate signals worth citing. You can optimise your owned channels all you want — if no one is talking about you, that limits what compounds.</p>
                 </div>
               </div>
 
@@ -276,6 +308,12 @@ export default function FlywheelPage() {
             <div className="flywheel-stage-cta fw-reveal">
               <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">See how this applies to your brand <span className="cta-arrow">&rarr;</span></a>
             </div>
+          </div>
+
+          <div className="container" style={{ marginTop: 36, marginBottom: 36 }}>
+            <h2 className="section-title fw-reveal">Run the numbers.</h2>
+            <p className="section-intro fw-reveal">See what even a modest improvement in retention could mean for your business.</p>
+            <FanCalculator />
           </div>
         </div>
       </section>
@@ -349,45 +387,45 @@ export default function FlywheelPage() {
         </div>
       </section>
 
-      {/* ── CALCULATOR ── */}
-      <section className="flywheel-calculator">
-        <div className="container">
-          <FanCalculator />
-        </div>
-      </section>
-
       {/* ── SERVICES ── */}
       <section className="flywheel-pricing">
         <div className="container">
-          <h2 className="section-title fw-reveal">Ready to build yours?</h2>
-          <p className="section-intro fw-reveal">Every Fandom Flywheel&trade; is custom-built. Here&apos;s how engagements typically work.</p>
-          <div className="flywheel-pricing-grid flywheel-pricing-grid--three">
+          <h2 className="section-title fw-reveal">Ways to work together.</h2>
+          <p className="section-intro fw-reveal">Not every brand needs the full flywheel from day one. Some need a diagnostic. Some need one lever fixed first. Others are ready to build the whole system.</p>
+          <div className="flywheel-pricing-grid flywheel-pricing-grid--four">
             <div className="flywheel-pricing-card fw-reveal">
               <span className="flywheel-pricing-step">01</span>
               <h3>Diagnostic</h3>
-              <span className="flywheel-pricing-price">$15K</span>
-              <p>A full audit of your fan ecosystem, scored across all 5 stages with a prioritised roadmap.</p>
+              <span className="flywheel-pricing-price">from &euro;4K <span className="flywheel-tier-price-alt">/ $4.5K</span></span>
+              <p>A strategic review of your current growth system across brand, product, retention, and participation. Clear priorities and a 90-day roadmap.</p>
               <span className="flywheel-pricing-tagline">Find out where you stand.</span>
             </div>
-            <div className="flywheel-pricing-card flywheel-pricing-card--featured fw-reveal">
+            <div className="flywheel-pricing-card fw-reveal">
               <span className="flywheel-pricing-step">02</span>
-              <h3>Blueprint</h3>
-              <span className="flywheel-pricing-price">from $45K</span>
-              <p>Complete system design — strategy, mechanics, and a launch plan tailored to your brand.</p>
+              <h3>Focused Sprint</h3>
+              <span className="flywheel-pricing-price">from &euro;6K <span className="flywheel-tier-price-alt">/ $6.5K</span></span>
+              <p>A fast-moving engagement built around one high-leverage problem — from recommendation systems and UGC programmes to retention strategy, launch mechanics, or brand activations.</p>
+              <span className="flywheel-pricing-tagline">Fix one lever fast.</span>
+            </div>
+            <div className="flywheel-pricing-card flywheel-pricing-card--featured fw-reveal">
+              <span className="flywheel-pricing-step">03</span>
+              <h3>Flywheel Strategy</h3>
+              <span className="flywheel-pricing-price">from &euro;15K <span className="flywheel-tier-price-alt">/ $16.5K</span></span>
+              <p>A full Fandom Flywheel&trade; engagement — brand, product, and participation strategy designed around your business model, product roadmap, and growth goals.</p>
               <span className="flywheel-pricing-tagline">Design the system.</span>
             </div>
             <div className="flywheel-pricing-card fw-reveal">
-              <span className="flywheel-pricing-step">03</span>
-              <h3>Activation</h3>
+              <span className="flywheel-pricing-step">04</span>
+              <h3>Embedded Support</h3>
               <span className="flywheel-pricing-price">tailored</span>
-              <p>Hands-on implementation, embedded with your team to build and launch the flywheel.</p>
+              <p>Ongoing strategic support to help your team activate the system in practice across brand, product, CRM, and participation.</p>
               <span className="flywheel-pricing-tagline">Build it with me.</span>
             </div>
           </div>
 
           <div className="flywheel-bridge fw-reveal">
-            <h3 className="flywheel-bridge-title">Not ready for a full flywheel?</h3>
-            <p className="flywheel-bridge-body">Not every brand needs the full system. I also take on focused projects — from fan strategy workshops and community audits to UGC programmes and campaign design.</p>
+            <h3 className="flywheel-bridge-title">Need more than the strategy?</h3>
+            <p className="flywheel-bridge-body">I also offer add-on support across messaging, campaign concepts, CRM journeys, creator and community mechanics, IRL activations, and team workshops.</p>
             <p className="flywheel-bridge-body">Every engagement starts with a conversation.</p>
           </div>
 
@@ -395,6 +433,51 @@ export default function FlywheelPage() {
             <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">
               Book a free discovery call <span className="cta-arrow">&rarr;</span>
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FAQ ── */}
+      <section className="flywheel-faq">
+        <div className="container">
+          <h2 className="section-title fw-reveal">Common questions</h2>
+          <div className="flywheel-faq-grid">
+
+            <details className="flywheel-faq-item fw-reveal">
+              <summary>How do you measure organic growth?</summary>
+              <p>Paid acquisition has perfect tracking and diminishing returns. Organic has imperfect tracking and compounding returns. The real question isn&apos;t &ldquo;can you track every referral?&rdquo; — it&apos;s &ldquo;can you afford to keep ignoring the cohort already driving 80% more spend?&rdquo;</p>
+              <p>That said, we track more than you&apos;d think: referral links, branded search volume, UGC creation rates, NPS trends, community-attributed signups, and direct traffic growth. The Diagnostic establishes your measurement baseline from day one.</p>
+            </details>
+
+            <details className="flywheel-faq-item fw-reveal">
+              <summary>How long before we see results?</summary>
+              <p>Some levers move fast — activating existing superfans through better retention and engagement can show results within weeks. Growing the cohort and building referral loops takes longer, typically 3–6 months to see compounding effects.</p>
+              <p>The Flywheel is designed as a system, not a campaign. Early wins build momentum for the bigger structural shifts.</p>
+            </details>
+
+            <details className="flywheel-faq-item fw-reveal">
+              <summary>We already have a community team. How is this different?</summary>
+              <p>Most community teams focus on engagement — keeping people active in a Discord or forum. The Fandom Flywheel&trade; connects that work to business outcomes. It maps every touchpoint across brand, product, and participation to specific revenue metrics.</p>
+              <p>I work alongside your existing team, not instead of them. The Flywheel gives them a system to plug into.</p>
+            </details>
+
+            <details className="flywheel-faq-item fw-reveal">
+              <summary>Is this only for gaming or entertainment brands?</summary>
+              <p>The methodology was born in gaming and entertainment, but superfans exist in every category — wellness, beauty, lifestyle, consumer apps, DTC, fintech. Anywhere you have customers who care more than average, there&apos;s a flywheel to build.</p>
+              <p>The principles are the same: identify, nurture, activate, grow. The mechanics adapt to your product, audience, and whether the experience is digital, physical, or both.</p>
+            </details>
+
+            <details className="flywheel-faq-item fw-reveal">
+              <summary>What does the engagement actually look like?</summary>
+              <p>It depends on where you are. A Diagnostic (from &euro;4K / $4.5K) is a 2-week strategic review. A Focused Sprint (from &euro;6K / $6.5K) tackles one growth lever over 2–3 weeks. A full Flywheel Strategy (from &euro;15K / $16.5K) is a 4–6 week engagement. Embedded support is ongoing and tailored.</p>
+              <p>Every engagement starts with a conversation to figure out what you actually need.</p>
+            </details>
+
+            <details className="flywheel-faq-item fw-reveal">
+              <summary>What if we&apos;re not ready for the full Flywheel?</summary>
+              <p>That&apos;s fine — not every brand needs the full system from day one. I also take on focused sprints: recommendation system design, retention strategy, UGC programmes, launch mechanics, IRL activations, and workshops. Think of it as a way to solve one problem fast and test the approach before committing to the full build.</p>
+            </details>
+
           </div>
         </div>
       </section>

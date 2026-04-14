@@ -1,4 +1,6 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef, useCallback, useEffect } from 'react'
+import BorderGlow from './BorderGlow'
+import SpotlightCard from './SpotlightCard'
 
 const formatCurrency = (n) => {
   if (n >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`
@@ -8,190 +10,283 @@ const formatCurrency = (n) => {
 
 const formatNumber = (n) => n.toLocaleString('en-US')
 
-// Research-backed assumptions
-const SUPERFAN_SPEND_MULT = 2.5    // Superfans spend 2-3× more (Ehrenberg-Bass), using 2.5×
-const SUPERFAN_RETENTION = 0.95    // Superfans retain at ~95%
-const REGULAR_RETENTION = 0.75     // Industry-average annual retention
-const REFERRAL_RATE = 0.15         // 15% of superfans refer a new customer per year
+const CALENDLY_URL = 'https://calendly.com/laura-lcordrey/30min'
+
+/* ── Dual-thumb slider on a single track ── */
+function DualSlider({ min, max, valueCurrent, valueTarget, onChangeCurrent, onChangeTarget }) {
+  const trackRef = useRef(null)
+  const dragging = useRef(null)
+
+  const pct = (v) => ((v - min) / (max - min)) * 100
+
+  const valFromX = useCallback((clientX) => {
+    const rect = trackRef.current.getBoundingClientRect()
+    const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width))
+    return Math.round(min + ratio * (max - min))
+  }, [min, max])
+
+  const handlePointerDown = useCallback((which) => (e) => {
+    e.preventDefault()
+    dragging.current = which
+    document.body.style.userSelect = 'none'
+  }, [])
+
+  useEffect(() => {
+    const onMove = (e) => {
+      if (!dragging.current) return
+      const x = e.touches ? e.touches[0].clientX : e.clientX
+      const val = valFromX(x)
+      if (dragging.current === 'current') {
+        if (val < valueTarget) onChangeCurrent(val)
+      } else {
+        if (val > valueCurrent) onChangeTarget(val)
+      }
+    }
+    const onUp = () => {
+      dragging.current = null
+      document.body.style.userSelect = ''
+    }
+    window.addEventListener('pointermove', onMove)
+    window.addEventListener('pointerup', onUp)
+    window.addEventListener('touchmove', onMove, { passive: false })
+    window.addEventListener('touchend', onUp)
+    return () => {
+      window.removeEventListener('pointermove', onMove)
+      window.removeEventListener('pointerup', onUp)
+      window.removeEventListener('touchmove', onMove)
+      window.removeEventListener('touchend', onUp)
+    }
+  }, [valueCurrent, valueTarget, valFromX, onChangeCurrent, onChangeTarget])
+
+  return (
+    <div className="ds-wrap">
+      <div className="ds-track" ref={trackRef}>
+        <div
+          className="ds-fill"
+          style={{
+            left: `${pct(valueCurrent)}%`,
+            right: `${100 - pct(valueTarget)}%`,
+          }}
+        />
+        <div
+          className="ds-thumb ds-thumb--current"
+          style={{ left: `${pct(valueCurrent)}%` }}
+          onPointerDown={handlePointerDown('current')}
+        />
+        <div
+          className="ds-thumb ds-thumb--target"
+          style={{ left: `${pct(valueTarget)}%` }}
+          onPointerDown={handlePointerDown('target')}
+        />
+      </div>
+    </div>
+  )
+}
 
 export default function FanCalculator() {
   const [customers, setCustomers] = useState(50000)
-  const [arpa, setArpa] = useState(200)
-  const [targetPct, setTargetPct] = useState(10)
+  const [arpu, setArpu] = useState(200)
+  const [currentRetention, setCurrentRetention] = useState(50)
+  const [potentialRetention, setPotentialRetention] = useState(55)
+  const [years, setYears] = useState(3)
 
   const results = useMemo(() => {
-    // --- TODAY ---
-    // Everyone at the same average. The ~10% who are superfan-adjacent
-    // aren't being nurtured, so they spend like everyone else.
-    const todayRevenue = customers * arpa
+    const baselineRevenue = customers * arpu
+    const retentionDelta = potentialRetention - currentRetention
 
-    // --- WITH THE FLYWHEEL ---
-    // At 10%: activate the superfans already in your base
-    // Above 10%: grow the cohort (bonus from the slider)
-    const activatedPct = targetPct / 100
-    const activatedSuperfans = Math.round(customers * activatedPct)
+    const currentRate = currentRetention / 100
+    const potentialRate = potentialRetention / 100
 
-    // 1. Higher spend: activated superfans go from avg spend to 2.5× avg
-    const spendUpliftPerFan = arpa * (SUPERFAN_SPEND_MULT - 1)
-    const spendUplift = activatedSuperfans * spendUpliftPerFan
+    let currentTotal = 0
+    let potentialTotal = 0
 
-    // 2. Better retention: activated superfans retain at 95% vs 75%
-    const retentionGain = Math.round(activatedSuperfans * (SUPERFAN_RETENTION - REGULAR_RETENTION))
-    const retentionValue = retentionGain * arpa
+    for (let y = 0; y < years; y++) {
+      currentTotal += customers * arpu * Math.pow(currentRate, y)
+      potentialTotal += customers * arpu * Math.pow(potentialRate, y)
+    }
 
-    // 3. Organic referrals: activated superfans refer at 15%/yr
-    const totalReferrals = Math.round(activatedSuperfans * REFERRAL_RATE)
-    const referralValue = totalReferrals * arpa
+    const additionalRevenue = potentialTotal - currentTotal
 
-    const flywheelTotal = todayRevenue + spendUplift + retentionValue + referralValue
-    const flywheelUplift = spendUplift + retentionValue + referralValue
-    const flywheelPct = todayRevenue > 0 ? Math.round((flywheelUplift / todayRevenue) * 100) : 0
+    const retainedDelta = Math.round(customers * (potentialRate - currentRate))
+    const referrals = Math.round(retainedDelta * 0.10)
+    const referralRevenue = referrals * arpu * 1.16 * years
 
     return {
-      todayRevenue,
-      activatedSuperfans,
-      spendUplift,
-      retentionGain,
-      retentionValue,
-      totalReferrals,
-      referralValue,
-      flywheelTotal,
-      flywheelUplift,
-      flywheelPct,
+      baselineRevenue,
+      retentionDelta,
+      additionalRevenue,
+      referralRevenue,
     }
-  }, [customers, arpa, targetPct])
+  }, [customers, arpu, currentRetention, potentialRetention, years])
 
   const nudgeCustomers = (dir) => {
     const step = customers >= 10000 ? 5000 : 1000
     setCustomers(Math.max(100, customers + dir * step))
   }
 
-  const nudgeArpa = (dir) => {
-    const step = arpa >= 100 ? 50 : 10
-    setArpa(Math.max(10, arpa + dir * step))
+  const nudgeArpu = (dir) => {
+    const step = arpu >= 100 ? 50 : 10
+    setArpu(Math.max(10, arpu + dir * step))
   }
 
   return (
-    <div className="fan-calc">
-      <div className="fan-calc-header">
-        <span className="fan-calc-eyebrow">The Fandom Flywheel&trade; Calculator</span>
-        <h3 className="fan-calc-title">What&apos;s your fan ecosystem worth?</h3>
-        <p className="fan-calc-subtitle">Enter your numbers. We&apos;ll show what you&apos;re leaving on the table.</p>
-      </div>
+    <BorderGlow
+      borderRadius={20}
+      colors={['#E8A020', '#4BBFB0', '#E8A020']}
+      glowColor="232 160 32"
+      backgroundColor="#141414"
+      edgeSensitivity={40}
+      glowRadius={60}
+      style={{ maxWidth: 680, margin: '0 auto' }}
+    >
+      <div className="fan-calc">
+        <div className="fan-calc-header">
+          <span className="fan-calc-eyebrow">The Fandom Flywheel&trade; Calculator</span>
+          <h3 className="fan-calc-title">The power of fan-driven growth.</h3>
+          <p className="fan-calc-subtitle">Bain &amp; Company found that a 5% improvement in retention can increase profits by up to 95%. See what even a modest shift could mean for your business.</p>
+        </div>
 
-      <div className="fan-calc-body">
-        {/* INPUTS */}
-        <div className="fan-calc-section">
-          <span className="fan-calc-label">Your business</span>
-          <div className="fan-calc-inputs">
-            <div className="fan-calc-input-group">
-              <label>Total customers</label>
-              <div className="fan-calc-num-wrap">
-                <button className="fan-calc-num-btn" onClick={() => nudgeCustomers(-1)}>−</button>
-                <input
-                  type="text"
-                  value={formatNumber(customers)}
-                  onChange={e => {
-                    const raw = e.target.value.replace(/[^0-9]/g, '')
-                    if (raw) setCustomers(Math.max(1, parseInt(raw)))
-                  }}
-                />
-                <button className="fan-calc-num-btn" onClick={() => nudgeCustomers(1)}>+</button>
+        <div className="fan-calc-body">
+          {/* SECTION 1 — YOUR STARTING POINT */}
+          <div className="fan-calc-section">
+            <span className="fan-calc-label">Your starting point</span>
+            <div className="fan-calc-inputs">
+              <div className="fan-calc-input-group">
+                <label>Your customers</label>
+                <div className="fan-calc-num-wrap">
+                  <button className="fan-calc-num-btn" onClick={() => nudgeCustomers(-1)}>&minus;</button>
+                  <input
+                    type="text"
+                    value={formatNumber(customers)}
+                    onChange={e => {
+                      const raw = e.target.value.replace(/[^0-9]/g, '')
+                      if (raw) setCustomers(Math.max(1, parseInt(raw)))
+                    }}
+                  />
+                  <button className="fan-calc-num-btn" onClick={() => nudgeCustomers(1)}>+</button>
+                </div>
+              </div>
+              <div className="fan-calc-input-group">
+                <label>Revenue per customer per year</label>
+                <div className="fan-calc-num-wrap">
+                  <button className="fan-calc-num-btn" onClick={() => nudgeArpu(-1)}>&minus;</button>
+                  <input
+                    type="text"
+                    value={`$${formatNumber(arpu)}`}
+                    onChange={e => {
+                      const raw = e.target.value.replace(/[^0-9]/g, '')
+                      if (raw) setArpu(Math.max(1, parseInt(raw)))
+                    }}
+                  />
+                  <button className="fan-calc-num-btn" onClick={() => nudgeArpu(1)}>+</button>
+                </div>
               </div>
             </div>
-            <div className="fan-calc-input-group">
-              <label>Avg. revenue per customer / year</label>
-              <div className="fan-calc-num-wrap">
-                <button className="fan-calc-num-btn" onClick={() => nudgeArpa(-1)}>−</button>
-                <input
-                  type="text"
-                  value={`$${formatNumber(arpa)}`}
-                  onChange={e => {
-                    const raw = e.target.value.replace(/[^0-9]/g, '')
-                    if (raw) setArpa(Math.max(1, parseInt(raw)))
-                  }}
-                />
-                <button className="fan-calc-num-btn" onClick={() => nudgeArpa(1)}>+</button>
-              </div>
+            <div className="fan-calc-baseline">
+              Your baseline revenue: <strong>{formatCurrency(results.baselineRevenue)}</strong>
             </div>
           </div>
-        </div>
 
-        <div className="fan-calc-divider" />
-
-        {/* TODAY */}
-        <div className="fan-calc-stage">
-          <div className="fan-calc-stage-content">
-            <span className="fan-calc-stage-label">Today</span>
-            <span className="fan-calc-stage-value fan-calc-stage-value--muted">{formatCurrency(results.todayRevenue)}</span>
-            <span className="fan-calc-stage-sub">your annual revenue &middot; Research shows ~10% of any customer base are already superfan-adjacent — they just aren&apos;t being nurtured.</span>
-          </div>
-        </div>
-
-        <div className="fan-calc-divider" />
-
-        {/* WITH THE FLYWHEEL */}
-        <div className="fan-calc-stage fan-calc-stage--highlight">
-          <div className="fan-calc-stage-content">
-            <span className="fan-calc-stage-label">With the Fandom Flywheel&trade;</span>
-            <span className="fan-calc-stage-value fan-calc-stage-value--gold fan-calc-stage-value--big">{formatCurrency(results.flywheelTotal)}</span>
-            <span className="fan-calc-stage-sub">+{results.flywheelPct}% uplift &middot; {formatCurrency(results.flywheelUplift)} in unlocked annual revenue</span>
-          </div>
-        </div>
-
-        <span className="fan-calc-breakdown-label">Where the extra {formatCurrency(results.flywheelUplift)} comes from</span>
-
-        <div className="fan-calc-breakdown-rows">
-          <div className="fan-calc-breakdown-row">
-            <div className="fan-calc-breakdown-text">
-              <span className="fan-calc-breakdown-title">Higher spend</span>
-              <span className="fan-calc-breakdown-explain">Activated superfans spend 2.5× your average. {formatNumber(results.activatedSuperfans)} superfans × {formatCurrency(arpa * (SUPERFAN_SPEND_MULT - 1))} extra per year.</span>
-              <span className="fan-calc-breakdown-source">Ehrenberg-Bass Institute</span>
+          {/* ── Connector ── */}
+          <div className="fan-calc-connector">
+            <div className="fan-calc-connector-line" />
+            <div className="fan-calc-connector-badge">
+              <span className="fan-calc-connector-label">The Fan Effect</span>
             </div>
-            <span className="fan-calc-breakdown-value fan-calc-breakdown-value--gold">+{formatCurrency(results.spendUplift)}</span>
+            <div className="fan-calc-connector-line" />
           </div>
 
-          <div className="fan-calc-breakdown-row">
-            <div className="fan-calc-breakdown-text">
-              <span className="fan-calc-breakdown-title">Better retention</span>
-              <span className="fan-calc-breakdown-explain">Superfans retain at 95% vs 75% for regular customers. {formatNumber(results.activatedSuperfans)} superfans × 20% better retention = {formatNumber(results.retentionGain)} more customers kept × {formatCurrency(arpa)}/yr.</span>
-              <span className="fan-calc-breakdown-source">Bain &amp; Company</span>
-            </div>
-            <span className="fan-calc-breakdown-value fan-calc-breakdown-value--gold">+{formatCurrency(results.retentionValue)}</span>
-          </div>
+          {/* SECTION 2 — THE FAN EFFECT */}
+          <div className="fan-calc-section">
+            <span className="fan-calc-slider-prompt">What if you improved retention?</span>
+            <p className="fan-calc-fan-explain">Fan-driven strategies target this lever &mdash; belonging, identity, recognition, and advocacy give customers reasons to stay beyond the product alone. Set your current rate on the left. Explore the potential on the right.</p>
 
-          <div className="fan-calc-breakdown-row">
-            <div className="fan-calc-breakdown-text">
-              <span className="fan-calc-breakdown-title">Organic growth</span>
-              <span className="fan-calc-breakdown-explain">15% of superfans refer a new customer each year. {formatNumber(results.activatedSuperfans)} superfans × 15% = {formatNumber(results.totalReferrals)} new customers × {formatCurrency(arpa)}/yr.</span>
-              <span className="fan-calc-breakdown-source">Nielsen</span>
-            </div>
-            <span className="fan-calc-breakdown-value fan-calc-breakdown-value--teal">+{formatCurrency(results.referralValue)}</span>
-          </div>
-        </div>
-
-        <div className="fan-calc-slider-section">
-          <span className="fan-calc-slider-prompt">How ambitious are you?</span>
-          <div className="fan-calc-slider-inline">
-            <input
-              type="range"
+            <DualSlider
               min={10}
-              max={30}
-              step={1}
-              value={targetPct}
-              onChange={e => setTargetPct(parseInt(e.target.value))}
-              className="fan-calc-range fan-calc-range--gold"
+              max={95}
+              valueCurrent={currentRetention}
+              valueTarget={potentialRetention}
+              onChangeCurrent={setCurrentRetention}
+              onChangeTarget={setPotentialRetention}
             />
-            <div className="fan-calc-slider-labels">
-              <span>10%</span>
-              <span>{targetPct}% superfans</span>
-              <span>30%</span>
+
+            <div className="fan-calc-retention-labels">
+              <div className="fan-calc-retention-side">
+                <span className="fan-calc-retention-tag">Current retention</span>
+                <span className="fan-calc-retention-val fan-calc-retention-val--current">{currentRetention}%</span>
+              </div>
+              <div className="fan-calc-retention-center">
+                <span className="fan-calc-retention-delta">+{results.retentionDelta} points</span>
+              </div>
+              <div className="fan-calc-retention-side fan-calc-retention-side--right">
+                <span className="fan-calc-retention-tag">Potential retention</span>
+                <span className="fan-calc-retention-val fan-calc-retention-val--target">{potentialRetention}%</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <p className="fan-calc-proof">Based on: 2.5× superfan spend (Ehrenberg-Bass), 95% vs 75% retention (Bain), referral conversion rates (Nielsen). Conservative estimates.</p>
+          <div className="fan-calc-divider" />
+
+          {/* SECTION 3 — TIME HORIZON */}
+          <div className="fan-calc-section">
+            <span className="fan-calc-label">Time horizon</span>
+            <div className="fan-calc-horizon-btns">
+              {[1, 2, 3].map(y => (
+                <button
+                  key={y}
+                  className={`fan-calc-horizon-btn${years === y ? ' fan-calc-horizon-btn--active' : ''}`}
+                  onClick={() => setYears(y)}
+                >
+                  {y} yr{y > 1 ? 's' : ''}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* ── Connector ── */}
+          <div className="fan-calc-connector">
+            <div className="fan-calc-connector-line" />
+            <div className="fan-calc-connector-badge">
+              <span className="fan-calc-connector-label">Your Opportunity</span>
+            </div>
+            <div className="fan-calc-connector-line" />
+          </div>
+
+          {/* RESULT */}
+          <SpotlightCard className="fan-calc-spotlight" spotlightColor="rgba(232, 160, 32, 0.15)">
+            <div className="fan-calc-result-hero">
+              <div className="fan-calc-result-glow" />
+              <span className="fan-calc-result-value">{formatCurrency(results.additionalRevenue)}</span>
+              <span className="fan-calc-result-extra">additional revenue over {years} year{years > 1 ? 's' : ''}</span>
+              <p className="fan-calc-result-explain">
+                This is what a {results.retentionDelta}-point retention improvement looks like when it compounds &mdash; based on your numbers.
+              </p>
+              {results.referralRevenue > 0 && (
+                <p className="fan-calc-result-referral">
+                  And if just 10% of those retained customers refer one new customer, that&apos;s another <strong>{formatCurrency(results.referralRevenue)}</strong> on top.
+                  <span className="fan-calc-result-cite">Referral estimate based on 16% higher LTV per referred customer (Schmitt et al., 2011)</span>
+                </p>
+              )}
+            </div>
+          </SpotlightCard>
+
+          {/* HOW THIS WORKS */}
+          <div className="fan-calc-how">
+            <h4 className="fan-calc-how-title">How this works</h4>
+            <p className="fan-calc-how-body">
+              Each percentage point of retention means more customers completing year 2 and year 3. The gap between current and potential widens the longer the horizon &mdash; that&apos;s the compounding effect. Fan-driven strategies like community, recognition, and advocacy programmes are one of the most cost-effective ways to move this lever. These figures are estimates based on your inputs.
+            </p>
+          </div>
+
+          {/* CTA */}
+          <div className="fan-calc-cta">
+            <h4 className="fan-calc-cta-title">Where is your flywheel leaking?</h4>
+            <a href={CALENDLY_URL} className="cta-button" target="_blank" rel="noopener noreferrer">
+              Book a Diagnostic &rarr;
+            </a>
+          </div>
+        </div>
       </div>
-    </div>
+    </BorderGlow>
   )
 }

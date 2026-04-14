@@ -12,31 +12,59 @@ const CALENDLY_URL = 'https://calendly.com/laura-lcordrey/30min'
 const caseStudyTeasers = [
   {
     brand: "Ubisoft",
-    stat: <>50M<sup className="bio-stat-plus">+</sup></>,
-    statLabel: "organic views",
-    outcome: "$0 ad spend. Fans became the marketing channel. Powered by UGC.",
+    stat: "$500K+",
+    statLabel: "Earned media. $0 ad spend.",
+    outcome: "Community creator programs for 3 of Ubisoft\u2019s biggest IPs. 60M+ UGC total views.",
     href: "/case-studies#ubisoft"
+  },
+  {
+    brand: "BlaBlaCar",
+    stat: "0\u20921M",
+    statLabel: "Members",
+    outcome: "Community growth from zero to one million. From newcomer to advocate.",
+    href: "/case-studies#blablacar"
+  },
+  {
+    brand: "Ubisoft",
+    stat: "10,000",
+    statLabel: "US applications",
+    outcome: "Built a fan advocacy program so compelling it sold itself. Launched at E3 to 10M viewers. Applications exceeded capacity.",
+    href: "/case-studies#ubisoft"
+  },
+  {
+    brand: "US Mobile",
+    stat: "$32K",
+    statLabel: "Superfan revenue in 3hrs",
+    outcome: "Core community targeted and monetised for the first time. Complete sell-out.",
+    href: "/case-studies#us-mobile"
   },
   {
     brand: "BlaBlaCar",
     stat: "\u20AC5",
     statLabel: "CAC",
-    outcome: "Through targeted storytelling to bring audiences inside the car.",
+    outcome: "Developed the brand\u2019s first-person narrative, shot on smartphones. One paid campaign across 22 markets. 3% CTR.",
     href: "/case-studies#blablacar"
-  },
-  {
-    brand: "US Mobile",
-    stat: "$32K",
-    statLabel: "revenue in 3 hours",
-    outcome: "Core community targeted and monetised for the first time.",
-    href: "/case-studies#us-mobile"
   },
   {
     brand: "Azarus",
     stat: "90%",
-    statLabel: "engagement rate",
-    outcome: "Live event game design. 500K peak viewers. Servers crashed.",
+    statLabel: "Engagement rate",
+    outcome: "Turned 500K passive viewers into active participants through live overlay game design. Servers crashed from demand.",
     href: "/case-studies#azarus"
+  },
+  {
+    brand: "Ubisoft",
+    stat: "2.4M",
+    statLabel: "Live watch hours",
+    outcome: "2.4M live watch hours generated entirely through community, no paid amplification.",
+    href: "/case-studies#ubisoft"
+  },
+  {
+    brand: "US Mobile",
+    stat: "55%",
+    statLabel: "Video view-through rate on Meta",
+    outcome: "Stunt creative designed for community buzz. Over half of all viewers watched the full ad.",
+    href: "/case-studies#us-mobile"
   }
 ]
 
@@ -248,18 +276,18 @@ export default function HomePage() {
               <figcaption className="bio-caption">Public speaking, E3 2019</figcaption>
             </figure>
             <div className="bio-text">
-              <h2>I build fan-powered growth engines.</h2>
+              <h2>I design fan-powered growth systems.</h2>
               <p>
-                I&apos;ve spent 12 years at the intersection of <strong>product-led growth</strong> and <strong>fan-led growth</strong>, building the systems that turn your user base into your most powerful growth channel.
+                I design fan-driven growth systems that turn customers into <strong>repeat revenue, retention, and organic acquisition</strong>. Not through paid media — through brand meaning, product experience, and participation that compounds.
               </p>
               <p>
-                That&apos;s how I designed the <strong>Fandom Flywheel&trade;</strong> — my proprietary framework for mapping the fan journey from first touchpoint to active advocate, and turning the value in between into <strong>retention, referrals and revenue</strong>.
+                That&apos;s how I built the <strong>Fandom Flywheel&trade;</strong> — a five-stage methodology for turning attention into repeat behaviour, belonging, and advocacy. <strong>Even small shifts in retention, referral, and fan spend can unlock millions in earned media, new customers, and lifetime value.</strong>
               </p>
               <p>
-                I developed my skills at <strong>Ubisoft, Amazon Games, BlaBlaCar</strong> and high-growth startups. Now I&apos;m bringing my playbook to disruptor brands across gaming, entertainment and consumer, ready to change how they do community.
+                I developed my approach at <strong>Ubisoft, Amazon Games, BlaBlaCar</strong> and high-growth startups. Now I work with consumer brands across gaming, entertainment, wellness, beauty, and lifestyle — anywhere customers care enough to come back, participate, and bring others with them.
               </p>
               <p>
-                Based in Paris, bilingual in English and French, working globally with a strong knowledge of the American market, since 2013.
+                Based in Paris, bilingual in English and French. Deep American market expertise since 2018 — from Ubisoft and Amazon Games to US-based startups.
               </p>
               <p className="bio-signature">Laura Cordrey</p>
             </div>
